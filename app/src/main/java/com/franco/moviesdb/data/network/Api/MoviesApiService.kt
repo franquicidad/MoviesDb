@@ -30,7 +30,7 @@ interface MoviesActionApiService {
 
     @GET("{sort_criteria}")
     fun getMoviesAction(
-        @Path("sort_criteria") sort_criteria: String,
+        @Path("movieOrAction") movieOrAction: String,
         @Query("api_key") api_key: String?,
         @Query("with_genres") genre: Int?,
         @Query("page") page: Int?,
