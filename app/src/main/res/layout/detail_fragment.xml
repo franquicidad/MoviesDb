@@ -113,14 +113,10 @@
                     <androidx.appcompat.widget.AppCompatRatingBar
                         android:id="@+id/movie_list_display_rating"
                         style="?android:attr/ratingBarStyleSmall"
+                        android:layout_marginTop="24dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:isIndicator="true"
-                        android:max="10"
-                        android:numStars="10"
-                        android:progressBackgroundTint="#FD605E5E"
-                        android:stepSize="0.5"
+                        android:theme="@style/ThemeForRatingBar"
                         app:layout_constraintStart_toStartOf="@+id/guideline2"
                         app:layout_constraintTop_toBottomOf="@+id/guideline4" />
 

@@ -33,6 +33,15 @@
         <item name="android:layout_marginTop">5dp</item>
     </style>
 
+    <style name="ThemeForRatingBar" parent="ThemeOverlay.MaterialComponents.Light">
+
+        <item name="android:isIndicator">true</item>
+        <item name="android:max">10</item>
+        <item name="android:numStars">10</item>
+        <item name="android:progressBackgroundTint">#FD605E5E</item>
+        <item name="android:stepSize">0.5</item>
+    </style>
+
     <style name="ThemeForAppTextTitleOverviewConfig" parent="ThemeOverlay.MaterialComponents.Light">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
