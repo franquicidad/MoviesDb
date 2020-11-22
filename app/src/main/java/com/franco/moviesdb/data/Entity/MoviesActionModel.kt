@@ -12,7 +12,7 @@ data class MoviesActionModel(
     val id: Int,
 
     @SerializedName("title")
-    val title: String,
+    var title: String,
 
     @SerializedName("original_language")
     val originalLanguage: String,

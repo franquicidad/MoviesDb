@@ -22,3 +22,4 @@ const val TV_URL_COMEDY = BASE_URL + APPEND_TV + APPEND_API + APPEND_TO_SELECT_G
 
 //https://api.themoviedb.org/3/discover/movie?api_key=7d51874568317dfd0c91db399be2bdec&with_genres=28
 //https://api.themoviedb.org/3/discover/tv?api_key=7d51874568317dfd0c91db399be2bdec&with_genres=28
+
