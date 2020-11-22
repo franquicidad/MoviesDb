@@ -3,23 +3,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_movie_action">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.franco.moviesdb.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_movie_action"
+        android:name="com.franco.moviesdb.ui.movie.action.MovieActionFragment"
+        android:label="@string/title_movie_action"
+        tools:layout="@layout/fragment_movie_action">
+        <action
+            android:id="@+id/action_navigation_home_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.franco.moviesdb.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
+        android:name="com.franco.moviesdb.ui.movie.comedy.MovieComedyFragment"
+        android:label="@string/title_movie_comedy"
+        tools:layout="@layout/fragment_movie_comedy">
+        <action
+            android:id="@+id/action_navigation_dashboard_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.franco.moviesdb.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_tv_action"
+        android:name="com.franco.moviesdb.ui.tv.tvaction.TvActionFragment"
+        android:label="Tv Action"
+        tools:layout="@layout/fragment_tv_action">
+        <action
+            android:id="@+id/action_navigation_tv_action_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_tv_comedy"
+        android:name="com.franco.moviesdb.ui.tv.tvcomedy.TvComedyFragment"
+        android:label="Tv Comedy"
+        tools:layout="@layout/fragment_tv_comedy">
+        <action
+            android:id="@+id/action_navigation_tv_comedy_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.franco.moviesdb.ui.movieDetails.DetailFragment"
+        android:label="Detail"
+        tools:layout="@layout/detail_fragment" />
+
+
 </navigation>

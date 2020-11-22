@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">MoviesDb</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_movie_action">Movie Action</string>
+    <string name="title_movie_comedy">Movie Comedy</string>
+    <string name="tv_action">Tv Action</string>
+    <string name="tv_comedy">Tv Comedy</string>
+    <string name="overview">Overview</string>
 </resources>

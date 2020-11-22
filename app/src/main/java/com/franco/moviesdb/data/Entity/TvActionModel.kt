@@ -8,6 +8,8 @@ data class TvActionModel(
 
     val name: String,
 
+    val first_air_date: String,
+
     @SerializedName("original_language")
     val originalLanguage: String,
 

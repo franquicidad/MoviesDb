@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.franco.moviesdb.ui.movieDetails.DetailViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.movieDetails.DetailFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/black"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black">
+
+                    <ProgressBar
+                        android:id="@+id/progress_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:progressDrawable="@drawable/progress"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/image_poster_detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </ProgressBar>
+
+                    <ImageView
+                        android:id="@+id/image_poster_detail"
+                        android:layout_width="411dp"
+                        android:layout_height="382dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/n_negra"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="407dp"
+                        android:layout_height="424dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/scrim_screen_for_recyclerview"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/image_poster_detail"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.166">
+
+                    </View>
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_begin="414dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="30dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_begin="237dp" />
+
+                    <TextView
+                        android:id="@+id/title_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:theme="@style/ThemeForAppTextTitleConfig"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@id/guideline2"
+                        app:layout_constraintTop_toTopOf="@id/guideline3"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_begin="372dp" />
+
+
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/movie_list_display_rating"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:isIndicator="true"
+                        android:max="10"
+                        android:numStars="10"
+                        android:progressBackgroundTint="#FD605E5E"
+                        android:stepSize="0.5"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toBottomOf="@+id/guideline4" />
+
+                    <TextView
+                        android:id="@+id/title_overview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/overview"
+                        android:theme="@style/ThemeForAppTextTitleOverviewConfig"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.448"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+                    <TextView
+                        android:id="@+id/detail_overview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="90dp"
+                        android:theme="@style/ThemeForAppTextOverviewConfig"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/title_overview"
+                        app:layout_constraintHorizontal_bias="0.489"
+                        app:layout_constraintStart_toStartOf="@+id/title_overview"
+                        app:layout_constraintTop_toBottomOf="@+id/title_overview"
+                        app:layout_constraintVertical_bias="0.0">
+
+                    </TextView>
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="363dp" />
+
+                    <TextView
+                        android:id="@+id/language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="48dp"
+                        android:fontFamily="@font/headland_one"
+                        android:text="EN"
+                        android:textAllCaps="true"
+                        android:textColor="#FD605E5E"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/movie_list_display_rating"
+                        app:layout_constraintStart_toEndOf="@+id/movie_list_display_rating"
+                        app:layout_constraintTop_toTopOf="@+id/guideline4"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <TextView
+                        android:id="@+id/rating_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:fontFamily="@font/headland_one"
+                        android:text="6.7"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/movie_list_display_rating"
+                        app:layout_constraintStart_toEndOf="@+id/movie_list_display_rating"
+                        app:layout_constraintTop_toTopOf="@+id/guideline4"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <TextView
+                        android:id="@+id/release_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/headland_one"
+                        android:text="TextView"
+                        android:textColor="#FD605E5E"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </FrameLayout>
+</layout>
