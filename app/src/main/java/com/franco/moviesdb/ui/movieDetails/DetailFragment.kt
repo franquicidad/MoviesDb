@@ -9,14 +9,15 @@ import android.view.ViewGroup
 import com.franco.moviesdb.IMAGE_URL
 import com.franco.moviesdb.databinding.DetailFragmentBinding
 import com.franco.moviesdb.loadUrl
+import com.franco.moviesdb.startActivity
 import kotlinx.android.synthetic.main.detail_fragment.*
 
 class DetailFragment : Fragment() {
 
     private lateinit var detailModel: DetailViewModel
 
-
     private lateinit var viewModel: DetailViewModel
+
     var movieName: String? = null
     var overview: String? = null
     var poster: String? = null
@@ -27,6 +28,7 @@ class DetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         movieName = arguments?.getString("movieName")
         overview = arguments?.getString("overview")
         poster = arguments?.getString("poster")
