@@ -5,18 +5,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.franco.moviesdb.*
 import com.franco.moviesdb.data.Entity.MoviesActionModel
 
 import kotlin.properties.Delegates
-
-
 class MovieRecyclerAdapter(items: List<MoviesActionModel> = emptyList()) :
     RecyclerView.Adapter<MovieRecyclerAdapter.ViewHolder>() {
 
     lateinit var mItemCLicked: ItemCLickedListener
-
 
     var items: List<MoviesActionModel> by Delegates.observable(items) { _, _, _ ->
         notifyDataSetChanged()
@@ -38,7 +38,6 @@ class MovieRecyclerAdapter(items: List<MoviesActionModel> = emptyList()) :
             mItemCLicked.let {
                 mItemCLicked.onItemClicked(item)
             }
-            //listenerMovie(item)
         }
     }
 
@@ -47,23 +46,18 @@ class MovieRecyclerAdapter(items: List<MoviesActionModel> = emptyList()) :
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //Tengo que quitar el binding por error desconocido cannot find symbol class shape private ScrimScreenForRecyclerviewBinding
-        // (@NonNull shape rootView) Un problema del viewBinding
-        //val binding= ItemLayoutReclyclerMoviesAndTvBinding.bind(itemView)
+
         val imageView = itemView.findViewById<ImageView>(R.id.rv_image_movie)
         val txtTitle = itemView.findViewById<TextView>(R.id.movie_title)
         val progress = itemView.findViewById<ProgressBar>(R.id.progress_item)
-
 
         fun bind(movieModel: MoviesActionModel) {
             progress.visibility = View.VISIBLE
             val basePoster = IMAGE_URL
             val restOfImageUrl = movieModel.posterPath
             val completeUrl = basePoster + restOfImageUrl
-
             imageView.loadUrl(completeUrl, progress)
             txtTitle.loadTextMovie(movieModel)
-
         }
     }
 

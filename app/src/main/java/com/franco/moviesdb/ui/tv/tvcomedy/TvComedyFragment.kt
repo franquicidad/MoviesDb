@@ -56,8 +56,6 @@ class TvComedyFragment : Fragment() {
                 layoutManager = linearLayoutManager
                 setHasFixedSize(true)
             }
-
-
             tvAdapter =
                 TvRecyclerAdapter(tvComedyList)
             binding.rvListTypesMovies.adapter = tvAdapter
@@ -71,26 +69,17 @@ class TvComedyFragment : Fragment() {
                         "rating" to modelItem.rating,
                         "lang" to modelItem.originalLanguage,
                         "release" to modelItem.first_air_date
-
                     )
-
 
                     tvComedyNavController = Navigation.findNavController(view!!)
                     tvComedyNavController!!.navigate(
                         R.id.action_navigation_tv_comedy_to_detailFragment,
                         bundle
                     )
-
-
                 }
 
             })
         })
-
-        tvComedyVM.items.observe(viewLifecycleOwner, Observer {
-            tvAdapter?.items = it
-        })
-
         return binding.root
     }
 }

@@ -22,6 +22,7 @@ import com.franco.moviesdb.R
 import com.franco.moviesdb.data.Entity.MoviesActionModel
 import com.franco.moviesdb.databinding.FragmentMovieActionBinding
 import com.franco.moviesdb.newToast
+import com.franco.moviesdb.observe
 
 class MovieActionFragment : Fragment() {
 
@@ -45,6 +46,8 @@ class MovieActionFragment : Fragment() {
         binding.viewModel = movieActionVM
 
         moviesActionList = mutableListOf<MoviesActionModel>()
+
+
 
         movieActionVM.message.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
@@ -80,9 +83,6 @@ class MovieActionFragment : Fragment() {
             })
         })
 
-
         return binding.root
     }
-
-
 }

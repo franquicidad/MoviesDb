@@ -10,13 +10,11 @@ import com.franco.moviesdb.*
 import com.franco.moviesdb.data.Entity.TvActionModel
 
 import kotlin.properties.Delegates
-
 class TvRecyclerAdapter(
     items: List<TvActionModel> = emptyList()
 ) : RecyclerView.Adapter<TvRecyclerAdapter.ViewHolder>() {
 
     lateinit var mItemCLicked: TvRecyclerAdapter.ItemTvCLickedListener
-
 
     var items: List<TvActionModel> by Delegates.observable(items) { _, _, _ ->
         notifyDataSetChanged()
@@ -38,7 +36,6 @@ class TvRecyclerAdapter(
             mItemCLicked.let {
                 mItemCLicked.onItemTvClicked(item)
             }
-            //listenerMovie(item)
         }
     }
 
@@ -47,14 +44,9 @@ class TvRecyclerAdapter(
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //Tengo que quitar el binding por error desconocido cannot find symbol class shape private ScrimScreenForRecyclerviewBinding
-        // (@NonNull shape rootView) Un problema del viewBinding :(
-
-        //val binding= ItemLayoutReclyclerMoviesAndTvBinding.bind(itemView)
         val imageView = itemView.findViewById<ImageView>(R.id.rv_image_movie)
         val txtTitle = itemView.findViewById<TextView>(R.id.movie_title)
         val progress = itemView.findViewById<ProgressBar>(R.id.progress_item)
-
 
         fun bind(movieModel: TvActionModel) {
             progress.visibility = View.VISIBLE

@@ -27,7 +27,6 @@ class TvActionFragment : Fragment() {
     private lateinit var tvActionList: List<TvActionModel>
     var tvActionNavController: NavController? = null
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,7 +35,6 @@ class TvActionFragment : Fragment() {
         tvActionVM =
             ViewModelProvider(this).get(TvActionViewModel::class.java)
         val binding = FragmentTvActionBinding.inflate(layoutInflater)
-
 
         binding.lifecycleOwner = this
 
@@ -54,11 +52,11 @@ class TvActionFragment : Fragment() {
 
             tvActionList = it.tvList
             val linearLayoutManager = GridLayoutManager(context, 2)
+
             with(binding.rvListTypesMovies) {
                 layoutManager = linearLayoutManager
                 setHasFixedSize(true)
             }
-
 
             tvAdapter = TvRecyclerAdapter(tvActionList)
             binding.rvListTypesMovies.adapter = tvAdapter
@@ -72,24 +70,14 @@ class TvActionFragment : Fragment() {
                         "rating" to modelItem.rating,
                         "lang" to modelItem.originalLanguage,
                         "release" to modelItem.first_air_date
-
                     )
-
-
                     tvActionNavController = Navigation.findNavController(view!!)
                     tvActionNavController!!.navigate(
                         R.id.action_navigation_tv_action_to_detailFragment,
                         bundle
                     )
-
-
                 }
-
             })
-        })
-
-        tvActionVM.items.observe(viewLifecycleOwner, Observer {
-            tvAdapter?.items = it
         })
 
         return binding.root

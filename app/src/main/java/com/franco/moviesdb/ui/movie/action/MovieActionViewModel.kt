@@ -29,7 +29,6 @@ class MovieActionViewModel() : ViewModel() {
         get() = statusMessage
 
     init {
-
         getActionMovies(APPEND_MOVIE, ALONE_API, ACTION, 2)
     }
 
@@ -60,8 +59,6 @@ class MovieActionViewModel() : ViewModel() {
                     statusMessage.value = Event("")
                     Log.e("", "ErrorRetreiveData: Failure: ${t.message}")
                 }
-
             })
     }
-
 }

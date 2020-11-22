@@ -20,21 +20,13 @@ class MovieComedyViewModel() : ViewModel() {
     private val _movieComedyresponse = MutableLiveData<MoviesActionResponce>()//moviesActionResponce
     val movieComedyresponse: LiveData<MoviesActionResponce> get() = _movieComedyresponse
 
-    private val _movieComedyNavigateToDetail = MutableLiveData<Event<Int>>()
-    val movieComedyNavigateToDetail: LiveData<Event<Int>> get() = _movieComedyNavigateToDetail
-
-    private val _movieComedyItems = MutableLiveData<List<MoviesActionModel>>()
-    val movieComedyItems: LiveData<List<MoviesActionModel>> get() = _movieComedyItems
-
     private val statusMessage = MutableLiveData<Event<String>>()
-
     val message: LiveData<Event<String>>
         get() = statusMessage
 
     init {
         callFunction()
     }
-
 
     fun callFunction() {
         getComedyMovies(APPEND_MOVIE, ALONE_API, COMEDY, 2)
@@ -61,15 +53,11 @@ class MovieComedyViewModel() : ViewModel() {
                     val obj: MoviesActionResponce? = response.body()
                     _movieComedyresponse.value = obj
                 }
-
                 override fun onFailure(call: Call<MoviesActionResponce>, t: Throwable) {
                     statusMessage.value = Event("")
 
                     Log.e("", "ErrorRetreiveData: Failure: ${t.message}")
                 }
-
             })
     }
-
-
 }

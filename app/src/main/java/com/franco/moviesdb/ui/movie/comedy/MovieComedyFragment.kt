@@ -34,9 +34,7 @@ class MovieComedyFragment : Fragment() {
     ): View? {
         movieComedyViewModel =
             ViewModelProvider(this).get(MovieComedyViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_movie_comedy, container, false)
         val binding = FragmentMovieComedyBinding.inflate(layoutInflater)
-        val recyclerView = root.findViewById<RecyclerView>(R.id.rv_list_types_movies)
 
         with(binding) {
             lifecycleOwner = this@MovieComedyFragment
@@ -55,15 +53,16 @@ class MovieComedyFragment : Fragment() {
 
             moviesComedyList = it.movieActionList
             val linearLayoutManager = GridLayoutManager(context, 2)
-            recyclerView.layoutManager = linearLayoutManager
-            recyclerView.setHasFixedSize(true)
+            with(binding.rvListTypesMovies) {
+                layoutManager = linearLayoutManager
+                setHasFixedSize(true)
+            }
 
             movieAdapter = MovieRecyclerAdapter(moviesComedyList)
-            recyclerView.adapter = movieAdapter
+            binding.rvListTypesMovies.adapter = movieAdapter
+
             movieAdapter!!.setUpListener(object : MovieRecyclerAdapter.ItemCLickedListener {
                 override fun onItemClicked(modelItem: MoviesActionModel) {
-
-
                     val bundle = bundleOf(
                         "movieName" to modelItem.title,
                         "overview" to modelItem.overview,
@@ -72,22 +71,15 @@ class MovieComedyFragment : Fragment() {
                         "lang" to modelItem.originalLanguage,
                         "release" to modelItem.releaseDate,
                     )
-
                     movieComedyNavController = Navigation.findNavController(view!!)
                     movieComedyNavController!!.navigate(
                         R.id.action_navigation_dashboard_to_detailFragment,
                         bundle
                     )
                 }
-
             })
         })
-        movieComedyViewModel.movieComedyItems.observe(viewLifecycleOwner, Observer {
-            movieAdapter?.items = it
-        })
 
-
-
-        return root
+        return binding.root
     }
 }
