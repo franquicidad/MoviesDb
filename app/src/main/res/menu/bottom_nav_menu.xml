@@ -7,7 +7,7 @@
         android:title="@string/title_movie_action" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_movie_comedy"
         android:icon="@drawable/comedy"
         android:title="@string/title_movie_comedy" />
     <item

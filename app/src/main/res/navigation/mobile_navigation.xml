@@ -20,7 +20,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_movie_comedy"
         android:name="com.franco.moviesdb.ui.movie.comedy.MovieComedyFragment"
         android:label="@string/title_movie_comedy"
         tools:layout="@layout/fragment_movie_comedy">
