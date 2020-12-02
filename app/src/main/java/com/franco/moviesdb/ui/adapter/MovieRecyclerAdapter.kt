@@ -1,16 +1,13 @@
-package com.franco.moviesdb.adapter
+package com.franco.moviesdb.ui.adapter
 
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.databinding.BindingAdapter
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.franco.moviesdb.*
-import com.franco.moviesdb.data.Entity.MoviesActionModel
+import com.franco.moviesdb.database.moviesAction.MoviesActionModel
 
 import kotlin.properties.Delegates
 class MovieRecyclerAdapter(items: List<MoviesActionModel> = emptyList()) :

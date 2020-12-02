@@ -1,4 +1,4 @@
-package com.franco.moviesdb.adapter
+package com.franco.moviesdb.ui.adapter
 
 import android.view.View
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.franco.moviesdb.*
-import com.franco.moviesdb.data.Entity.TvActionModel
+import com.franco.moviesdb.database.TvActionModel
 
 import kotlin.properties.Delegates
 class TvRecyclerAdapter(

@@ -8,7 +8,6 @@ import com.franco.moviesdb.ALONE_API
 import com.franco.moviesdb.APPEND_MOVIE
 import com.franco.moviesdb.COMEDY
 import com.franco.moviesdb.Event
-import com.franco.moviesdb.data.Entity.MoviesActionModel
 import com.franco.moviesdb.data.network.Api.MoviesActionApi
 import com.franco.moviesdb.data.network.MovieResponce.MoviesActionResponce
 import retrofit2.Call

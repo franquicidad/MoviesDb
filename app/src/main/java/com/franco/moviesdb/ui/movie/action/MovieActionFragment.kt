@@ -4,25 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.NavDeepLinkBuilder
 import androidx.navigation.Navigation
-import androidx.navigation.navOptions
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.franco.moviesdb.Event
-import com.franco.moviesdb.adapter.MovieRecyclerAdapter
+import com.franco.moviesdb.ui.adapter.MovieRecyclerAdapter
 import com.franco.moviesdb.R
-import com.franco.moviesdb.data.Entity.MoviesActionModel
+import com.franco.moviesdb.database.moviesAction.MoviesActionModel
 import com.franco.moviesdb.databinding.FragmentMovieActionBinding
 import com.franco.moviesdb.newToast
-import com.franco.moviesdb.observe
 
 class MovieActionFragment : Fragment() {
 

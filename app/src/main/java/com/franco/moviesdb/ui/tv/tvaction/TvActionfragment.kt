@@ -11,12 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.franco.moviesdb.adapter.TvRecyclerAdapter
+import com.franco.moviesdb.ui.adapter.TvRecyclerAdapter
 import com.franco.moviesdb.R
-import com.franco.moviesdb.adapter.MovieRecyclerAdapter
-import com.franco.moviesdb.data.Entity.MoviesActionModel
-import com.franco.moviesdb.data.Entity.TvActionModel
+import com.franco.moviesdb.database.TvActionModel
 import com.franco.moviesdb.databinding.FragmentTvActionBinding
 import com.franco.moviesdb.newToast
 

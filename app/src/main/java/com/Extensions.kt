@@ -1,7 +1,7 @@
 package com.franco.moviesdb
 
 
-import com.franco.moviesdb.data.Entity.MoviesActionModel
+import com.franco.moviesdb.database.moviesAction.MoviesActionModel
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -15,9 +15,8 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.core.os.bundleOf
 import androidx.lifecycle.*
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.franco.moviesdb.data.Entity.TvActionModel
+import com.franco.moviesdb.database.TvActionModel
 
 
 fun Context.newToast(message: String) {

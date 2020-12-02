@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.franco.moviesdb.*
-import com.franco.moviesdb.data.Entity.TvActionModel
 import com.franco.moviesdb.data.network.Api.MoviesActionApi
 import com.franco.moviesdb.data.network.TvResponce.TvActionResponce
 import retrofit2.Call
