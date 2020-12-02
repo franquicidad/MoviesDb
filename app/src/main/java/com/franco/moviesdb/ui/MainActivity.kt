@@ -1,14 +1,14 @@
-package com.franco.moviesdb
+package com.franco.moviesdb.ui
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.franco.moviesdb.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,12 +26,12 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_movie_action,
-                R.id.navigation_movie_comedy,
-                R.id.navigation_tv_action,
-                R.id.navigation_tv_comedy
-            )
+                setOf(
+                        R.id.navigation_movie_action,
+                        R.id.navigation_movie_comedy,
+                        R.id.navigation_tv_action,
+                        R.id.navigation_tv_comedy
+                )
         )
         setupActionBarWithNavController(navController!!, appBarConfiguration)
         navView.setupWithNavController(navController!!)
