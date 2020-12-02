@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoviesDBKotlin">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.MoviesDBKotlin">
             <intent-filter>
