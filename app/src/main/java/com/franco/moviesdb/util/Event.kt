@@ -1,4 +1,4 @@
-package com.franco.moviesdb
+package com.franco.moviesdb.util
 
 data class Event<out T>(private val content: T) {
 

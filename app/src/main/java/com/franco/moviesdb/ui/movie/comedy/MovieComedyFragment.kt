@@ -1,84 +1,74 @@
 package com.franco.moviesdb.ui.movie.comedy
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.franco.moviesdb.ui.adapter.MovieRecyclerAdapter
-import com.franco.moviesdb.R
-import com.franco.moviesdb.database.moviesAction.MoviesActionModel
+import androidx.recyclerview.widget.RecyclerView
+import com.franco.moviesdb.*
+import com.franco.moviesdb.ui.adapter.PagingAdapter
 import com.franco.moviesdb.databinding.FragmentMovieComedyBinding
-import com.franco.moviesdb.newToast
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-class MovieComedyFragment : Fragment() {
+@AndroidEntryPoint
+class MovieComedyFragment : Fragment(R.layout.fragment_movie_comedy) {
 
-    private var movieAdapter: MovieRecyclerAdapter? = null
-    private lateinit var movieComedyViewModel: MovieComedyViewModel
-    var movieComedyNavController: NavController? = null
+    private val movieComedyVM: MovieComedyViewModel by viewModels()
 
-    private lateinit var moviesComedyList: List<MoviesActionModel>
+    @ExperimentalCoroutinesApi
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentMovieComedyBinding.bind(view)
+        val pagingAdapter = PagingAdapter(lifecycleScope)
+        binding.apply {
+            binding.rvListTypesMovies.apply {
+                adapter = pagingAdapter
+                layoutManager = GridLayoutManager(requireContext(), 2)
+                setHasFixedSize(true)
 
+                lifecycleScope.apply {
+                    collectFlow(rvListTypesMovies.lastVisibleEvents) {
+                        movieComedyVM.notifyLastVisible(it)
+                    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        movieComedyViewModel =
-            ViewModelProvider(this).get(MovieComedyViewModel::class.java)
-        val binding = FragmentMovieComedyBinding.inflate(layoutInflater)
+                    collectFlow(movieComedyVM.spinner) {
+                        progressMovieAction.visible = it
+                    }
 
-        with(binding) {
-            lifecycleOwner = this@MovieComedyFragment
-            viewModel = movieComedyViewModel
+                }
+
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        movieComedyVM.notifyLastVisible((layoutManager as GridLayoutManager).findLastVisibleItemPosition())
+
+                    }
+                })
+            }
         }
 
-        moviesComedyList = mutableListOf<MoviesActionModel>()
-
-        movieComedyViewModel.message.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let {
-                context?.newToast("No internet connection!!!, please connect")
-            }
+        movieComedyVM.movieQuery.observe(viewLifecycleOwner, Observer {
+            pagingAdapter.submitList(it)
         })
+        setHasOptionsMenu(true)
+    }
 
-        movieComedyViewModel.movieComedyresponse.observe(viewLifecycleOwner, Observer {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_gallery, menu)
 
-            moviesComedyList = it.movieActionList
-            val linearLayoutManager = GridLayoutManager(context, 2)
-            with(binding.rvListTypesMovies) {
-                layoutManager = linearLayoutManager
-                setHasFixedSize(true)
-            }
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as SearchView
 
-            movieAdapter = MovieRecyclerAdapter(moviesComedyList)
-            binding.rvListTypesMovies.adapter = movieAdapter
-
-            movieAdapter!!.setUpListener(object : MovieRecyclerAdapter.ItemCLickedListener {
-                override fun onItemClicked(modelItem: MoviesActionModel) {
-                    val bundle = bundleOf(
-                        "movieName" to modelItem.title,
-                        "overview" to modelItem.overview,
-                        "poster" to modelItem.posterPath,
-                        "rating" to modelItem.rating,
-                        "lang" to modelItem.originalLanguage,
-                        "release" to modelItem.releaseDate,
-                    )
-                    movieComedyNavController = Navigation.findNavController(view!!)
-                    movieComedyNavController!!.navigate(
-                        R.id.action_navigation_dashboard_to_detailFragment,
-                        bundle
-                    )
-                }
-            })
-        })
-
-        return binding.root
+        searchView.onQueryTextChanged {
+            //update search query
+            movieComedyVM.searchQuery.value = it
+        }
     }
 }
+

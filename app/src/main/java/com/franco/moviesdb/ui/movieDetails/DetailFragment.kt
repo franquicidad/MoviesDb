@@ -6,18 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.franco.moviesdb.IMAGE_URL
+import androidx.fragment.app.viewModels
+import com.franco.moviesdb.R
+import com.franco.moviesdb.util.IMAGE_URL
 import com.franco.moviesdb.databinding.DetailFragmentBinding
 import com.franco.moviesdb.loadUrl
-import com.franco.moviesdb.startActivity
-import kotlinx.android.synthetic.main.detail_fragment.*
+import dagger.hilt.android.AndroidEntryPoint
 
-class DetailFragment : Fragment() {
+@AndroidEntryPoint
+class DetailFragment : Fragment(R.layout.detail_fragment) {
 
-    private lateinit var detailModel: DetailViewModel
+    private val detailModel: DetailViewModel by viewModels()
 
-    private lateinit var viewModel: DetailViewModel
-
+    var id: Int? = null
     var movieName: String? = null
     var overview: String? = null
     var poster: String? = null
@@ -29,6 +30,7 @@ class DetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        id = arguments?.getInt("id")
         movieName = arguments?.getString("movieName")
         overview = arguments?.getString("overview")
         poster = arguments?.getString("poster")
@@ -43,8 +45,7 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 //        val view= inflater.inflate(R.layout.detail_fragment, container, false)
-        detailModel =
-            ViewModelProvider(this).get(DetailViewModel::class.java)
+
         val binding = DetailFragmentBinding.inflate(layoutInflater)
         with(binding) {
             lifecycleOwner = this@DetailFragment

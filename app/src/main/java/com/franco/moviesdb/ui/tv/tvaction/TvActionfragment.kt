@@ -1,83 +1,73 @@
 package com.franco.moviesdb.ui.tv.tvaction
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.franco.moviesdb.ui.adapter.TvRecyclerAdapter
-import com.franco.moviesdb.R
-import com.franco.moviesdb.database.TvActionModel
+import androidx.recyclerview.widget.RecyclerView
+import com.franco.moviesdb.*
 import com.franco.moviesdb.databinding.FragmentTvActionBinding
-import com.franco.moviesdb.newToast
+import com.franco.moviesdb.ui.adapter.PagingAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-class TvActionFragment : Fragment() {
+@AndroidEntryPoint
+class TvActionFragment : Fragment(R.layout.fragment_tv_action) {
 
-    private var tvAdapter: TvRecyclerAdapter? = null
-    private lateinit var tvActionVM: TvActionViewModel
-    private lateinit var tvActionList: List<TvActionModel>
-    var tvActionNavController: NavController? = null
+    private val tvActionVM: TvActionViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        tvActionVM =
-            ViewModelProvider(this).get(TvActionViewModel::class.java)
-        val binding = FragmentTvActionBinding.inflate(layoutInflater)
+    @ExperimentalCoroutinesApi
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this
-
-        binding.viewModel = tvActionVM
-
-        tvActionList = mutableListOf<TvActionModel>()
-
-        tvActionVM.message.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let {
-                context?.newToast("No internet connection!!!, please connect")
-            }
-        })
-
-        tvActionVM.response.observe(viewLifecycleOwner, Observer {
-
-            tvActionList = it.tvList
-            val linearLayoutManager = GridLayoutManager(context, 2)
-
-            with(binding.rvListTypesMovies) {
-                layoutManager = linearLayoutManager
+        val binding = FragmentTvActionBinding.bind(view)
+        val pagingAdapter = PagingAdapter(lifecycleScope)
+        binding.apply {
+            binding.rvListTypesMovies.apply {
+                adapter = pagingAdapter
+                layoutManager = GridLayoutManager(requireContext(), 2)
                 setHasFixedSize(true)
-            }
 
-            tvAdapter = TvRecyclerAdapter(tvActionList)
-            binding.rvListTypesMovies.adapter = tvAdapter
+                lifecycleScope.apply {
+                    collectFlow(rvListTypesMovies.lastVisibleEvents) {
+                        tvActionVM.notifyLastVisible(it)
+                    }
 
-            tvAdapter!!.setUpListener(object : TvRecyclerAdapter.ItemTvCLickedListener {
-                override fun onItemTvClicked(modelItem: TvActionModel) {
-                    val bundle = bundleOf(
-                        "movieName" to modelItem.name,
-                        "overview" to modelItem.overview,
-                        "poster" to modelItem.posterPath,
-                        "rating" to modelItem.rating,
-                        "lang" to modelItem.originalLanguage,
-                        "release" to modelItem.first_air_date
-                    )
-                    tvActionNavController = Navigation.findNavController(view!!)
-                    tvActionNavController!!.navigate(
-                        R.id.action_navigation_tv_action_to_detailFragment,
-                        bundle
-                    )
+                    collectFlow(tvActionVM.spinner) {
+                        progressTv.visible = it
+                    }
+
                 }
-            })
-        })
 
-        return binding.root
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        tvActionVM.notifyLastVisible((layoutManager as GridLayoutManager).findLastVisibleItemPosition())
+                    }
+                })
+            }
+        }
+        tvActionVM.tvActionQuery.observe(viewLifecycleOwner, Observer {
+            pagingAdapter.submitList(it)
+        })
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_gallery, menu)
+
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.onQueryTextChanged {
+            //update search query
+            tvActionVM.searchQuery.value = it
+        }
     }
 }
 

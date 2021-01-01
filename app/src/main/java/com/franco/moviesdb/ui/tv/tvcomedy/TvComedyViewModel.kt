@@ -1,58 +1,38 @@
 package com.franco.moviesdb.ui.tv.tvcomedy
 
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.franco.moviesdb.*
-import com.franco.moviesdb.data.network.Api.MoviesActionApi
-import com.franco.moviesdb.data.network.TvResponce.TvActionResponce
-import retrofit2.Call
-import retrofit2.Response
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
+import com.franco.moviesdb.domain.Repository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.launch
 
 
-class TvComedyViewModel() : ViewModel() {
+class TvComedyViewModel @ViewModelInject constructor(
+    private val repository: Repository
+) : ViewModel() {
 
-    private val _response = MutableLiveData<TvActionResponce>()//moviesActionResponce
-    val response: LiveData<TvActionResponce> get() = _response
+    private val _spinner = MutableStateFlow(true)
+    val spinner: StateFlow<Boolean> get() = _spinner
 
-    private val statusMessage = MutableLiveData<Event<String>>()
+    val searchQuery = MutableStateFlow("")
 
-    val message: LiveData<Event<String>>
-        get() = statusMessage
+    private val tvComedyQueryFlow = searchQuery.flatMapLatest {
+        repository.getMovieListByQuery(it)
+    }
+    val tvComedyQuery = tvComedyQueryFlow.asLiveData()
 
     init {
-        getActionMovies(APPEND_TV, ALONE_API, COMEDY, 1)
+        viewModelScope.launch { notifyLastVisible(0) }
     }
 
-    fun getActionMovies(
-        appendMovieOrAction: String,
-        aloneApi: String,
-        numberActionOrMovieInt: Int,
-        page: Int
-    ) {
-        MoviesActionApi.retrofitService.getTvAction(
-            appendMovieOrAction,
-            aloneApi,
-            numberActionOrMovieInt,
-            page
-        ).enqueue(object :
-            retrofit2.Callback<TvActionResponce> {
-            override fun onResponse(
-                call: Call<TvActionResponce>,
-                response: Response<TvActionResponce>
-            ) {
-                val obj: TvActionResponce? = response.body()
-                _response.value = obj
-            }
-
-            override fun onFailure(call: Call<TvActionResponce>, t: Throwable) {
-                statusMessage.value = Event("")
-
-                Log.e("", "ErrorRetreiveData: Failure: ${t.message}")
-            }
-        })
+    fun notifyLastVisible(lastVisible: Int) {
+        viewModelScope.launch {
+            repository.checkRequireNewPageMovieAction(lastVisible)
+            _spinner.value = false
+        }
     }
 
 }

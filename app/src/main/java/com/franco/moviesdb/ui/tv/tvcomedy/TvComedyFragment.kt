@@ -2,84 +2,75 @@ package com.franco.moviesdb.ui.tv.tvcomedy
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.franco.moviesdb.ui.adapter.TvRecyclerAdapter
-import com.franco.moviesdb.R
-import com.franco.moviesdb.database.TvActionModel
+import androidx.recyclerview.widget.RecyclerView
+import com.franco.moviesdb.*
+import com.franco.moviesdb.databinding.FragmentMovieComedyBinding
 import com.franco.moviesdb.databinding.FragmentTvComedyBinding
-import com.franco.moviesdb.newToast
+import com.franco.moviesdb.ui.adapter.PagingAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@AndroidEntryPoint
+class TvComedyFragment : Fragment(R.layout.fragment_tv_comedy) {
 
-class TvComedyFragment : Fragment() {
+    private val tvComedyVM: TvComedyViewModel by viewModels()
 
-    private var tvAdapter: TvRecyclerAdapter? = null
-    private lateinit var tvComedyVM: TvComedyViewModel
-    private lateinit var tvComedyList: List<TvActionModel>
-    var tvComedyNavController: NavController? = null
+    @ExperimentalCoroutinesApi
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        tvComedyVM =
-            ViewModelProvider(this).get(TvComedyViewModel::class.java)
-        val binding = FragmentTvComedyBinding.inflate(layoutInflater)
-        binding.lifecycleOwner = this
-
-        binding.viewModel = tvComedyVM
-
-        tvComedyList = mutableListOf<TvActionModel>()
-
-        tvComedyVM.message.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let {
-                context?.newToast("No internet connection!!!, please connect")
-            }
-        })
-
-        tvComedyVM.response.observe(viewLifecycleOwner, Observer {
-
-            tvComedyList = it.tvList
-            val linearLayoutManager = GridLayoutManager(context, 2)
-            with(binding.rvListTypesMovies) {
-                layoutManager = linearLayoutManager
+        super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentTvComedyBinding.bind(view)
+        val pagingAdapter = PagingAdapter(lifecycleScope)
+        binding.apply {
+            binding.rvListTypesMovies.apply {
+                adapter = pagingAdapter
+                layoutManager = GridLayoutManager(requireContext(), 2)
                 setHasFixedSize(true)
-            }
-            tvAdapter =
-                TvRecyclerAdapter(tvComedyList)
-            binding.rvListTypesMovies.adapter = tvAdapter
 
-            tvAdapter!!.setUpListener(object : TvRecyclerAdapter.ItemTvCLickedListener {
-                override fun onItemTvClicked(modelItem: TvActionModel) {
-                    val bundle = bundleOf(
-                        "movieName" to modelItem.name,
-                        "overview" to modelItem.overview,
-                        "poster" to modelItem.posterPath,
-                        "rating" to modelItem.rating,
-                        "lang" to modelItem.originalLanguage,
-                        "release" to modelItem.first_air_date
-                    )
+                lifecycleScope.apply {
+                    collectFlow(rvListTypesMovies.lastVisibleEvents) {
+                        tvComedyVM.notifyLastVisible(it)
+                    }
 
-                    tvComedyNavController = Navigation.findNavController(view!!)
-                    tvComedyNavController!!.navigate(
-                        R.id.action_navigation_tv_comedy_to_detailFragment,
-                        bundle
-                    )
+                    collectFlow(tvComedyVM.spinner) {
+                        progressTvComedy.visible = it
+                    }
+
                 }
 
-            })
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        tvComedyVM.notifyLastVisible((layoutManager as GridLayoutManager).findLastVisibleItemPosition())
+
+                    }
+                })
+            }
+        }
+
+        tvComedyVM.tvComedyQuery.observe(viewLifecycleOwner, Observer {
+            pagingAdapter.submitList(it)
         })
-        return binding.root
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_gallery, menu)
+
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.onQueryTextChanged {
+            //update search query
+            tvComedyVM.searchQuery.value = it
+        }
     }
 }
-
