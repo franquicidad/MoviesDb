@@ -3,6 +3,8 @@ package com.franco.moviesdb.ui.movie.action
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.franco.moviesdb.domain.Repository
+import com.franco.moviesdb.domain.RepositoryImpl
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -19,10 +21,14 @@ class MovieActionViewModel @ViewModelInject constructor(
 
     val searchQuery = MutableStateFlow("")
 
+    @ExperimentalCoroutinesApi
     private val movieQueryFlow = searchQuery.flatMapLatest {
-        repository.getMovieListByQuery(it)
+        repository.getMovieListActionByQuery(it)
     }
-    val movieQuery = movieQueryFlow.asLiveData()
+
+    @ExperimentalCoroutinesApi
+    val list = movieQueryFlow
+    val movieQuery = list.asLiveData()
 
     init {
         viewModelScope.launch { notifyLastVisible(0) }

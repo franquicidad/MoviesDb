@@ -1,5 +1,6 @@
 package com.franco.moviesdb.domain
 
+import android.util.Log
 import com.franco.moviesdb.database.LocalDatasourceImpl
 import com.franco.moviesdb.network.RemoteDatasourceImpl
 import kotlinx.coroutines.flow.Flow
@@ -37,7 +38,7 @@ class RepositoryImpl(
     }
 
     override suspend fun checkRequireNewPageMovieComedy(lastVisible: Int) {
-        val size = localDatasource.movieActionSize()
+        val size = localDatasource.movieComedySize()
         if (lastVisible >= size - PAGE_THRESHOLD) {
             val page = size / PAGE_SIZE + 1
             val newMovies = remoteDatasource.getMovieListComedy(page)

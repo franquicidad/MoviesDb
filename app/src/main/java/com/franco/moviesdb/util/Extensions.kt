@@ -1,63 +1,32 @@
-package com.franco.moviesdb
+package com.franco.moviesdb.util
 
-
-import com.franco.moviesdb.network.model.MoviesActionModel
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.SearchView
-import androidx.core.os.bundleOf
-import androidx.lifecycle.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.franco.moviesdb.network.model.TvActionModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 
-
-fun Context.newToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-}
-
-
-//fun RecyclerView.ViewHolder.toast(message: String){
-//    itemView.context.newToast(message)
-//}
-fun ViewGroup.inflate(@LayoutRes layout: Int): View {
-    val view = LayoutInflater.from(context).inflate(layout, this, false)
-    return view
-}
-
-fun ImageView.loadUrl(completeUrl: String, progress: ProgressBar) {
-
-    Glide.with(this)
-        .load(completeUrl)
-        .placeholder(R.drawable.progress)
-        .into(this)
-
-    progress.visibility = View.GONE
-}
-
-fun TextView.loadTextMovie(movieModel: MoviesActionModel) {
-
-    this.text = movieModel.title
-}
-
 fun <T> CoroutineScope.collectFlow(flow: Flow<T>, body: suspend (T) -> Unit) {
     flow.onEach { body(it) }
         .launchIn(this)
 }
+
+@ExperimentalCoroutinesApi
+val View.onClickEvents: Flow<View>
+    get() = callbackFlow {
+        val onClickListener = View.OnClickListener { offer(it) }
+        setOnClickListener(onClickListener)
+        awaitClose { setOnClickListener(null) }
+    }.conflate()
+
 
 var View.visible: Boolean
     get() = visibility == View.VISIBLE
@@ -78,15 +47,22 @@ val RecyclerView.lastVisibleEvents: Flow<Int>
         addOnScrollListener(listener)
         awaitClose { removeOnScrollListener(listener) }
     }.conflate()
-//fun TextView.loadTextTv(movieModel: MoviesActionModel) {
-//
-//    this.text = movieModel.title
-//}
 
-inline fun <reified T : Activity> Context.startActivity(vararg pairs: Pair<String, Any?>) {
 
-    Intent(this, T::class.java).apply { putExtras(bundleOf(*pairs)) }
-        .also(::startActivity)
+fun ImageView.loadUrl(completeUrl: String) {
+
+    Glide
+        .with(this)
+        .load(completeUrl)
+
+        .into(this)
+
+
+}
+
+fun ViewGroup.inflate(@LayoutRes layout: Int): View {
+    val view = LayoutInflater.from(context).inflate(layout, this, false)
+    return view
 }
 
 inline fun SearchView.onQueryTextChanged(crossinline listener: (String) -> Unit) {
@@ -102,19 +78,3 @@ inline fun SearchView.onQueryTextChanged(crossinline listener: (String) -> Unit)
 
     })
 }
-
-inline fun <reified T : ViewModel> ViewModelStoreOwner.getViewModel(body: T.() -> Unit = {}): T =
-    ViewModelProvider(this).get<T>().apply(body)
-
-fun <T> LifecycleOwner.observe(liveData: LiveData<T>, observer: (T) -> Unit) {
-    liveData.observe(this, Observer(observer))
-
-}
-
-@ExperimentalCoroutinesApi
-val View.onClickEvents: Flow<View>
-    get() = callbackFlow {
-        val onClickListener = View.OnClickListener { offer(it) }
-        setOnClickListener(onClickListener)
-        awaitClose { setOnClickListener(null) }
-    }.conflate()

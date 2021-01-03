@@ -77,7 +77,6 @@
                     android:layout_marginBottom="16dp"
                     android:gravity="center_horizontal"
                     android:text="Loading"
-
                     android:theme="@style/ThemeForAppTextRecycler"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

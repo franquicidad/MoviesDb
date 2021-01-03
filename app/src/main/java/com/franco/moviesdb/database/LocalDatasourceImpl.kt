@@ -1,10 +1,7 @@
 package com.franco.moviesdb.database
 
 import com.franco.moviesdb.domain.MovieActionDomain
-import com.franco.moviesdb.network.mapDatabaseToDomain
-import com.franco.moviesdb.network.mapFromDomainToDatabase
-import com.franco.moviesdb.network.mapFromDomainToTvDatabase
-import com.franco.moviesdb.network.mapTvDatabaseToDomain
+import com.franco.moviesdb.network.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -38,8 +35,8 @@ class LocalDatasourceImpl @Inject constructor(
         })
 
     override suspend fun saveMovieComedyToDb(movie: List<MovieActionDomain>) =
-        movieDb.moviesDAO().insertMovieAction(movie.map {
-            it.mapFromDomainToDatabase()
+        movieDb.moviesDAO().insertMovieComedy(movie.map { movieComedy ->
+            movieComedy.mapFromDomainToDatabaseComedy()
         })
 
 
@@ -50,8 +47,8 @@ class LocalDatasourceImpl @Inject constructor(
     }
 
     override suspend fun saveTvComedyToDb(tv: List<MovieActionDomain>) {
-        movieDb.moviesDAO().insertTvAction(tv.map {
-            it.mapFromDomainToTvDatabase()
+        movieDb.moviesDAO().insertTvComedy(tv.map {
+            it.mapFromDomainToTvDatabaseComedy()
         })
     }
 
@@ -63,10 +60,11 @@ class LocalDatasourceImpl @Inject constructor(
         }
 
     override fun getAllMoviesComedyFromDatabase(): Flow<List<MovieActionDomain>> =
-        movieDb.moviesDAO().getAllMoviesActionByGenre().map { movies ->
-            movies.map {
-                it.mapDatabaseToDomain()
+        movieDb.moviesDAO().getAllMoviesComedyByGenre().map { movieComedy ->
+            movieComedy.map {
+                it.mapFromDatabaseComedyToDomain()
             }
+
         }
 
     override fun getAllTvSeriesActionFromDatabase(): Flow<List<MovieActionDomain>> =
@@ -94,12 +92,10 @@ class LocalDatasourceImpl @Inject constructor(
         }
 
     override fun getListBySearchBarMovieComedyFromDatabase(query: String): Flow<List<MovieActionDomain>> =
-        movieDb.moviesDAO().getListBySearchBarMovieAction(query).map { moviesFiltered ->
-            moviesFiltered.map {
-                it.mapDatabaseToDomain()
-            }
-
+        movieDb.moviesDAO().getListBySearchBarMovieComedy(query).map { movieTable ->
+            movieTable.map { it.mapFromDatabaseComedyToDomain() }
         }
+
 
     override fun getListBySearchBarTvActionFromDatabase(query: String): Flow<List<MovieActionDomain>> =
         movieDb.moviesDAO().getListBySearchBarTvAction(query).map { tvFiltered ->

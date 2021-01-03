@@ -3,31 +3,38 @@ package com.franco.moviesdb.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.franco.moviesdb.*
+import com.franco.moviesdb.R
 import com.franco.moviesdb.databinding.ItemLayoutReclyclerMoviesAndTvBinding
 import com.franco.moviesdb.domain.MovieActionDomain
-import com.franco.moviesdb.network.model.MoviesActionModel
 import com.franco.moviesdb.util.IMAGE_URL
+import com.franco.moviesdb.util.collectFlow
+import com.franco.moviesdb.util.loadUrl
+import com.franco.moviesdb.util.onClickEvents
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-import kotlin.properties.Delegates
-
 @ExperimentalCoroutinesApi
-class PagingAdapter(private val scope: CoroutineScope) :
-    ListAdapter<MovieActionDomain, PagingAdapter.ItemViewHolder>(DiffCallBackFromAdapter()) {
+class PagingMovieComedyAdapter(private val scope: CoroutineScope) :
+    ListAdapter<MovieActionDomain, PagingMovieComedyAdapter.ItemViewHolder>(DiffCallBackFromAdapter()) {
 
     var navController: NavController? = null
 
+
+    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding = ItemLayoutReclyclerMoviesAndTvBinding.bind(itemView)
+        fun bind(item: MovieActionDomain) = with(binding) {
+            val url = IMAGE_URL + item.posterPath
+            movieTitle.text = item.title
+            rvImageMovie.loadUrl(url)
+        }
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
@@ -55,36 +62,8 @@ class PagingAdapter(private val scope: CoroutineScope) :
 
             )
             navController = Navigation.findNavController(it!!)
-            navController!!.navigate(R.id.action_navigation_home_to_detailFragment, bundle)
+            navController!!.navigate(R.id.action_navigation_dashboard_to_detailFragment, bundle)
 
         }
     }
-
-
-    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val binding = ItemLayoutReclyclerMoviesAndTvBinding.bind(itemView)
-        fun bind(item: MovieActionDomain) = with(binding) {
-            val url = IMAGE_URL + item.posterPath
-            movieTitle.text = item.title
-            rvImageMovie.loadUrl(url, progressItem)
-        }
-    }
-
 }
-
-class DiffCallBackFromAdapter : DiffUtil.ItemCallback<MovieActionDomain>() {
-    override fun areItemsTheSame(oldItem: MovieActionDomain, newItem: MovieActionDomain): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(
-        oldItem: MovieActionDomain,
-        newItem: MovieActionDomain
-    ): Boolean {
-        return oldItem == newItem
-    }
-
-}
-
-
-

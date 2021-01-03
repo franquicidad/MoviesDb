@@ -11,9 +11,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.franco.moviesdb.*
-import com.franco.moviesdb.databinding.FragmentMovieComedyBinding
 import com.franco.moviesdb.databinding.FragmentTvComedyBinding
 import com.franco.moviesdb.ui.adapter.PagingAdapter
+import com.franco.moviesdb.util.collectFlow
+import com.franco.moviesdb.util.lastVisibleEvents
+import com.franco.moviesdb.util.onQueryTextChanged
+import com.franco.moviesdb.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -39,7 +42,7 @@ class TvComedyFragment : Fragment(R.layout.fragment_tv_comedy) {
                         tvComedyVM.notifyLastVisible(it)
                     }
 
-                    collectFlow(tvComedyVM.spinner) {
+                    collectFlow(tvComedyVM.spinnerTvComedy) {
                         progressTvComedy.visible = it
                     }
 
@@ -70,7 +73,7 @@ class TvComedyFragment : Fragment(R.layout.fragment_tv_comedy) {
 
         searchView.onQueryTextChanged {
             //update search query
-            tvComedyVM.searchQuery.value = it
+            tvComedyVM.searchTvComedyQuery.value = it
         }
     }
 }

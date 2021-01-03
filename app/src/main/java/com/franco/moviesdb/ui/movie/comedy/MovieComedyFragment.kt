@@ -1,6 +1,7 @@
 package com.franco.moviesdb.ui.movie.comedy
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -12,6 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.franco.moviesdb.*
 import com.franco.moviesdb.ui.adapter.PagingAdapter
 import com.franco.moviesdb.databinding.FragmentMovieComedyBinding
+import com.franco.moviesdb.ui.adapter.PagingMovieComedyAdapter
+import com.franco.moviesdb.util.collectFlow
+import com.franco.moviesdb.util.lastVisibleEvents
+import com.franco.moviesdb.util.onQueryTextChanged
+import com.franco.moviesdb.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -23,22 +29,24 @@ class MovieComedyFragment : Fragment(R.layout.fragment_movie_comedy) {
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val binding = FragmentMovieComedyBinding.bind(view)
-        val pagingAdapter = PagingAdapter(lifecycleScope)
+        val pagingAdapter = PagingMovieComedyAdapter(lifecycleScope)
         binding.apply {
-            binding.rvListTypesMovies.apply {
+            binding.rvListTypesMoviesAction.apply {
                 adapter = pagingAdapter
                 layoutManager = GridLayoutManager(requireContext(), 2)
                 setHasFixedSize(true)
 
                 lifecycleScope.apply {
-                    collectFlow(rvListTypesMovies.lastVisibleEvents) {
+                    collectFlow(rvListTypesMoviesAction.lastVisibleEvents) {
                         movieComedyVM.notifyLastVisible(it)
                     }
 
-                    collectFlow(movieComedyVM.spinner) {
+                    collectFlow(movieComedyVM.spinnerMovieComedy) {
                         progressMovieAction.visible = it
                     }
+
 
                 }
 
@@ -52,7 +60,13 @@ class MovieComedyFragment : Fragment(R.layout.fragment_movie_comedy) {
             }
         }
 
-        movieComedyVM.movieQuery.observe(viewLifecycleOwner, Observer {
+        movieComedyVM.listComedy.observe(viewLifecycleOwner, Observer {
+
+        })
+
+        movieComedyVM.movieComedyQuery.observe(viewLifecycleOwner, Observer {
+            Log.i("cComedy", "$it")
+
             pagingAdapter.submitList(it)
         })
         setHasOptionsMenu(true)
@@ -67,7 +81,7 @@ class MovieComedyFragment : Fragment(R.layout.fragment_movie_comedy) {
 
         searchView.onQueryTextChanged {
             //update search query
-            movieComedyVM.searchQuery.value = it
+            movieComedyVM.searchMovieComedyQuery.value = it
         }
     }
 }

@@ -40,7 +40,9 @@ object NetworkModule {
         app,
         MovieDatabase::class.java,
         DATABASE_MOVIE_NAME
-    ).build()
+    )
+        .fallbackToDestructiveMigration()
+        .build()
 
 
     @Singleton

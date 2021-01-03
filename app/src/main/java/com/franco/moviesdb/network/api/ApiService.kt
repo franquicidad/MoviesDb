@@ -1,6 +1,7 @@
 package com.franco.moviesdb.network.api
 
 import com.franco.moviesdb.network.model.MoviesActionResponce
+import com.franco.moviesdb.network.model.MoviesComedyResponce
 import com.franco.moviesdb.network.model.TvActionResponce
 import retrofit2.Call
 import retrofit2.http.GET
@@ -14,6 +15,17 @@ interface ApiService {
     @GET("discover/{sort_criteria}")
     suspend fun getMoviesAction(
         @Path("sort_criteria") sort_criteria: String,
+        @Query("sort_by") sort_by: String?,
+        @Query("api_key") api_key: String?,
+        @Query("with_genres") genre: Int?,
+        @Query("page") page: Int?,
+
+        ): MoviesActionResponce
+
+    @GET("discover/{sort_criteria}")
+    suspend fun getMoviesComedy(
+        @Path("sort_criteria") sort_criteria: String,
+        @Query("sort_by") sort_by: String?,
         @Query("api_key") api_key: String?,
         @Query("with_genres") genre: Int?,
         @Query("page") page: Int?,

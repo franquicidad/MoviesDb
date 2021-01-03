@@ -1,6 +1,5 @@
 package com.franco.moviesdb.ui.movieDetails
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,7 +9,7 @@ import androidx.fragment.app.viewModels
 import com.franco.moviesdb.R
 import com.franco.moviesdb.util.IMAGE_URL
 import com.franco.moviesdb.databinding.DetailFragmentBinding
-import com.franco.moviesdb.loadUrl
+import com.franco.moviesdb.util.loadUrl
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,12 +50,12 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             lifecycleOwner = this@DetailFragment
             viewModel = detailModel
         }
-        val url = IMAGE_URL + poster
+
 
         with(binding) {
             titleDetail.text = movieName
 
-            imagePosterDetail.loadUrl(url, binding.progressDetail)
+            imagePosterDetail.loadUrl(poster.toString())
 
             movieListDisplayRating.rating = rating?.toFloat()!!
 

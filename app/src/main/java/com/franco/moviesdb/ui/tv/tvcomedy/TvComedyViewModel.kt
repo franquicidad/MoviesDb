@@ -14,13 +14,13 @@ class TvComedyViewModel @ViewModelInject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    private val _spinner = MutableStateFlow(true)
-    val spinner: StateFlow<Boolean> get() = _spinner
+    private val _spinnerTvComedy = MutableStateFlow(true)
+    val spinnerTvComedy: StateFlow<Boolean> get() = _spinnerTvComedy
 
-    val searchQuery = MutableStateFlow("")
+    val searchTvComedyQuery = MutableStateFlow("")
 
-    private val tvComedyQueryFlow = searchQuery.flatMapLatest {
-        repository.getMovieListByQuery(it)
+    private val tvComedyQueryFlow = searchTvComedyQuery.flatMapLatest {
+        repository.getTvListComedyByQuery(it)
     }
     val tvComedyQuery = tvComedyQueryFlow.asLiveData()
 
@@ -30,8 +30,8 @@ class TvComedyViewModel @ViewModelInject constructor(
 
     fun notifyLastVisible(lastVisible: Int) {
         viewModelScope.launch {
-            repository.checkRequireNewPageMovieAction(lastVisible)
-            _spinner.value = false
+            repository.checkRequireNewPageTvComedy(lastVisible)
+            _spinnerTvComedy.value = false
         }
     }
 

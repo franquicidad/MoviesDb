@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.franco.moviesdb.*
 import com.franco.moviesdb.ui.adapter.PagingAdapter
-import com.franco.moviesdb.network.model.MoviesActionModel
 import com.franco.moviesdb.databinding.FragmentMovieActionBinding
+import com.franco.moviesdb.util.collectFlow
+import com.franco.moviesdb.util.lastVisibleEvents
+import com.franco.moviesdb.util.onQueryTextChanged
+import com.franco.moviesdb.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -55,6 +58,8 @@ class MovieActionFragment : Fragment(R.layout.fragment_movie_action) {
         }
 
         movieActionVM.movieQuery.observe(viewLifecycleOwner, Observer {
+            Log.i("cAction", "$it")
+
             pagingAdapter.submitList(it)
         })
         setHasOptionsMenu(true)

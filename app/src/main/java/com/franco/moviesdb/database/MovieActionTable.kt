@@ -9,49 +9,24 @@ data class MovieActionTable(
 
     @PrimaryKey(autoGenerate = false)
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
 
     @SerializedName("title")
-    var title: String,
+    var title: String?,
 
     @SerializedName("original_language")
-    val originalLanguage: String,
+    val originalLanguage: String?,
 
-    val overview: String,
+    val overview: String?,
 
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
 
     @SerializedName("release_date")
-    val releaseDate: String,
+    val releaseDate: String?,
 
     @SerializedName("vote_average")
-    val rating: Double,
+    val rating: Double?,
 
     )
 
-@Entity(tableName = "movie_comedy")
-data class MovieComedyTable(
-
-    @PrimaryKey(autoGenerate = false)
-    @SerializedName("id")
-    val id: Int,
-
-    @SerializedName("title")
-    var title: String,
-
-    @SerializedName("original_language")
-    val originalLanguage: String,
-
-    val overview: String,
-
-    @SerializedName("poster_path")
-    val posterPath: String,
-
-    @SerializedName("release_date")
-    val releaseDate: String,
-
-    @SerializedName("vote_average")
-    val rating: Double,
-
-    )

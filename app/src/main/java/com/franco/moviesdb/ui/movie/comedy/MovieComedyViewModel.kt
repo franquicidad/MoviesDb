@@ -1,35 +1,52 @@
 package com.franco.moviesdb.ui.movie.comedy
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.franco.moviesdb.domain.MovieActionDomain
 import com.franco.moviesdb.domain.Repository
+import com.franco.moviesdb.domain.RepositoryImpl
+import com.franco.moviesdb.network.api.ApiService
+import com.franco.moviesdb.util.ALONE_API
+import com.franco.moviesdb.util.APPEND_MOVIE
+import com.franco.moviesdb.util.COMEDY
+import com.franco.moviesdb.util.POPULARITY
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 class MovieComedyViewModel @ViewModelInject constructor(
-    private val repository: Repository
+    private val repository: Repository,
+    private val service: ApiService
 ) : ViewModel() {
 
-    private val _spinner = MutableStateFlow(true)
-    val spinner: StateFlow<Boolean> get() = _spinner
+    private val _spinnerMovieComedy = MutableStateFlow(true)
+    val spinnerMovieComedy: StateFlow<Boolean> get() = _spinnerMovieComedy
 
-    val searchQuery = MutableStateFlow("")
+    val searchMovieComedyQuery = MutableStateFlow("")
 
-    private val movieQueryFlow = searchQuery.flatMapLatest {
-        repository.getMovieListByQuery(it)
+    @ExperimentalCoroutinesApi
+    private val movieComedyQueryFlow = searchMovieComedyQuery.flatMapLatest {
+        repository.getMovieListComedyByQuery(it)
     }
-    val movieQuery = movieQueryFlow.asLiveData()
+    val list = movieComedyQueryFlow
+    val movieComedyQuery = list.asLiveData()
 
     init {
-        viewModelScope.launch { notifyLastVisible(0) }
+        viewModelScope.launch {
+            notifyLastVisible(0)
+
+        }
+
     }
 
     fun notifyLastVisible(lastVisible: Int) {
+        Log.i("stac", "viewModel")
         viewModelScope.launch {
-            repository.checkRequireNewPageMovieAction(lastVisible)
-            _spinner.value = false
+            repository.checkRequireNewPageMovieComedy(lastVisible)
+            _spinnerMovieComedy.value = false
         }
     }
 }

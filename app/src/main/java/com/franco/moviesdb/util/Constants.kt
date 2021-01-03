@@ -14,6 +14,7 @@ const val APPEND_TV = "tv"
 
 const val ACTION = 28
 const val COMEDY = 35
+const val POPULARITY = "popularity.desc"
 
 const val DATABASE_MOVIE_NAME = "movies-db"
 const val DATABASE_TV_NAME = "tvmovies-db"

@@ -1,11 +1,13 @@
-package com.franco.moviesdb.network.model
+package com.franco.moviesdb.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-data class MoviesActionModel(
+@Entity(tableName = "movie_comedy")
+data class MovieComedyTable(
 
+    @PrimaryKey(autoGenerate = false)
     @SerializedName("id")
     val id: Int?,
 
@@ -25,6 +27,5 @@ data class MoviesActionModel(
 
     @SerializedName("vote_average")
     val rating: Double?,
-
 
     )
