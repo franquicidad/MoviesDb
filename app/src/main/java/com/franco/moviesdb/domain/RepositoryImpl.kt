@@ -38,6 +38,7 @@ class RepositoryImpl(
     }
 
     override suspend fun checkRequireNewPageMovieComedy(lastVisible: Int) {
+        Log.i("Comedy", "paginationRepo")
         val size = localDatasource.movieComedySize()
         if (lastVisible >= size - PAGE_THRESHOLD) {
             val page = size / PAGE_SIZE + 1

@@ -20,12 +20,15 @@ import com.franco.moviesdb.util.onQueryTextChanged
 import com.franco.moviesdb.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
+import org.koin.ext.scope
 
 @AndroidEntryPoint
 class MovieComedyFragment : Fragment(R.layout.fragment_movie_comedy) {
 
     private val movieComedyVM: MovieComedyViewModel by viewModels()
 
+    @InternalCoroutinesApi
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,6 +50,9 @@ class MovieComedyFragment : Fragment(R.layout.fragment_movie_comedy) {
                         progressMovieAction.visible = it
                     }
 
+                    collectFlow(movieComedyVM.list) {
+                        Log.i("vmList", "$it")
+                    }
 
                 }
 
@@ -59,10 +65,6 @@ class MovieComedyFragment : Fragment(R.layout.fragment_movie_comedy) {
                 })
             }
         }
-
-        movieComedyVM.listComedy.observe(viewLifecycleOwner, Observer {
-
-        })
 
         movieComedyVM.movieComedyQuery.observe(viewLifecycleOwner, Observer {
             Log.i("cComedy", "$it")

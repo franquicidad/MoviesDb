@@ -66,8 +66,8 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRepository(
-        localDataSource: LocalDatasourceImpl,
-        remoteDataSource: RemoteDatasourceImpl
+            localDataSource: LocalDatasourceImpl,
+            remoteDataSource: RemoteDatasourceImpl
     ): Repository {
         return RepositoryImpl(localDataSource, remoteDataSource)
     }
@@ -78,9 +78,9 @@ object NetworkModule {
         return MovieActionViewModel(repositoryImpl)
     }
 
-    fun providesRepoToMovieComedyVm(repositoryImpl: RepositoryImpl): MovieComedyViewModel {
-        return MovieComedyViewModel(repositoryImpl)
-    }
+//    fun providesRepoToMovieComedyVm(repositoryImpl: RepositoryImpl): MovieComedyViewModel {
+//        return MovieComedyViewModel(repositoryImpl)
+//    }
 
     fun providesRepoToTvActionVm(repositoryImpl: RepositoryImpl): TvActionViewModel {
         return TvActionViewModel(repositoryImpl)

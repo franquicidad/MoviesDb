@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 
 class MovieComedyViewModel @ViewModelInject constructor(
     private val repository: Repository,
-    private val service: ApiService
 ) : ViewModel() {
 
     private val _spinnerMovieComedy = MutableStateFlow(true)
@@ -36,7 +35,8 @@ class MovieComedyViewModel @ViewModelInject constructor(
 
     init {
         viewModelScope.launch {
-            notifyLastVisible(0)
+
+        notifyLastVisible(0)
 
         }
 
