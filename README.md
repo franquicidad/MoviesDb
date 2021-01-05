@@ -1,7 +1,7 @@
 # MoviesDb
 MoviesDbMvvm
 
-App mvvm arquitecture to make the best possible app with TheMovieDatabase data provided.
+App mvvm arquitecture to make the best possible app with TheMovieDatabase provided.
 This app handles persistance, offline mode and all information in the app comes from Room Database and the data is gathered 
 from the network.
 
