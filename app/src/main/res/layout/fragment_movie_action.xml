@@ -17,15 +17,17 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list_types_movies"
-            android:layout_width="398dp"
-            android:layout_height="840dp"
-            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:paddingStart="25dp"
+            android:paddingEnd="20dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:itemCount="50"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/netflix_view"
+            tools:itemCount="10"
             tools:listitem="@layout/item_layout_reclycler_movies_and_tv">
 
         </androidx.recyclerview.widget.RecyclerView>

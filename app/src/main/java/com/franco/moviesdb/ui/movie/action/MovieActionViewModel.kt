@@ -21,14 +21,11 @@ class MovieActionViewModel @ViewModelInject constructor(
 
     val searchQuery = MutableStateFlow("")
 
-    @ExperimentalCoroutinesApi
     private val movieQueryFlow = searchQuery.flatMapLatest {
         repository.getMovieListActionByQuery(it)
     }
 
-    @ExperimentalCoroutinesApi
-    val list = movieQueryFlow
-    val movieQuery = list.asLiveData()
+    val movieQuery = movieQueryFlow.asLiveData()
 
     init {
         viewModelScope.launch { notifyLastVisible(0) }

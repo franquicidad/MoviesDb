@@ -8,12 +8,12 @@ import com.franco.moviesdb.database.moviesAction.MoviesAndTvDao
 
 
 @Database(
-    entities = [
-        MovieActionTable::class,
-        MovieComedyTable::class,
-        TvActionTable::class,
-        TvComedyTable::class
-    ], version = 5
+        entities = [
+            MovieActionTable::class,
+            MovieComedyTable::class,
+            TvActionTable::class,
+            TvComedyTable::class
+        ], version = 6
 )
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun moviesDAO(): MoviesAndTvDao

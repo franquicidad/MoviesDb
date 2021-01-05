@@ -7,25 +7,28 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "movie_comedy")
 data class MovieComedyTable(
 
-    @PrimaryKey(autoGenerate = false)
-    @SerializedName("id")
-    val id: Int?,
+        @PrimaryKey(autoGenerate = false)
+        @SerializedName("id")
+        val id: Int?,
 
-    @SerializedName("title")
-    var title: String?,
+        @SerializedName("backdrop_path")
+        val backdropPath: String?,
 
-    @SerializedName("original_language")
-    val originalLanguage: String?,
+        @SerializedName("title")
+        var title: String?,
 
-    val overview: String?,
+        @SerializedName("original_language")
+        val originalLanguage: String?,
 
-    @SerializedName("poster_path")
-    val posterPath: String?,
+        val overview: String?,
 
-    @SerializedName("release_date")
-    val releaseDate: String?,
+        @SerializedName("poster_path")
+        val posterPath: String?,
 
-    @SerializedName("vote_average")
-    val rating: Double?,
+        @SerializedName("release_date")
+        val releaseDate: String?,
 
-    )
+        @SerializedName("vote_average")
+        val rating: Double?,
+
+        )

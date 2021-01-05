@@ -30,8 +30,7 @@ class MovieComedyViewModel @ViewModelInject constructor(
     private val movieComedyQueryFlow = searchMovieComedyQuery.flatMapLatest {
         repository.getMovieListComedyByQuery(it)
     }
-    val list = movieComedyQueryFlow
-    val movieComedyQuery = list.asLiveData()
+    val movieComedyQuery = movieComedyQueryFlow.asLiveData()
 
     init {
         viewModelScope.launch {

@@ -10,7 +10,7 @@ class RepositoryImpl(
     private val remoteDatasource: RemoteDatasourceImpl,
 ) : Repository {
     companion object {
-        const val PAGE_SIZE = 20
+        const val PAGE_SIZE = 5
         const val PAGE_THRESHOLD = 10
     }
 
@@ -32,6 +32,7 @@ class RepositoryImpl(
         val size = localDatasource.movieActionSize()
         if (lastVisible >= size - PAGE_THRESHOLD) {
             val page = size / PAGE_SIZE + 1
+            Log.i("page", "Page $page ---->:next page -->${page + 1}")
             val newMovies = remoteDatasource.getMovieListAction(page)
             localDatasource.saveMovieActionToDb(newMovies)
         }
@@ -48,7 +49,7 @@ class RepositoryImpl(
     }
 
     override suspend fun checkRequireNewPageTvAction(lastVisible: Int) {
-        val size = localDatasource.movieActionSize()
+        val size = localDatasource.tvActionSize()
         if (lastVisible >= size - PAGE_THRESHOLD) {
             val page = size / PAGE_SIZE + 1
             val newMovies = remoteDatasource.getTvListAction(page)
@@ -57,7 +58,7 @@ class RepositoryImpl(
     }
 
     override suspend fun checkRequireNewPageTvComedy(lastVisible: Int) {
-        val size = localDatasource.movieActionSize()
+        val size = localDatasource.tvComedySize()
         if (lastVisible >= size - PAGE_THRESHOLD) {
             val page = size / PAGE_SIZE + 1
             val newMovies = remoteDatasource.getTvListComedy(page)

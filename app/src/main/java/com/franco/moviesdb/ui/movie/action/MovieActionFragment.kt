@@ -74,7 +74,7 @@ class MovieActionFragment : Fragment(R.layout.fragment_movie_action) {
 
         searchView.onQueryTextChanged {
             //update search query
-            movieActionVM.searchQuery.value = it
+            movieActionVM.searchQuery.value = it.toLowerCase()
         }
     }
 }

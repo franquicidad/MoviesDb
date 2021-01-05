@@ -2,6 +2,7 @@ package com.franco.moviesdb.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.viewbinding.BuildConfig
 import com.franco.moviesdb.database.LocalDatasourceImpl
 import com.franco.moviesdb.database.MovieDatabase
 import com.franco.moviesdb.domain.Repository
@@ -23,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -35,25 +37,39 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideMovieDatabase(
-        @ApplicationContext app: Context
+            @ApplicationContext app: Context
     ) = Room.databaseBuilder(
-        app,
-        MovieDatabase::class.java,
-        DATABASE_MOVIE_NAME
+            app,
+            MovieDatabase::class.java,
+            DATABASE_MOVIE_NAME
     )
-        .fallbackToDestructiveMigration()
-        .build()
+            .fallbackToDestructiveMigration()
+            .build()
 
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient() = if (BuildConfig.DEBUG) {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
+    } else {
+        OkHttpClient
+                .Builder()
+                .build()
+    }
 
     @Singleton
     @Provides
     fun provideApiService(): ApiService {
         val client = OkHttpClient.Builder()
-            .build()
+                .build()
         return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-            .baseUrl(BASE_URL)
-            .client(client)
+                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+                .baseUrl(BASE_URL)
+                .client(client)
             .build()
             .create(ApiService::class.java)
     }

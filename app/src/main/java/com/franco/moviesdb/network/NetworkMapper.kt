@@ -11,85 +11,82 @@ import com.franco.moviesdb.domain.MovieActionDomain
 
 
 fun NetworkModelMovie.mapMovieToDomain(): MovieActionDomain =
-     MovieActionDomain(id, title, originalLanguage, overview, posterPath, releaseDate, rating)
+     MovieActionDomain(id, backdropPath, title, originalLanguage, overview, posterPath, releaseDate, rating)
 
 fun NetworkModelMovieComedy.mapMovieComedyToDomain(): MovieActionDomain =
-     MovieActionDomain(id, title, originalLanguage, overview, posterPath, releaseDate, rating)
+        MovieActionDomain(id, backdropPath, title, originalLanguage, overview, posterPath, releaseDate, rating)
 
 fun NetworkModelTv.mapTvToDomain(): MovieActionDomain =
-     MovieActionDomain(
-          id = id,
-          title = title,
-          originalLanguage = originalLanguage,
-          overview = overview,
-          posterPath = posterPath,
-          releaseDate = releaseDate,
-          rating = rating
-     )
+        MovieActionDomain(id, backdropPath, title, originalLanguage, overview, posterPath, releaseDate, rating)
 
 fun DatabaseModelMovie.mapDatabaseToDomain(): MovieActionDomain =
      MovieActionDomain(
-          id,
-          title ?: "",
-          originalLanguage ?: "",
-          overview ?: "",
-          posterPath ?: "",
-          releaseDate ?: "",
-          rating ?: 0.0
+             id,
+             backdropPath ?: "",
+             title ?: "",
+             originalLanguage ?: "",
+             overview ?: "",
+             posterPath ?: "",
+             releaseDate ?: "",
+             rating ?: 0.0
 
      )
 
 fun DatabaseModelTv.mapTvDatabaseToDomain(): MovieActionDomain =
      MovieActionDomain(
-          id = id,
-          title = title,
-          originalLanguage = originalLanguage,
-          overview = overview,
-          posterPath = posterPath,
-          releaseDate = releaseDate,
-          rating = rating
+             id = id,
+             backdropPath,
+             title = title,
+             originalLanguage = originalLanguage,
+             overview = overview,
+             posterPath = posterPath,
+             releaseDate = releaseDate,
+             rating = rating
      )
 
 fun MovieActionDomain.mapFromDomainToDatabase(): DatabaseModelMovie =
-     DatabaseModelMovie(id, title, originalLanguage, overview, posterPath, releaseDate, rating)
+        DatabaseModelMovie(id, backdropPath, title, originalLanguage, overview, posterPath, releaseDate, rating)
 
 fun MovieActionDomain.mapFromDomainToDatabaseComedy(): DatabaseMovieComedy =
-     DatabaseMovieComedy(id, title, originalLanguage, overview, posterPath, releaseDate, rating)
+        DatabaseMovieComedy(id, backdropPath, title, originalLanguage, overview, posterPath, releaseDate, rating)
 
 fun DatabaseMovieComedy.mapFromDatabaseComedyToDomain(): MovieActionDomain =
      MovieActionDomain(
-          id,
-          title ?: "",
-          originalLanguage ?: "",
-          overview ?: "",
-          posterPath ?: "",
-          releaseDate ?: "",
-          rating ?: 0.0
+             id,
+             backdropPath ?: "",
+             title ?: "",
+             originalLanguage ?: "",
+             overview ?: "",
+             posterPath ?: "",
+             releaseDate ?: "",
+             rating ?: 0.0
 
      )
 
 
 fun MovieActionDomain.mapFromDomainToTvDatabase(): DatabaseModelTv =
      DatabaseModelTv(
-          id,
-          title ?: "",
-          releaseDate ?: "",
-          originalLanguage ?: "",
-          overview ?: "",
-          posterPath ?: "",
-          rating ?: 0.0
+             id,
+             backdropPath ?: "",
+             title ?: "",
+             releaseDate ?: "",
+             originalLanguage ?: "",
+             overview ?: "",
+             posterPath ?: "",
+             rating ?: 0.0
 
      )
 
 fun MovieActionDomain.mapFromDomainToTvDatabaseComedy(): DatabaseModelTvComedy =
      DatabaseModelTvComedy(
-          id,
-          title ?: "",
-          releaseDate ?: "",
-          originalLanguage ?: "",
-          overview ?: "",
-          posterPath ?: "",
-          rating ?: 0.0
+             id,
+             backdropPath ?: "",
+             title ?: "",
+             releaseDate ?: "",
+             originalLanguage ?: "",
+             overview ?: "",
+             posterPath ?: "",
+             rating ?: 0.0
 
      )
 

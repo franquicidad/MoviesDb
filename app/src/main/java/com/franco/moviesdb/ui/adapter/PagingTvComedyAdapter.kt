@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.franco.moviesdb.R
@@ -19,9 +18,10 @@ import com.franco.moviesdb.util.onClickEvents
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+
 @ExperimentalCoroutinesApi
-class PagingMovieComedyAdapter(private val scope: CoroutineScope) :
-    ListAdapter<MovieActionDomain, PagingMovieComedyAdapter.ItemViewHolder>(DiffCallBackFromAdapter()) {
+class PagingTvComedyAdapter(private val scope: CoroutineScope) :
+        ListAdapter<MovieActionDomain, PagingTvComedyAdapter.ItemViewHolder>(DiffCallBackFromAdapter()) {
 
     var navController: NavController? = null
 
@@ -38,10 +38,11 @@ class PagingMovieComedyAdapter(private val scope: CoroutineScope) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_layout_reclycler_movies_and_tv, parent, false)
+                LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_layout_reclycler_movies_and_tv, parent, false)
         )
     }
+
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) = with(holder) {
         val item = getItem(position)
@@ -50,6 +51,7 @@ class PagingMovieComedyAdapter(private val scope: CoroutineScope) :
 
             val url = IMAGE_URL + item.posterPath
             val backImage = IMAGE_URL + item.backdropPath
+
 
             val bundle = bundleOf(
                     "id" to item.id,
@@ -64,8 +66,10 @@ class PagingMovieComedyAdapter(private val scope: CoroutineScope) :
 
             )
             navController = Navigation.findNavController(it!!)
-            navController!!.navigate(R.id.action_navigation_dashboard_to_detailFragment, bundle)
+            navController!!.navigate(R.id.action_navigation_tv_comedy_to_detailFragment, bundle)
 
         }
     }
+
+
 }

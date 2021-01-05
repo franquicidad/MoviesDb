@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="#252424">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/netflix_view"
@@ -14,6 +14,7 @@
         android:background="@android:color/white"
         android:paddingTop="30dp"
         android:paddingBottom="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -48,7 +49,7 @@
         android:layout_width="411dp"
         android:layout_height="wrap_content"
 
-        android:background="#FA303030"
+        android:background="#FA494646"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,13 +59,14 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="406dp"
-        android:layout_height="431dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
+        android:foregroundGravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
         app:layout_constraintTop_toTopOf="@+id/guideline6"
         app:navGraph="@navigation/mobile_navigation">
 

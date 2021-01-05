@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.franco.moviesdb.*
 import com.franco.moviesdb.databinding.FragmentTvActionBinding
 import com.franco.moviesdb.ui.adapter.PagingAdapter
+import com.franco.moviesdb.ui.adapter.PagingTvActionAdapter
 import com.franco.moviesdb.util.collectFlow
 import com.franco.moviesdb.util.lastVisibleEvents
 import com.franco.moviesdb.util.onQueryTextChanged
@@ -29,7 +30,7 @@ class TvActionFragment : Fragment(R.layout.fragment_tv_action) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentTvActionBinding.bind(view)
-        val pagingAdapter = PagingAdapter(lifecycleScope)
+        val pagingAdapter = PagingTvActionAdapter(lifecycleScope)
         binding.apply {
             binding.rvListTypesMovies.apply {
                 adapter = pagingAdapter

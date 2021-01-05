@@ -25,16 +25,16 @@ interface MoviesAndTvDao {
 
     //Querys
 
-    @Query("SELECT * FROM movie_action WHERE title LIKE  '%' ||  :query  ||  '%'  ")
+    @Query("SELECT * FROM movie_action WHERE title LIKE  '%' ||  :query  ||  '%'  ORDER BY releaseDate DESC")
     fun getListBySearchBarMovieAction(query: String): Flow<List<MovieActionTable>>
 
-    @Query("SELECT * FROM movie_comedy WHERE title LIKE  '%' ||  :query  ||  '%'  ")
+    @Query("SELECT * FROM movie_comedy WHERE title LIKE  '%' ||  :query  ||  '%'  ORDER BY releaseDate DESC")
     fun getListBySearchBarMovieComedy(query: String): Flow<List<MovieComedyTable>>
 
-    @Query("SELECT * FROM tv_action WHERE title LIKE  '%' ||  :query  ||  '%'  ")
+    @Query("SELECT * FROM tv_action WHERE title LIKE  '%' ||  :query  ||  '%'  ORDER BY rating DESC")
     fun getListBySearchBarTvAction(query: String): Flow<List<TvActionTable>>
 
-    @Query("SELECT * FROM tv_comedy WHERE title LIKE  '%' ||  :query  ||  '%'  ")
+    @Query("SELECT * FROM tv_comedy WHERE title LIKE  '%' ||  :query  ||  '%'  ORDER BY rating DESC")
     fun getListBySearchBarTvComedy(query: String): Flow<List<TvActionTable>>
 
     @Query("SELECT COUNT(id) FROM movie_action")

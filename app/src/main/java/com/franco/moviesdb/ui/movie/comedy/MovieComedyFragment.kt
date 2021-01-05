@@ -50,9 +50,6 @@ class MovieComedyFragment : Fragment(R.layout.fragment_movie_comedy) {
                         progressMovieAction.visible = it
                     }
 
-                    collectFlow(movieComedyVM.list) {
-                        Log.i("vmList", "$it")
-                    }
 
                 }
 

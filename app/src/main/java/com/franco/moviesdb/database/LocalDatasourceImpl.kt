@@ -17,7 +17,7 @@ class LocalDatasourceImpl @Inject constructor(
     }
 
     override suspend fun movieComedySize(): Int {
-        return movieDb.moviesDAO().movieCountAction()
+        return movieDb.moviesDAO().movieCountComedy()
     }
 
     override suspend fun tvActionSize(): Int {
@@ -25,7 +25,7 @@ class LocalDatasourceImpl @Inject constructor(
     }
 
     override suspend fun tvComedySize(): Int {
-        return movieDb.moviesDAO().tvCountAction()
+        return movieDb.moviesDAO().tvCountComedy()
     }
 
 
@@ -105,9 +105,9 @@ class LocalDatasourceImpl @Inject constructor(
         }
 
     override fun getListBySearchBarTvComedyFromDatabase(query: String): Flow<List<MovieActionDomain>> =
-        movieDb.moviesDAO().getListBySearchBarTvAction(query).map { tvFiltered ->
-            tvFiltered.map {
-                it.mapTvDatabaseToDomain()
+            movieDb.moviesDAO().getListBySearchBarTvComedy(query).map { tvFiltered ->
+                tvFiltered.map {
+                    it.mapTvDatabaseToDomain()
+                }
             }
-        }
 }
