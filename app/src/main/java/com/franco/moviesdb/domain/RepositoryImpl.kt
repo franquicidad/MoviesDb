@@ -16,17 +16,20 @@ class RepositoryImpl(
 
 
     override fun getMovieListActionByQuery(query: String): Flow<List<MovieActionDomain>> =
-        localDatasource.getListBySearchBarMovieActionFromDatabase(query)
+            localDatasource.getListBySearchBarMovieActionFromDatabase(query)
 
     override fun getMovieListComedyByQuery(query: String): Flow<List<MovieActionDomain>> =
-        localDatasource.getListBySearchBarMovieComedyFromDatabase(query)
+            localDatasource.getListBySearchBarMovieComedyFromDatabase(query)
+
+    override suspend fun getAllActors(movieId: Int): Flow<List<ActorsDomain>> =
+            localDatasource.getAllActorsMovieId(movieId)
 
 
     override fun getTvListActionByQuery(query: String): Flow<List<MovieActionDomain>> =
-        localDatasource.getListBySearchBarTvActionFromDatabase(query)
+            localDatasource.getListBySearchBarTvActionFromDatabase(query)
 
     override fun getTvListComedyByQuery(query: String): Flow<List<MovieActionDomain>> =
-        localDatasource.getListBySearchBarTvComedyFromDatabase(query)
+            localDatasource.getListBySearchBarTvComedyFromDatabase(query)
 
     override suspend fun checkRequireNewPageMovieAction(lastVisible: Int) {
         val size = localDatasource.movieActionSize()
@@ -61,8 +64,16 @@ class RepositoryImpl(
         val size = localDatasource.tvComedySize()
         if (lastVisible >= size - PAGE_THRESHOLD) {
             val page = size / PAGE_SIZE + 1
-            val newMovies = remoteDatasource.getTvListComedy(page)
-            localDatasource.saveTvComedyToDb(newMovies)
+            val tvCom = remoteDatasource.getTvListComedy(page)
+            localDatasource.saveTvComedyToDb(tvCom)
         }
+    }
+
+
+    override suspend fun checkRequireNewPageActors(id: Int) {
+
+        val newActors = remoteDatasource.getActorsRemote(id)
+        localDatasource.insertActors(newActors)
+
     }
 }

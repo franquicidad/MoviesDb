@@ -7,6 +7,7 @@ import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.CoroutineScope
@@ -48,11 +49,25 @@ val RecyclerView.lastVisibleEvents: Flow<Int>
         awaitClose { removeOnScrollListener(listener) }
     }.conflate()
 
+@ExperimentalCoroutinesApi
+val RecyclerView.lastVisibleEventsLinearActors: Flow<Int>
+    get() = callbackFlow<Int> {
+        val lm = layoutManager as LinearLayoutManager
+
+        val listener = object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                offer(lm.findLastVisibleItemPosition())
+            }
+        }
+        addOnScrollListener(listener)
+        awaitClose { removeOnScrollListener(listener) }
+    }.conflate()
+
 
 fun ImageView.loadUrl(completeUrl: String) {
 
     Glide
-        .with(this)
+            .with(this)
         .load(completeUrl)
 
         .into(this)

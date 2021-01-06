@@ -1,10 +1,7 @@
 package com.franco.moviesdb.database.moviesAction
 
 import androidx.room.*
-import com.franco.moviesdb.database.MovieActionTable
-import com.franco.moviesdb.database.MovieComedyTable
-import com.franco.moviesdb.database.TvActionTable
-import com.franco.moviesdb.database.TvComedyTable
+import com.franco.moviesdb.database.*
 import kotlinx.coroutines.flow.Flow
 
 
@@ -22,6 +19,16 @@ interface MoviesAndTvDao {
 
     @Query("SELECT * FROM tv_action")
     fun getAllTvComedyByGenre(): Flow<List<TvComedyTable>>
+
+    //Actors
+    @Query("SELECT * FROM actors WHERE :id")
+    fun getAllActorsMovieId(id: Int): Flow<List<ActorsTable>>
+
+    @Query("SELECT COUNT(id) FROM actors")
+    suspend fun actorsCount(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertActors(actors: List<ActorsTable>)
 
     //Querys
 

@@ -47,24 +47,26 @@
                     <ImageView
                         android:id="@+id/image_poster_detail"
                         android:layout_width="411dp"
-                        android:layout_height="382dp"
+                        android:layout_height="233dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/n_negra"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+
                     <View
                         android:id="@+id/view2"
-                        android:layout_width="407dp"
-                        android:layout_height="424dp"
+                        android:layout_width="395dp"
+                        android:layout_height="243dp"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/scrim_screen_for_recyclerview"
                         app:layout_constraintBottom_toTopOf="@+id/guideline"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/image_poster_detail"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.166">
+                        app:layout_constraintVertical_bias="0.0">
 
                     </View>
 
@@ -73,128 +75,194 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="414dp" />
+                        app:layout_constraintGuide_begin="585dp" />
 
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_begin="30dp" />
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="237dp" />
 
                     <TextView
                         android:id="@+id/title_detail"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="MovieTitle"
                         android:theme="@style/ThemeForAppTextTitleConfig"
-                        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@id/guideline2"
-                        app:layout_constraintTop_toTopOf="@id/guideline3"
-                        app:layout_constraintVertical_bias="1.0" />
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="372dp" />
-
+                        android:translationY="-30dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.461"
+                        app:layout_constraintStart_toStartOf="@+id/guideline3"
+                        app:layout_constraintTop_toBottomOf="@+id/image_poster_detail" />
 
                     <androidx.appcompat.widget.AppCompatRatingBar
                         android:id="@+id/movie_list_display_rating"
                         style="?android:attr/ratingBarStyleSmall"
-                        android:layout_marginTop="24dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:theme="@style/ThemeForRatingBar"
-                        app:layout_constraintStart_toStartOf="@+id/guideline2"
-                        app:layout_constraintTop_toBottomOf="@+id/guideline4" />
+                        android:translationY="-30dp"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/guideline3"
+                        app:layout_constraintTop_toBottomOf="@+id/release_date"
+                        app:layout_constraintVertical_bias="0.102" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/framelayout_actors"
+                        android:layout_width="403dp"
+                        android:layout_height="171dp"
+                        android:layout_marginBottom="12dp"
+                        android:clipToPadding="true"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/guideline2"
+                        app:layout_constraintVertical_bias="0.918"
+                        tools:context=".ui.MainActivity"
+                        tools:listitem="@layout/item_actors">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <ProgressBar
+                        android:id="@+id/actorsProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/framelayout_actors"
+                        app:layout_constraintTop_toTopOf="@+id/framelayout_actors">
+
+                    </ProgressBar>
 
                     <TextView
                         android:id="@+id/title_overview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="12dp"
                         android:text="@string/overview"
-                        android:theme="@style/ThemeForAppTextTitleOverviewConfig"
+                        android:theme="@style/ThemeForAppTextTitleConfig"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.448"
-                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintHorizontal_bias="0.498"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
                     <TextView
                         android:id="@+id/detail_overview"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginBottom="90dp"
                         android:theme="@style/ThemeForAppTextOverviewConfig"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/title_overview"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.489"
-                        app:layout_constraintStart_toStartOf="@+id/title_overview"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/title_overview"
                         app:layout_constraintVertical_bias="0.0">
 
                     </TextView>
 
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_begin="363dp" />
 
                     <TextView
                         android:id="@+id/language"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="48dp"
+                        android:layout_width="22dp"
+                        android:layout_height="17dp"
+                        android:layout_marginStart="8dp"
                         android:fontFamily="@font/headland_one"
                         android:text="EN"
                         android:textAllCaps="true"
+
                         android:textColor="#FD605E5E"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/movie_list_display_rating"
-                        app:layout_constraintStart_toEndOf="@+id/movie_list_display_rating"
-                        app:layout_constraintTop_toTopOf="@+id/guideline4"
+                        android:translationY="-30dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/rating_number"
+                        app:layout_constraintStart_toEndOf="@+id/rating_number"
+                        app:layout_constraintTop_toTopOf="@+id/rating_number"
                         app:layout_constraintVertical_bias="1.0" />
 
                     <TextView
                         android:id="@+id/rating_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:fontFamily="@font/headland_one"
                         android:text="6.7"
                         android:textAllCaps="true"
+
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold"
+                        android:translationY="-30dp"
                         app:layout_constraintBottom_toBottomOf="@+id/movie_list_display_rating"
                         app:layout_constraintStart_toEndOf="@+id/movie_list_display_rating"
-                        app:layout_constraintTop_toTopOf="@+id/guideline4"
-                        app:layout_constraintVertical_bias="1.0" />
+                        app:layout_constraintTop_toTopOf="@+id/movie_list_display_rating"
+                        app:layout_constraintVertical_bias="0.515" />
 
                     <TextView
                         android:id="@+id/release_date"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/headland_one"
                         android:text="TextView"
                         android:textColor="#FD605E5E"
+                        android:textSize="18sp"
                         android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="@+id/guideline2"
-                        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+                        android:translationY="-30dp"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/title_detail"
+                        app:layout_constraintTop_toBottomOf="@+id/title_detail" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        app:cardCornerRadius="40dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/image_poster_detail"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_poster_detail">
+
+                        <ImageView
+                            android:id="@+id/poster"
+                            android:layout_width="150dp"
+                            android:layout_height="200dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/movies_noimage"
+                            app:layout_constraintBottom_toBottomOf="@+id/image_poster_detail"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/image_poster_detail">
+
+                        </ImageView>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="162dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_begin="346dp" />
+
+                    <View
+                        android:id="@+id/view3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="5dp"
+                        android:background="#FD605E5E"
+                        app:layout_constraintBottom_toTopOf="@+id/framelayout_actors"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
@@ -202,3 +270,4 @@
 
     </FrameLayout>
 </layout>
+

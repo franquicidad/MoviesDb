@@ -1,5 +1,6 @@
 package com.franco.moviesdb.network.api
 
+import com.franco.moviesdb.network.model.ActorsModelResponce
 import com.franco.moviesdb.network.model.MoviesActionResponce
 import com.franco.moviesdb.network.model.MoviesComedyResponce
 import com.franco.moviesdb.network.model.TvActionResponce
@@ -46,12 +47,21 @@ interface ApiService {
 
     @GET("{sort_criteria}/popular")
     suspend fun getMoviesOrTvPopular(
-        @Path("sort_criteria") sort_criteria: String,
-        @Query("api_key") api_key: String?,
-        @Query("language") language: String? = "en-US",
-        @Query("page") page: Int? = 1,
+            @Path("sort_criteria") sort_criteria: String,
+            @Query("api_key") api_key: String?,
+            @Query("language") language: String? = "en-US",
+            @Query("page") page: Int? = 1,
 
-        ): Call<MoviesActionResponce>
+            ): MoviesActionResponce
+
+    //actors per movie
+    //https://api.themoviedb.org/3/movie/464052/credits?api_key=7d51874568317dfd0c91db399be2bdec&language=en-US
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getActorsByMovie(
+            @Path("movie_id") movieId: Int,
+            @Query("api_key") api_key: String,
+    ): ActorsModelResponce
 }
 
 

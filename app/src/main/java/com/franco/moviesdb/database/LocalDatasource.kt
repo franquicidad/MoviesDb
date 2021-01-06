@@ -1,5 +1,6 @@
 package com.franco.moviesdb.database
 
+import com.franco.moviesdb.domain.ActorsDomain
 import com.franco.moviesdb.domain.MovieActionDomain
 import kotlinx.coroutines.flow.Flow
 
@@ -8,6 +9,9 @@ interface LocalDatasource {
     suspend fun movieComedySize(): Int
     suspend fun tvActionSize(): Int
     suspend fun tvComedySize(): Int
+    suspend fun actorsSize(): Int
+    suspend fun insertActors(actors: List<ActorsDomain>)
+    suspend fun getAllActorsMovieId(id: Int): Flow<List<ActorsDomain>>
     suspend fun saveMovieActionToDb(movie: List<MovieActionDomain>)
     suspend fun saveMovieComedyToDb(movie: List<MovieActionDomain>)
     suspend fun saveTvActionToDb(tv: List<MovieActionDomain>)

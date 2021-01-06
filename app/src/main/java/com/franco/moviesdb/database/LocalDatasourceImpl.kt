@@ -1,5 +1,6 @@
 package com.franco.moviesdb.database
 
+import com.franco.moviesdb.domain.ActorsDomain
 import com.franco.moviesdb.domain.MovieActionDomain
 import com.franco.moviesdb.network.*
 import kotlinx.coroutines.flow.Flow
@@ -28,16 +29,32 @@ class LocalDatasourceImpl @Inject constructor(
         return movieDb.moviesDAO().tvCountComedy()
     }
 
+    override suspend fun actorsSize(): Int {
+        return movieDb.moviesDAO().actorsCount()
+    }
+
+    override suspend fun insertActors(actors: List<ActorsDomain>) =
+            movieDb.moviesDAO().insertActors(actors.map {
+                it.fromDomainToDatabase()
+            })
+
+    override suspend fun getAllActorsMovieId(id: Int): Flow<List<ActorsDomain>> =
+            movieDb.moviesDAO().getAllActorsMovieId(id).map { actors ->
+                actors.map {
+                    it.fromDatabaseToDomain()
+                }
+            }
+
 
     override suspend fun saveMovieActionToDb(movie: List<MovieActionDomain>) =
-        movieDb.moviesDAO().insertMovieAction(movie.map {
-            it.mapFromDomainToDatabase()
-        })
+            movieDb.moviesDAO().insertMovieAction(movie.map {
+                it.mapFromDomainToDatabase()
+            })
 
     override suspend fun saveMovieComedyToDb(movie: List<MovieActionDomain>) =
-        movieDb.moviesDAO().insertMovieComedy(movie.map { movieComedy ->
-            movieComedy.mapFromDomainToDatabaseComedy()
-        })
+            movieDb.moviesDAO().insertMovieComedy(movie.map { movieComedy ->
+                movieComedy.mapFromDomainToDatabaseComedy()
+            })
 
 
     override suspend fun saveTvActionToDb(tv: List<MovieActionDomain>) {

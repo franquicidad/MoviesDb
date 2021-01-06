@@ -47,31 +47,45 @@ object NetworkModule {
             .build()
 
 
-    @Singleton
-    @Provides
-    fun provideOkHttpClient() = if (BuildConfig.DEBUG) {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .build()
-    } else {
-        OkHttpClient
-                .Builder()
-                .build()
-    }
+//    @Singleton
+//    @Provides
+//    fun provideOkHttpClient() = if (BuildConfig.DEBUG) {
+//        val loggingInterceptor = HttpLoggingInterceptor()
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+//        OkHttpClient.Builder()
+//                .addInterceptor(loggingInterceptor)
+//                .build()
+//    } else {
+//        OkHttpClient
+//                .Builder()
+//                .build()
+//    }
 
     @Singleton
     @Provides
     fun provideApiService(): ApiService {
+//        val client = OkHttpClient.Builder()
+//                .build()
+//        return Retrofit.Builder()
+//                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+//                .baseUrl(BASE_URL)
+//                .client(client)
+//            .build()
+//            .create(ApiService::class.java)
+
+        val logger = HttpLoggingInterceptor()
+        logger.level = HttpLoggingInterceptor.Level.BASIC
+
         val client = OkHttpClient.Builder()
+                .addInterceptor(logger)
                 .build()
+
         return Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+                .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(BASE_URL)
                 .client(client)
-            .build()
-            .create(ApiService::class.java)
+                .build()
+                .create(ApiService::class.java)
     }
 
 

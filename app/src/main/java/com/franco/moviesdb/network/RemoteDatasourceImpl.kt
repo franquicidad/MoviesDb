@@ -1,6 +1,7 @@
 package com.franco.moviesdb.network
 
 import android.util.Log
+import com.franco.moviesdb.domain.ActorsDomain
 import com.franco.moviesdb.domain.MovieActionDomain
 import com.franco.moviesdb.network.api.ApiService
 import com.franco.moviesdb.util.*
@@ -44,14 +45,19 @@ class RemoteDatasourceImpl @Inject constructor(
 
     override suspend fun getTvListAction(page: Int): List<MovieActionDomain> =
         service.getTvAction(APPEND_TV, ALONE_API, ACTION, page)
-            .tvList.map {
-                it.mapTvToDomain()
-            }
+                .tvList.map {
+                    it.mapTvToDomain()
+                }
 
     override suspend fun getTvListComedy(page: Int): List<MovieActionDomain> =
-        service.getTvAction(APPEND_TV, ALONE_API, COMEDY, page)
-            .tvList.map {
-                it.mapTvToDomain()
+            service.getTvAction(APPEND_TV, ALONE_API, COMEDY, page)
+                    .tvList.map {
+                        it.mapTvToDomain()
+                    }
+
+    override suspend fun getActorsRemote(id: Int): List<ActorsDomain> =
+            service.getActorsByMovie(id, ALONE_API).cast.map {
+                it.fromNetworkToDomain()
             }
 
 
