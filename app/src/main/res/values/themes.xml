@@ -18,7 +18,7 @@
     </style>
 
     <style name="ThemeForAppTextTitleConfig" parent="ThemeOverlay.MaterialComponents.Light">
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">23sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
         <item name="fontFamily">@font/headland_one</item>

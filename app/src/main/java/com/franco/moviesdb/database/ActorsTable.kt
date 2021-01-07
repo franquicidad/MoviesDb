@@ -4,22 +4,17 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "actors")
+@Entity(tableName = "actorsTable")
 data class ActorsTable(
-
         @PrimaryKey(autoGenerate = false)
+        val movieId: Int,
         val id: Int,
-
         @SerializedName("cast_id")
         val castId: Int,
-
         val character: String,
-
         @SerializedName("credit_id")
         val creditId: String,
-
         val gender: Int,
-
         @SerializedName("known_for_department")
         val knownForDepartment: String,
 

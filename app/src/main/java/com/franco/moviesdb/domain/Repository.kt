@@ -1,5 +1,6 @@
 package com.franco.moviesdb.domain
 
+import com.franco.moviesdb.database.ActorsTable
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {

@@ -15,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.detail_fragment.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class DetailFragment : Fragment(R.layout.detail_fragment) {
@@ -51,6 +50,13 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         super.onViewCreated(view, savedInstanceState)
         val binding = DetailFragmentBinding.bind(view)
         val pagingAdapter = ActorsAdapter(lifecycleScope)
+        framelayout_actors.apply {
+            adapter = pagingAdapter
+            val linearLayout = LinearLayoutManager(requireContext())
+            linearLayout.orientation = LinearLayoutManager.HORIZONTAL
+            layoutManager = linearLayout
+            setHasFixedSize(true)
+        }
         binding.apply {
 
             with(binding) {
@@ -73,37 +79,35 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                 releaseDate.text = release
             }
 
-            framelayoutActors.apply {
-                adapter = pagingAdapter
-                val linearLayout = LinearLayoutManager(requireContext())
-                linearLayout.orientation = LinearLayoutManager.HORIZONTAL
-                layoutManager = linearLayout
-                setHasFixedSize(true)
-            }
+
         }
 
-        lifecycleScope.apply {
-            collectFlow(framelayout_actors.lastVisibleEventsLinearActors) {
-                id?.let { it1 -> detailModel.notifyLastVisible(it1) }
-            }
+        detailModel.notifyLastVisible(id!!)
+//        lifecycleScope.apply {
+//            collectFlow(framelayout_actors.lastVisibleEventsLinearActors) {
+//                id?.let { it1 -> detailModel.notifyLastVisible(it1) }
+//            }
 
-            lifecycleScope.launch {
-                val theId = id
-                detailModel.getMovieCast(theId!!).observe(viewLifecycleOwner, Observer {
+        lifecycleScope.launch {
+            val theId: Int? = id
+
+            if (theId != null) {
+                detailModel.getMovieCast(theId).observe(viewLifecycleOwner, Observer {
                     pagingAdapter.submitList(it)
 
                 })
             }
 
-
-
-            collectFlow(detailModel.spinner) {
-                actorsProgress.visible = it
-            }
-
         }
+
+
+//            collectFlow(detailModel.spinner) {
+//                actorsProgress.visible = it
+//            }
+
     }
-}
+    }
+
 
 
 

@@ -52,8 +52,13 @@ class ActorsAdapter(private val scope: CoroutineScope) :
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemActorsBinding.bind(itemView)
         fun bind(item: ActorsDomain) = with(binding) {
-            val url = IMAGE_URL + item.profilePath
-            actorImage.loadUrl(url)
+            val url = IMAGE_URL + item.image
+
+            if (url != null) {
+                actorImage.loadUrl(url)
+            } else {
+                actorImage.loadUrl("https://st3.depositphotos.com/3581215/18899/v/600/depositphotos_188994514-stock-illustration-vector-illustration-male-silhouette-profile.jpg")
+            }
             actorName.text = item.name
             actorRole.text = item.character
 

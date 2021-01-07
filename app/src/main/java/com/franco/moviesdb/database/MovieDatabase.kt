@@ -2,20 +2,22 @@ package com.franco.moviesdb.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.room.TypeConverters
 import com.franco.moviesdb.database.moviesAction.MoviesAndTvDao
+import com.franco.moviesdb.network.api.CastTypeConverter
 
 
 @Database(
         entities = [
             MovieActionTable::class,
-            ActorsTable::class,
             MovieComedyTable::class,
             TvActionTable::class,
-            TvComedyTable::class
-        ], version = 7
+            TvComedyTable::class,
+            ActorsModelResponceDb::class,
+            ActorsTable::class
+        ], version = 9
 )
+@TypeConverters(CastTypeConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun moviesDAO(): MoviesAndTvDao
 }

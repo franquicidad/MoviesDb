@@ -1,5 +1,6 @@
 package com.franco.moviesdb.network
 
+import com.franco.moviesdb.database.ActorsTable
 import com.franco.moviesdb.domain.ActorsDomain
 import com.franco.moviesdb.domain.MovieActionDomain
 
@@ -8,5 +9,5 @@ interface RemoteDatasource {
     suspend fun getMovieListComedy(page: Int): List<MovieActionDomain>
     suspend fun getTvListAction(page: Int): List<MovieActionDomain>
     suspend fun getTvListComedy(page: Int): List<MovieActionDomain>
-    suspend fun getActorsRemote(id: Int): List<ActorsDomain>
+    suspend fun getActorsRemote(id: Int): List<ActorsTable>
 }

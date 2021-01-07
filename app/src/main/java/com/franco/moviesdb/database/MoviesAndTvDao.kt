@@ -11,24 +11,24 @@ interface MoviesAndTvDao {
     @Query("SELECT * FROM movie_action")
     fun getAllMoviesActionByGenre(): Flow<List<MovieActionTable>>
 
-    @Query("SELECT * FROM movie_action")
+    @Query("SELECT * FROM movie_comedy")
     fun getAllMoviesComedyByGenre(): Flow<List<MovieComedyTable>>
 
     @Query("SELECT * FROM tv_action")
     fun getAllTvActionByGenre(): Flow<List<TvActionTable>>
 
-    @Query("SELECT * FROM tv_action")
+    @Query("SELECT * FROM tv_comedy")
     fun getAllTvComedyByGenre(): Flow<List<TvComedyTable>>
 
-    //Actors
-    @Query("SELECT * FROM actors WHERE :id")
-    fun getAllActorsMovieId(id: Int): Flow<List<ActorsTable>>
+    //Actor
+    @Query("SELECT * FROM actorsTable WHERE movieId = :id")
+    fun getAllActorsByMovieId(id: Int): Flow<List<ActorsTable>>
 
-    @Query("SELECT COUNT(id) FROM actors")
+    @Query("SELECT COUNT(id) FROM actorsByMovie")
     suspend fun actorsCount(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertActors(actors: List<ActorsTable>)
+    suspend fun insertActors(actor: ActorsTable)
 
     //Querys
 

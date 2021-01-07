@@ -1,8 +1,10 @@
 package com.franco.moviesdb.domain
 
 import android.util.Log
+import com.franco.moviesdb.database.ActorsTable
 import com.franco.moviesdb.database.LocalDatasourceImpl
 import com.franco.moviesdb.network.RemoteDatasourceImpl
+import com.franco.moviesdb.network.toDomain
 import kotlinx.coroutines.flow.Flow
 
 class RepositoryImpl(
@@ -22,7 +24,7 @@ class RepositoryImpl(
             localDatasource.getListBySearchBarMovieComedyFromDatabase(query)
 
     override suspend fun getAllActors(movieId: Int): Flow<List<ActorsDomain>> =
-            localDatasource.getAllActorsMovieId(movieId)
+            localDatasource.getAllActorsByMovieId(movieId).toDomain()
 
 
     override fun getTvListActionByQuery(query: String): Flow<List<MovieActionDomain>> =
@@ -35,7 +37,6 @@ class RepositoryImpl(
         val size = localDatasource.movieActionSize()
         if (lastVisible >= size - PAGE_THRESHOLD) {
             val page = size / PAGE_SIZE + 1
-            Log.i("page", "Page $page ---->:next page -->${page + 1}")
             val newMovies = remoteDatasource.getMovieListAction(page)
             localDatasource.saveMovieActionToDb(newMovies)
         }

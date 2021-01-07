@@ -10,8 +10,8 @@ interface LocalDatasource {
     suspend fun tvActionSize(): Int
     suspend fun tvComedySize(): Int
     suspend fun actorsSize(): Int
-    suspend fun insertActors(actors: List<ActorsDomain>)
-    suspend fun getAllActorsMovieId(id: Int): Flow<List<ActorsDomain>>
+    suspend fun insertActors(actors: List<ActorsTable>)
+    suspend fun getAllActorsByMovieId(id: Int): Flow<List<ActorsTable>>
     suspend fun saveMovieActionToDb(movie: List<MovieActionDomain>)
     suspend fun saveMovieComedyToDb(movie: List<MovieActionDomain>)
     suspend fun saveTvActionToDb(tv: List<MovieActionDomain>)

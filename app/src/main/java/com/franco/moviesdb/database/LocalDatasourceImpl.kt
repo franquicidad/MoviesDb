@@ -33,17 +33,13 @@ class LocalDatasourceImpl @Inject constructor(
         return movieDb.moviesDAO().actorsCount()
     }
 
-    override suspend fun insertActors(actors: List<ActorsDomain>) =
-            movieDb.moviesDAO().insertActors(actors.map {
-                it.fromDomainToDatabase()
-            })
-
-    override suspend fun getAllActorsMovieId(id: Int): Flow<List<ActorsDomain>> =
-            movieDb.moviesDAO().getAllActorsMovieId(id).map { actors ->
-                actors.map {
-                    it.fromDatabaseToDomain()
-                }
+    override suspend fun insertActors(actors: List<ActorsTable>) =
+            actors.forEach {
+                movieDb.moviesDAO().insertActors(it)
             }
+
+    override suspend fun getAllActorsByMovieId(id: Int): Flow<List<ActorsTable>> =
+            movieDb.moviesDAO().getAllActorsByMovieId(id)
 
 
     override suspend fun saveMovieActionToDb(movie: List<MovieActionDomain>) =

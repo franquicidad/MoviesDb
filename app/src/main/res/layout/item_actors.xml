@@ -12,26 +12,27 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:padding="20dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/actorImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/charlize"
-            android:elevation="10dp"
             android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@+id/actorName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </de.hdodenhof.circleimageview.CircleImageView>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:src="@drawable/charlize" />
 
         <TextView
             android:id="@+id/actorName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/headland_one"
@@ -39,24 +40,25 @@
             android:textSize="11sp"
 
             android:textStyle="bold|italic"
-            app:layout_constraintEnd_toEndOf="@+id/actorImage"
-            app:layout_constraintStart_toStartOf="@+id/actorImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/actorImage"
             tools:text="ActorsName" />
 
         <TextView
             android:id="@+id/actorRole"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/headland_one"
             android:text="TextView"
-            android:textColor="@android:color/white"
+            android:gravity="center_horizontal"
+            android:textColor="#5E5C5C"
             android:textSize="11sp"
             android:textStyle="bold"
 
-            app:layout_constraintEnd_toEndOf="@+id/actorName"
-            app:layout_constraintStart_toStartOf="@+id/actorName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/actorName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

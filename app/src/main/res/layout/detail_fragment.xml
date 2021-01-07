@@ -107,12 +107,13 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/framelayout_actors"
-                        android:layout_width="403dp"
-                        android:layout_height="171dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
                         android:clipToPadding="true"
                         android:orientation="horizontal"
                         android:padding="10dp"
+                        android:layout_marginTop="10dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintBottom_toTopOf="@+id/guideline"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -251,7 +252,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="346dp" />
+                        app:layout_constraintGuide_begin="341dp" />
 
                     <View
                         android:id="@+id/view3"
