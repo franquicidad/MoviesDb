@@ -47,9 +47,9 @@ class RemoteDatasourceImpl @Inject constructor(
                         it.mapTvToDomain()
                     }
 
-    override suspend fun getActorsRemote(id: Int): List<ActorsTable> {
-        return service.getActorsByMovie(id, ALONE_API).fromNetworkToLocal()
-    }
+    override suspend fun getActorsRemote(id: Int): List<ActorsTable> =
+            service.getActorsByMovie(id, ALONE_API).fromNetworkToLocal()
+
 }
 
 //    override suspend fun getActorsRemote(id: Int): List<ActorsDomain> =

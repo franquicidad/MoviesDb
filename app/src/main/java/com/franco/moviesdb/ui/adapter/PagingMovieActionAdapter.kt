@@ -53,7 +53,7 @@ class PagingAdapter(private val scope: CoroutineScope) :
 
 
             )
-            navController = Navigation.findNavController(it!!)
+            navController = Navigation.findNavController(it)
             navController!!.navigate(R.id.action_navigation_home_to_detailFragment, bundle)
 
         }
