@@ -2,7 +2,8 @@ package com.franco.moviesdb.ui.movieDetails
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.franco.moviesdb.domain.ActorsDomain
+import com.franco.moviesdb.database.actors.model.ResponceWithActor
+import com.franco.moviesdb.domain.Actor
 import com.franco.moviesdb.domain.Repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,15 +21,9 @@ class DetailViewModel @ViewModelInject constructor(
     private val _id = MutableLiveData<Int>()
     val id: LiveData<Int> get() = _id
 
-    suspend fun getMovieCast(movieId: Int): LiveData<List<ActorsDomain>> =
-            repository.getAllActors(movieId).asLiveData()
-
-
-    fun notifyLastVisible(id: Int) {
-        viewModelScope.launch {
-            repository.checkRequireNewPageActors(id)
-            _spinner.value = false
-        }
+    suspend fun observableListActors(id: Int): LiveData<List<ResponceWithActor>> {
+        val actorList = repository.getActorsFromDatabase(id)
+        return actorList.asLiveData()
     }
 
 

@@ -64,7 +64,6 @@ class MovieComedyFragment : Fragment(R.layout.fragment_movie_comedy) {
         }
 
         movieComedyVM.movieComedyQuery.observe(viewLifecycleOwner, Observer {
-            Log.i("cComedy", "$it")
 
             pagingAdapter.submitList(it)
         })

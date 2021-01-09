@@ -58,7 +58,6 @@ class MovieActionFragment : Fragment(R.layout.fragment_movie_action) {
         }
 
         movieActionVM.movieQuery.observe(viewLifecycleOwner, Observer {
-            Log.i("cAction", "$it")
 
             pagingAdapter.submitList(it)
         })

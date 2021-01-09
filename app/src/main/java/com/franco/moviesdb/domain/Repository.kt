@@ -1,6 +1,6 @@
 package com.franco.moviesdb.domain
 
-import com.franco.moviesdb.database.ActorsTable
+import com.franco.moviesdb.database.actors.model.ResponceWithActor
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
@@ -9,7 +9,6 @@ interface Repository {
     fun getMovieListActionByQuery(query: String): Flow<List<MovieActionDomain>>
     fun getMovieListComedyByQuery(query: String): Flow<List<MovieActionDomain>>
 
-    suspend fun getAllActors(movieId: Int): Flow<List<ActorsDomain>>
 
     fun getTvListActionByQuery(query: String): Flow<List<MovieActionDomain>>
     fun getTvListComedyByQuery(query: String): Flow<List<MovieActionDomain>>
@@ -19,7 +18,14 @@ interface Repository {
 
     suspend fun checkRequireNewPageTvAction(lastVisible: Int)
     suspend fun checkRequireNewPageTvComedy(lastVisible: Int)
-    suspend fun checkRequireNewPageActors(id: Int)
+
+    /**
+     * Get and save Actors
+     */
+
+    suspend fun getActorsFromDatabase(movieId: Int): Flow<List<ResponceWithActor>>
+
+    suspend fun obtainAndSaveToDb(movieId: Int)
 
 
 }

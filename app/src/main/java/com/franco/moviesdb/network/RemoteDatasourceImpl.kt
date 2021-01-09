@@ -1,13 +1,9 @@
 package com.franco.moviesdb.network
 
-import android.util.Log
-import com.franco.moviesdb.database.ActorsTable
-import com.franco.moviesdb.domain.ActorsDomain
+import com.franco.moviesdb.database.actors.model.Actor
 import com.franco.moviesdb.domain.MovieActionDomain
 import com.franco.moviesdb.network.api.ApiService
 import com.franco.moviesdb.util.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import javax.inject.Inject
 
 class RemoteDatasourceImpl @Inject constructor(
@@ -41,14 +37,13 @@ class RemoteDatasourceImpl @Inject constructor(
                         it.mapTvToDomain()
                     }
 
+
     override suspend fun getTvListComedy(page: Int): List<MovieActionDomain> =
             service.getTvAction(APPEND_TV, ALONE_API, COMEDY, page)
                     .tvList.map {
                         it.mapTvToDomain()
                     }
 
-    override suspend fun getActorsRemote(id: Int): List<ActorsTable> =
-            service.getActorsByMovie(id, ALONE_API).fromNetworkToLocal()
 
 }
 

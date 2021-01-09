@@ -38,7 +38,8 @@ class PagingAdapter(private val scope: CoroutineScope) :
         bind(item)
         scope.collectFlow(itemView.onClickEvents) {
 
-            val url = IMAGE_URL + item.posterPath
+
+        val url = IMAGE_URL + item.posterPath
             val backImage = IMAGE_URL + item.backdropPath
 
             val bundle = bundleOf(

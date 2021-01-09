@@ -5,6 +5,8 @@ import androidx.room.Room
 import androidx.viewbinding.BuildConfig
 import com.franco.moviesdb.database.LocalDatasourceImpl
 import com.franco.moviesdb.database.MovieDatabase
+import com.franco.moviesdb.database.actors.localDatasourceActors.LocalDatasourceActorsImpl
+import com.franco.moviesdb.database.actors.remoteDatasourceActors.RemoteDatasourceActorsImpl
 import com.franco.moviesdb.domain.Repository
 import com.franco.moviesdb.domain.RepositoryImpl
 import com.franco.moviesdb.network.RemoteDatasourceImpl
@@ -81,7 +83,7 @@ object NetworkModule {
                 .build()
 
         return Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .baseUrl(BASE_URL)
                 .client(client)
                 .build()
@@ -97,7 +99,9 @@ object NetworkModule {
     @Provides
     fun provideRepository(
             localDataSource: LocalDatasourceImpl,
-            remoteDataSource: RemoteDatasourceImpl
+            remoteDataSource: RemoteDatasourceImpl,
+            localActorSource: LocalDatasourceActorsImpl,
+            remoteActorSource: RemoteDatasourceActorsImpl
     ): Repository {
         return RepositoryImpl(localDataSource, remoteDataSource)
     }

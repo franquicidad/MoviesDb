@@ -82,7 +82,6 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
 
         }
 
-        detailModel.notifyLastVisible(id!!)
 //        lifecycleScope.apply {
 //            collectFlow(framelayout_actors.lastVisibleEventsLinearActors) {
 //                id?.let { it1 -> detailModel.notifyLastVisible(it1) }
@@ -92,7 +91,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             val theId: Int? = id
 
             if (theId != null) {
-                detailModel.getMovieCast(theId).observe(viewLifecycleOwner, Observer {
+                detailModel.observableListActors(theId).observe(viewLifecycleOwner, Observer {
                     pagingAdapter.submitList(it)
 
                 })

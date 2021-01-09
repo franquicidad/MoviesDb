@@ -1,8 +1,7 @@
 package com.franco.moviesdb.network.api
 
-import com.franco.moviesdb.database.ActorsModelResponceDb
+import com.franco.moviesdb.network.model.Cast
 import com.franco.moviesdb.network.model.MoviesActionResponce
-import com.franco.moviesdb.network.model.NetworkActorsResponce
 import com.franco.moviesdb.network.model.TvActionResponce
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -60,7 +59,7 @@ interface ApiService {
     suspend fun getActorsByMovie(
             @Path("movie_id") movieId: Int,
             @Query("api_key") api_key: String,
-    ): NetworkActorsResponce
+    ): Cast
 }
 
 

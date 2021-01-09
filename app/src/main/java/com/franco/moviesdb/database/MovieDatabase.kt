@@ -3,9 +3,10 @@ package com.franco.moviesdb.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.franco.moviesdb.database.actors.model.Actor
+import com.franco.moviesdb.database.actors.model.DatabaseActorsModelWithActor
 import com.franco.moviesdb.database.moviesAction.MoviesAndTvDao
 import com.franco.moviesdb.network.api.CastTypeConverter
-
 
 @Database(
         entities = [
@@ -13,9 +14,10 @@ import com.franco.moviesdb.network.api.CastTypeConverter
             MovieComedyTable::class,
             TvActionTable::class,
             TvComedyTable::class,
-            ActorsModelResponceDb::class,
-            ActorsTable::class
-        ], version = 9
+            DatabaseActorsModelWithActor::class,
+//            ActorsModelResponceDb::class,
+            Actor::class
+        ], version = 12
 )
 @TypeConverters(CastTypeConverter::class)
 abstract class MovieDatabase : RoomDatabase() {

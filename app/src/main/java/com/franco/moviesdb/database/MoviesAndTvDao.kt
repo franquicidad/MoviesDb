@@ -2,6 +2,9 @@ package com.franco.moviesdb.database.moviesAction
 
 import androidx.room.*
 import com.franco.moviesdb.database.*
+import com.franco.moviesdb.database.actors.model.Actor
+import com.franco.moviesdb.database.actors.model.ResponceWithActor
+import io.reactivex.Flowable
 import kotlinx.coroutines.flow.Flow
 
 
@@ -21,14 +24,20 @@ interface MoviesAndTvDao {
     fun getAllTvComedyByGenre(): Flow<List<TvComedyTable>>
 
     //Actor
-    @Query("SELECT * FROM actorsTable WHERE movieId = :id")
-    fun getAllActorsByMovieId(id: Int): Flow<List<ActorsTable>>
-
-    @Query("SELECT COUNT(id) FROM actorsByMovie")
+    @Query("SELECT COUNT(id) FROM actorsTable")
     suspend fun actorsCount(): Int
 
+    @Query("SELECT * FROM actorsTable WHERE id = :id")
+    fun getAllActorsByMovieId(id: Int): List<Actor>
+
+    @Query("SELECT * FROM actorsTable WHERE id IN (SELECT actorId FROM DatabaseActorsModelWithActor WHERE movieId = :movieId)")
+    suspend fun getActorsForMovie(movieId: Int): Flow<List<Actor>>
+
+    @Query("SELECT * FROM databaseactorsmodelwithactor ")
+    fun getAllCast(): Flow<List<ResponceWithActor>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertActors(actor: ActorsTable)
+    suspend fun insertActors(actor: List<ResponceWithActor>)
 
     //Querys
 
@@ -55,6 +64,7 @@ interface MoviesAndTvDao {
 
     @Query("SELECT COUNT(id) FROM tv_comedy")
     suspend fun tvCountComedy(): Int
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovieAction(movie: List<MovieActionTable>)
