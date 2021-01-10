@@ -2,23 +2,18 @@ package com.franco.moviesdb.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.viewbinding.BuildConfig
-import com.franco.moviesdb.database.LocalDatasourceImpl
 import com.franco.moviesdb.database.MovieDatabase
 import com.franco.moviesdb.database.actors.localDatasourceActors.LocalDatasourceActorsImpl
 import com.franco.moviesdb.database.actors.remoteDatasourceActors.RemoteDatasourceActorsImpl
 import com.franco.moviesdb.domain.Repository
 import com.franco.moviesdb.domain.RepositoryImpl
-import com.franco.moviesdb.network.RemoteDatasourceImpl
 import com.franco.moviesdb.network.api.ApiService
 import com.franco.moviesdb.ui.movie.action.MovieActionViewModel
-import com.franco.moviesdb.ui.movie.comedy.MovieComedyViewModel
 import com.franco.moviesdb.ui.movieDetails.DetailViewModel
 import com.franco.moviesdb.ui.tv.tvaction.TvActionViewModel
 import com.franco.moviesdb.ui.tv.tvcomedy.TvComedyViewModel
 import com.franco.moviesdb.util.BASE_URL
 import com.franco.moviesdb.util.DATABASE_MOVIE_NAME
-import com.franco.moviesdb.util.DATABASE_TV_NAME
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -93,7 +88,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideDao(db: MovieDatabase) = db.moviesDAO()
+    fun provideDao(db: MovieDatabase) = db.moviesActionDAO()
 
     @Singleton
     @Provides
@@ -103,7 +98,7 @@ object NetworkModule {
             localActorSource: LocalDatasourceActorsImpl,
             remoteActorSource: RemoteDatasourceActorsImpl
     ): Repository {
-        return RepositoryImpl(localDataSource, remoteDataSource)
+        return RepositoryImpl(localDataSource, remoteDataSource, localActorSource, remoteActorSource)
     }
 
     @Singleton

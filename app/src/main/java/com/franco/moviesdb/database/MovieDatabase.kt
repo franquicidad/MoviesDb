@@ -5,7 +5,11 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.franco.moviesdb.database.actors.model.Actor
 import com.franco.moviesdb.database.actors.model.DatabaseActorsModelWithActor
-import com.franco.moviesdb.database.moviesAction.MoviesAndTvDao
+import com.franco.moviesdb.database.actorsDao.ActorsDao
+import com.franco.moviesdb.database.moviesActionDao.MoviesActionDao
+import com.franco.moviesdb.database.moviesComedyDao.MoviesComedyDao
+import com.franco.moviesdb.database.tvActionDao.TvActionDao
+import com.franco.moviesdb.database.tvComedyDao.TvComedyDao
 import com.franco.moviesdb.network.api.CastTypeConverter
 
 @Database(
@@ -21,7 +25,11 @@ import com.franco.moviesdb.network.api.CastTypeConverter
 )
 @TypeConverters(CastTypeConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
-    abstract fun moviesDAO(): MoviesAndTvDao
+    abstract fun moviesActionDAO(): MoviesActionDao
+    abstract fun moviesComedyDAO(): MoviesComedyDao
+    abstract fun tvActionDAO(): TvActionDao
+    abstract fun tvComedyDAO(): TvComedyDao
+    abstract fun actorsDAO(): ActorsDao
 }
 //
 //val MIGRATION_1_2: Migration = object : Migration(1, 2) {

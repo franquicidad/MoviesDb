@@ -4,8 +4,6 @@ import com.franco.moviesdb.database.MovieDatabase
 import com.franco.moviesdb.database.actors.LocalDatasourceActors
 import com.franco.moviesdb.database.actors.model.ResponceWithActor
 import com.franco.moviesdb.domain.Actor
-import com.franco.moviesdb.network.fromDatabaseToDomain
-import io.reactivex.Flowable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -14,15 +12,15 @@ class LocalDatasourceActorsImpl @Inject constructor(
         private val movieDb: MovieDatabase
 ) : LocalDatasourceActors {
     override suspend fun actorsSize(): Int {
-        return movieDb.moviesDAO().actorsCount()
+        return movieDb.moviesActionDAO().actorsCount()
     }
 
     override suspend fun getAllCastsI(): Flow<List<ResponceWithActor>> {
-        return movieDb.moviesDAO().getAllCast()
+        return movieDb.moviesActionDAO().getAllCast()
     }
 
     override suspend fun getCastForMovieByIdI(movieId: Int): Flow<List<Actor>> {
-        return movieDb.moviesDAO().getActorsForMovie(movieId).map { actorList ->
+        return movieDb.moviesActionDAO().getActorsForMovie(movieId).map { actorList ->
             actorList.map {
                 it.fromDatabaseToDomain()
             }
@@ -30,7 +28,7 @@ class LocalDatasourceActorsImpl @Inject constructor(
     }
 
     override suspend fun insertActorList(cast: List<ResponceWithActor>) {
-        movieDb.moviesDAO().insertActors(cast)
+        movieDb.moviesActionDAO().insertActors(cast)
     }
 
 }
