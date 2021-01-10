@@ -4,6 +4,7 @@ package com.franco.moviesdb.ui.tv.tvcomedy
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.franco.moviesdb.domain.Repository
+import com.franco.moviesdb.repository.tvComedyRepository.TvComedyRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -11,7 +12,7 @@ import kotlinx.coroutines.launch
 
 
 class TvComedyViewModel @ViewModelInject constructor(
-    private val repository: Repository
+        private val tvComedyRepositoty: TvComedyRepository
 ) : ViewModel() {
 
     private val _spinnerTvComedy = MutableStateFlow(true)
@@ -20,7 +21,7 @@ class TvComedyViewModel @ViewModelInject constructor(
     val searchTvComedyQuery = MutableStateFlow("")
 
     private val tvComedyQueryFlow = searchTvComedyQuery.flatMapLatest {
-        repository.getTvListComedyByQuery(it)
+        tvComedyRepositoty.getTvListComedyByQuery(it)
     }
     val tvComedyQuery = tvComedyQueryFlow.asLiveData()
 
@@ -30,7 +31,7 @@ class TvComedyViewModel @ViewModelInject constructor(
 
     fun notifyLastVisible(lastVisible: Int) {
         viewModelScope.launch {
-            repository.checkRequireNewPageTvComedy(lastVisible)
+            tvComedyRepositoty.checkRequireNewPageTvComedy(lastVisible)
             _spinnerTvComedy.value = false
         }
     }

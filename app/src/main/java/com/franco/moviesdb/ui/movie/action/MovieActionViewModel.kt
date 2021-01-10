@@ -4,6 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.franco.moviesdb.domain.Repository
 import com.franco.moviesdb.domain.RepositoryImpl
+import com.franco.moviesdb.repository.movieActionRepository.MovieActionRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
 
 
 class MovieActionViewModel @ViewModelInject constructor(
-    private val repository: Repository
+        private val movieActionRepository: MovieActionRepository
 ) : ViewModel() {
 
     private val _spinner = MutableStateFlow(true)
@@ -22,7 +23,7 @@ class MovieActionViewModel @ViewModelInject constructor(
     val searchQuery = MutableStateFlow("")
 
     private val movieQueryFlow = searchQuery.flatMapLatest {
-        repository.getMovieListActionByQuery(it)
+        movieActionRepository.getMovieListActionByQuery(it)
     }
 
     val movieQuery = movieQueryFlow.asLiveData()
@@ -33,7 +34,7 @@ class MovieActionViewModel @ViewModelInject constructor(
 
     fun notifyLastVisible(lastVisible: Int) {
         viewModelScope.launch {
-            repository.checkRequireNewPageMovieAction(lastVisible)
+            movieActionRepository.checkRequireNewPageMovieAction(lastVisible)
             _spinner.value = false
         }
     }

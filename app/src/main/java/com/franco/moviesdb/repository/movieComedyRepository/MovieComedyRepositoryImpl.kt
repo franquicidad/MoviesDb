@@ -25,10 +25,9 @@ class MovieComedyRepositoryImpl(
             localDatasourceMovieComedy.getListBySearchBarMovieComedyFromDatabase(query)
 
     override suspend fun checkRequireNewPageMovieComedy(lastVisible: Int) {
-        Log.i("Comedy", "paginationRepo")
         val size = localDatasourceMovieComedy.movieComedySize()
-        if (lastVisible >= size - RepositoryImpl.PAGE_THRESHOLD) {
-            val page = size / RepositoryImpl.PAGE_SIZE + 1
+        if (lastVisible >= size - MovieComedyRepositoryImpl.PAGE_THRESHOLD) {
+            val page = size / MovieComedyRepositoryImpl.PAGE_SIZE + 1
             val newMovies = remoteDatasourceMovieComedy.getMovieListComedy(page)
             localDatasourceMovieComedy.saveMovieComedyToDb(newMovies)
         }

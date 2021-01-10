@@ -26,10 +26,9 @@ class TvActionRepositoryImpl(
 
     override suspend fun checkRequireNewPageTvAction(lastVisible: Int) {
         val size = localDatasourceTvAction.tvActionSize()
-        val page = size / RepositoryImpl.PAGE_SIZE + 1
 
-        if (lastVisible >= size - RepositoryImpl.PAGE_THRESHOLD) {
-            val page = size / RepositoryImpl.PAGE_SIZE + 1
+        if (lastVisible >= size - TvActionRepositoryImpl.PAGE_THRESHOLD) {
+            val page = size / TvActionRepositoryImpl.PAGE_SIZE + 1
             val newMovies = remoteDatasourceMovieComedy.getTvListAction(page)
             localDatasourceTvAction.saveTvActionToDb(newMovies)
         }

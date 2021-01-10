@@ -7,6 +7,7 @@ import com.franco.moviesdb.domain.MovieActionDomain
 import com.franco.moviesdb.domain.Repository
 import com.franco.moviesdb.domain.RepositoryImpl
 import com.franco.moviesdb.network.api.ApiService
+import com.franco.moviesdb.repository.movieComedyRepository.MovieComedyRepository
 import com.franco.moviesdb.util.ALONE_API
 import com.franco.moviesdb.util.APPEND_MOVIE
 import com.franco.moviesdb.util.COMEDY
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 class MovieComedyViewModel @ViewModelInject constructor(
-    private val repository: Repository,
+        private val movieComedyRepository: MovieComedyRepository,
 ) : ViewModel() {
 
     private val _spinnerMovieComedy = MutableStateFlow(true)
@@ -28,23 +29,18 @@ class MovieComedyViewModel @ViewModelInject constructor(
 
     @ExperimentalCoroutinesApi
     private val movieComedyQueryFlow = searchMovieComedyQuery.flatMapLatest {
-        repository.getMovieListComedyByQuery(it)
+        movieComedyRepository.getMovieListComedyByQuery(it)
     }
     val movieComedyQuery = movieComedyQueryFlow.asLiveData()
-
     init {
         viewModelScope.launch {
-
         notifyLastVisible(0)
-
         }
-
     }
-
     fun notifyLastVisible(lastVisible: Int) {
         Log.i("stac", "viewModel")
         viewModelScope.launch {
-            repository.checkRequireNewPageMovieComedy(lastVisible)
+            movieComedyRepository.checkRequireNewPageMovieComedy(lastVisible)
             _spinnerMovieComedy.value = false
         }
     }
