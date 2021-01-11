@@ -1,4 +1,4 @@
-package com.franco.moviesdb.database.actorsDao
+package com.franco.moviesdb.database.actors.actorsDao
 
 import androidx.room.Dao
 import androidx.room.Insert

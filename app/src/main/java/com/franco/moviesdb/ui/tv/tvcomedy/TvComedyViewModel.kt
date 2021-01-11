@@ -3,7 +3,6 @@ package com.franco.moviesdb.ui.tv.tvcomedy
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.franco.moviesdb.domain.Repository
 import com.franco.moviesdb.repository.tvComedyRepository.TvComedyRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

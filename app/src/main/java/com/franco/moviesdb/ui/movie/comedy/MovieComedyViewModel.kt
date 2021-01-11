@@ -3,15 +3,7 @@ package com.franco.moviesdb.ui.movie.comedy
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.franco.moviesdb.domain.MovieActionDomain
-import com.franco.moviesdb.domain.Repository
-import com.franco.moviesdb.domain.RepositoryImpl
-import com.franco.moviesdb.network.api.ApiService
 import com.franco.moviesdb.repository.movieComedyRepository.MovieComedyRepository
-import com.franco.moviesdb.util.ALONE_API
-import com.franco.moviesdb.util.APPEND_MOVIE
-import com.franco.moviesdb.util.COMEDY
-import com.franco.moviesdb.util.POPULARITY
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

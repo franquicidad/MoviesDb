@@ -3,12 +3,8 @@ package com.franco.moviesdb.ui.movieDetails
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.franco.moviesdb.database.actors.model.ResponceWithActor
-import com.franco.moviesdb.domain.Actor
-import com.franco.moviesdb.domain.Repository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 class DetailViewModel @ViewModelInject constructor(
         private val repository: Repository

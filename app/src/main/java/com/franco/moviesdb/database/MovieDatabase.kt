@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.franco.moviesdb.database.actors.model.Actor
 import com.franco.moviesdb.database.actors.model.DatabaseActorsModelWithActor
-import com.franco.moviesdb.database.actorsDao.ActorsDao
+import com.franco.moviesdb.database.actors.actorsDao.ActorsDao
 import com.franco.moviesdb.database.moviesActionDao.MoviesActionDao
 import com.franco.moviesdb.database.moviesComedyDao.MoviesComedyDao
 import com.franco.moviesdb.database.tvActionDao.TvActionDao

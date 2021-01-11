@@ -5,10 +5,17 @@ import androidx.room.Room
 import com.franco.moviesdb.database.MovieDatabase
 import com.franco.moviesdb.database.actors.localDatasourceActors.LocalDatasourceActorsImpl
 import com.franco.moviesdb.database.actors.remoteDatasourceActors.RemoteDatasourceActorsImpl
-import com.franco.moviesdb.domain.Repository
-import com.franco.moviesdb.domain.RepositoryImpl
+import com.franco.moviesdb.database.localDatasources.movies.localDataSourceMoviecomedy.LocalDataSourceMovieComedyImpl
+import com.franco.moviesdb.database.localDatasources.movies.localdatasourceMovieAction.LocalDatasourceMoviesActionImpl
 import com.franco.moviesdb.network.api.ApiService
+import com.franco.moviesdb.network.remoteDatasourceMovieAction.RemoteDatasourceMovieActionImpl
+import com.franco.moviesdb.network.remoteDatasourceMoviecomedy.RemoteDatasourceMovieComedyImpl
+import com.franco.moviesdb.repository.movieActionRepository.MovieActionRepository
+import com.franco.moviesdb.repository.movieActionRepository.MovieActionRepositoryImpl
+import com.franco.moviesdb.repository.movieComedyRepository.MovieComedyRepository
+import com.franco.moviesdb.repository.movieComedyRepository.MovieComedyRepositoryImpl
 import com.franco.moviesdb.ui.movie.action.MovieActionViewModel
+import com.franco.moviesdb.ui.movie.comedy.MovieComedyViewModel
 import com.franco.moviesdb.ui.movieDetails.DetailViewModel
 import com.franco.moviesdb.ui.tv.tvaction.TvActionViewModel
 import com.franco.moviesdb.ui.tv.tvcomedy.TvComedyViewModel
@@ -92,36 +99,48 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRepository(
-            localDataSource: LocalDatasourceImpl,
-            remoteDataSource: RemoteDatasourceImpl,
-            localActorSource: LocalDatasourceActorsImpl,
-            remoteActorSource: RemoteDatasourceActorsImpl
-    ): Repository {
-        return RepositoryImpl(localDataSource, remoteDataSource, localActorSource, remoteActorSource)
+    fun provideMovieActionRepository(
+            localDatasourceMoviesAction: LocalDatasourceMoviesActionImpl,
+            remoteDatasourceMoviesAction: RemoteDatasourceMovieActionImpl,
+
+            ): MovieActionRepository {
+        return MovieActionRepositoryImpl(localDatasourceMoviesAction, remoteDatasourceMoviesAction)
     }
 
     @Singleton
     @Provides
-    fun providesRepoToMovieActionVm(repositoryImpl: RepositoryImpl): MovieActionViewModel {
+    fun providesRepoToMovieActionVm(repositoryImpl: MovieActionRepositoryImpl): MovieActionViewModel {
         return MovieActionViewModel(repositoryImpl)
     }
 
-//    fun providesRepoToMovieComedyVm(repositoryImpl: RepositoryImpl): MovieComedyViewModel {
-//        return MovieComedyViewModel(repositoryImpl)
-//    }
+    @Singleton
+    @Provides
+    fun provideMovieComedyRepository(
+            localDatasourceMoviesComedy: LocalDataSourceMovieComedyImpl,
+            remoteDatasourceMoviesComedy: RemoteDatasourceMovieComedyImpl,
 
-    fun providesRepoToTvActionVm(repositoryImpl: RepositoryImpl): TvActionViewModel {
-        return TvActionViewModel(repositoryImpl)
+            ): MovieComedyRepository {
+        return MovieComedyRepositoryImpl(localDatasourceMoviesComedy, remoteDatasourceMoviesComedy)
     }
 
-    fun providesRepoToTvComedyVm(repositoryImpl: RepositoryImpl): TvComedyViewModel {
-        return TvComedyViewModel(repositoryImpl)
-    }
 
     @Singleton
     @Provides
-    fun provideDetailViewModel(repositoryImpl: RepositoryImpl): DetailViewModel {
+    fun providesRepoToMovieComedyVm(movieComedyRepo: MovieComedyRepositoryImpl): MovieComedyViewModel {
+        return MovieComedyViewModel(movieComedyRepo)
+    }
+//
+//    fun providesRepoToTvActionVm(repositoryImpl: RepositoryImpl): TvActionViewModel {
+//        return TvActionViewModel(repositoryImpl)
+//    }
+//
+//    fun providesRepoToTvComedyVm(repositoryImpl: RepositoryImpl): TvComedyViewModel {
+//        return TvComedyViewModel(repositoryImpl)
+//    }
+
+    @Singleton
+    @Provides
+    fun provideDetailViewModel(repositoryImpl: MovieActionRepositoryImpl): DetailViewModel {
         return DetailViewModel(repositoryImpl)
     }
 

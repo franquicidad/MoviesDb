@@ -12,23 +12,24 @@ class LocalDatasourceActorsImpl @Inject constructor(
         private val movieDb: MovieDatabase
 ) : LocalDatasourceActors {
     override suspend fun actorsSize(): Int {
-        return movieDb.moviesActionDAO().actorsCount()
+        return movieDb.actorsDAO().actorsCount()
     }
 
     override suspend fun getAllCastsI(): Flow<List<ResponceWithActor>> {
-        return movieDb.moviesActionDAO().getAllCast()
+        return movieDb.actorsDAO().getAllCast()
     }
 
     override suspend fun getCastForMovieByIdI(movieId: Int): Flow<List<Actor>> {
-        return movieDb.moviesActionDAO().getActorsForMovie(movieId).map { actorList ->
-            actorList.map {
-                it.fromDatabaseToDomain()
-            }
-        }
+//        return movieDb.actorsDAO().getActorsForMovie(movieId).map { actorList ->
+//            actorList.map {
+//                it.fromDatabaseToDomain()
+//            }
+//        }
+        return
     }
 
     override suspend fun insertActorList(cast: List<ResponceWithActor>) {
-        movieDb.moviesActionDAO().insertActors(cast)
+        movieDb.actorsDAO().insertActors(cast)
     }
 
 }
