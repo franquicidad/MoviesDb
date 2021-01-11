@@ -1,11 +1,11 @@
 package com.franco.moviesdb.database.actors.remoteDatasourceActors
 
-import com.franco.moviesdb.database.actors.model.Actor
-import com.franco.moviesdb.database.actors.model.ResponceWithActor
+import com.franco.moviesdb.domain.Actor
+
 
 interface RemoteDatasourceActors {
 
-    suspend fun getActorsRemote(id: Int): List<ResponceWithActor>
+    suspend fun getActorsRemote(movieId: Int): List<Actor>
 
 
 }

@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.franco.moviesdb.*
-import com.franco.moviesdb.database.actors.model.ResponceWithActor
 import com.franco.moviesdb.databinding.ItemActorsBinding
+import com.franco.moviesdb.domain.Actor
 import com.franco.moviesdb.util.IMAGE_URL
 import com.franco.moviesdb.util.collectFlow
 import com.franco.moviesdb.util.loadUrl
@@ -21,7 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 class ActorsAdapter(private val scope: CoroutineScope) :
-        ListAdapter<ResponceWithActor, ActorsAdapter.ItemViewHolder>(DiffCallBackFromAdapterActors()) {
+        ListAdapter<Actor, ActorsAdapter.ItemViewHolder>(DiffCallBackFromAdapterActors()) {
 
     var navController: NavController? = null
 
@@ -49,30 +49,30 @@ class ActorsAdapter(private val scope: CoroutineScope) :
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemActorsBinding.bind(itemView)
-        fun bind(item: ResponceWithActor, position: Int) = with(binding) {
-            val url = IMAGE_URL + item.actors[position].profilePath
+        fun bind(item: Actor, position: Int) = with(binding) {
+            val url = IMAGE_URL + item.urlImage
 
             if (url != null) {
                 actorImage.loadUrl(url)
             } else {
                 actorImage.loadUrl("https://st3.depositphotos.com/3581215/18899/v/600/depositphotos_188994514-stock-illustration-vector-illustration-male-silhouette-profile.jpg")
             }
-            actorName.text = item.actors[position].name
-            actorRole.text = item.actors[position].character
+            actorName.text = item.name
+            actorRole.text = item.character
 
         }
     }
 
 }
 
-class DiffCallBackFromAdapterActors : DiffUtil.ItemCallback<ResponceWithActor>() {
-    override fun areItemsTheSame(oldItem: ResponceWithActor, newItem: ResponceWithActor): Boolean {
-        return oldItem.movieId == newItem.movieId
+class DiffCallBackFromAdapterActors : DiffUtil.ItemCallback<Actor>() {
+    override fun areItemsTheSame(oldItem: Actor, newItem: Actor): Boolean {
+        return oldItem.Id == newItem.Id
     }
 
     override fun areContentsTheSame(
-            oldItem: ResponceWithActor,
-            newItem: ResponceWithActor
+            oldItem: Actor,
+            newItem: Actor
     ): Boolean {
         return oldItem == newItem
     }

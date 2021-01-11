@@ -14,6 +14,7 @@ import com.franco.moviesdb.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.detail_fragment.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -82,20 +83,24 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
 
         }
 
-//        lifecycleScope.apply {
-//            collectFlow(framelayout_actors.lastVisibleEventsLinearActors) {
-//                id?.let { it1 -> detailModel.notifyLastVisible(it1) }
-//            }
-
         lifecycleScope.launch {
             val theId: Int? = id
 
-            if (theId != null) {
-                detailModel.observableListActors(theId).observe(viewLifecycleOwner, Observer {
-                    pagingAdapter.submitList(it)
+            id?.let { detailModel.observableListActors(it) }
 
-                })
+            id?.let { id ->
+                detailModel.passTofunctionThoughtDetail(id).collect { listOfActorsForMovie ->
+                    pagingAdapter.submitList(listOfActorsForMovie)
+
+                }
             }
+
+//            if (theId != null) {
+//                detailModel.observableListActors(theId).observe(viewLifecycleOwner, Observer {
+//                    pagingAdapter.submitList(it)
+//
+//                })
+//            }
 
         }
 

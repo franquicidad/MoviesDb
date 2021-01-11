@@ -38,7 +38,7 @@ class MovieActionFragment : Fragment(R.layout.fragment_movie_action) {
 
                 lifecycleScope.apply {
                     collectFlow(rvListTypesMovies.lastVisibleEvents) {
-                        movieActionVM.notifyLastVisible(it)
+                        movieActionVM.lastVisible.value = it
                     }
 
                     collectFlow(movieActionVM.spinner) {
@@ -50,7 +50,7 @@ class MovieActionFragment : Fragment(R.layout.fragment_movie_action) {
                 addOnScrollListener(object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                         super.onScrolled(recyclerView, dx, dy)
-                        movieActionVM.notifyLastVisible((layoutManager as GridLayoutManager).findLastVisibleItemPosition())
+                        movieActionVM.lastVisible.value = ((layoutManager as GridLayoutManager).findLastVisibleItemPosition())
 
                     }
                 })

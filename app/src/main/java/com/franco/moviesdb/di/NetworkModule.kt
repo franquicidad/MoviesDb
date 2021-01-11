@@ -6,14 +6,23 @@ import com.franco.moviesdb.database.MovieDatabase
 import com.franco.moviesdb.database.actors.localDatasourceActors.LocalDatasourceActorsImpl
 import com.franco.moviesdb.database.actors.remoteDatasourceActors.RemoteDatasourceActorsImpl
 import com.franco.moviesdb.database.localDatasources.movies.localDataSourceMoviecomedy.LocalDataSourceMovieComedyImpl
+import com.franco.moviesdb.database.localDatasources.movies.localDatasourceTvAction.LocalDataSourceTvActionImpl
+import com.franco.moviesdb.database.localDatasources.movies.localDatasourceTvComedy.LocalDataSourceTvComedyImpl
 import com.franco.moviesdb.database.localDatasources.movies.localdatasourceMovieAction.LocalDatasourceMoviesActionImpl
 import com.franco.moviesdb.network.api.ApiService
 import com.franco.moviesdb.network.remoteDatasourceMovieAction.RemoteDatasourceMovieActionImpl
 import com.franco.moviesdb.network.remoteDatasourceMoviecomedy.RemoteDatasourceMovieComedyImpl
+import com.franco.moviesdb.network.remoteDatasourceTvAction.RemoteDatasourceTvActionImpl
+import com.franco.moviesdb.network.remoteDatasourceTvComedy.RemoteDataSourceTvComedyImpl
+import com.franco.moviesdb.repository.actorsRepository.ActorsRepository
 import com.franco.moviesdb.repository.movieActionRepository.MovieActionRepository
 import com.franco.moviesdb.repository.movieActionRepository.MovieActionRepositoryImpl
 import com.franco.moviesdb.repository.movieComedyRepository.MovieComedyRepository
 import com.franco.moviesdb.repository.movieComedyRepository.MovieComedyRepositoryImpl
+import com.franco.moviesdb.repository.tvActionRepository.TvActionRepository
+import com.franco.moviesdb.repository.tvActionRepository.TvActionRepositoryImpl
+import com.franco.moviesdb.repository.tvComedyRepository.TvComedyRepository
+import com.franco.moviesdb.repository.tvComedyRepository.TvComedyRepositoryImpl
 import com.franco.moviesdb.ui.movie.action.MovieActionViewModel
 import com.franco.moviesdb.ui.movie.comedy.MovieComedyViewModel
 import com.franco.moviesdb.ui.movieDetails.DetailViewModel
@@ -123,6 +132,35 @@ object NetworkModule {
         return MovieComedyRepositoryImpl(localDatasourceMoviesComedy, remoteDatasourceMoviesComedy)
     }
 
+    @Singleton
+    @Provides
+    fun provideTvActionRepository(
+            localDatasourceTvAction: LocalDataSourceTvActionImpl,
+            remoteDatasourceTvAction: RemoteDatasourceTvActionImpl,
+
+            ): TvActionRepository {
+        return TvActionRepositoryImpl(localDatasourceTvAction, remoteDatasourceTvAction)
+    }
+
+    @Singleton
+    @Provides
+    fun provideTvComedyRepository(
+            localDatasourceTvComedy: LocalDataSourceTvComedyImpl,
+            remoteDatasourceTvComedy: RemoteDataSourceTvComedyImpl,
+
+            ): TvComedyRepository {
+        return TvComedyRepositoryImpl(localDatasourceTvComedy, remoteDatasourceTvComedy)
+    }
+
+    @Singleton
+    @Provides
+    fun provideActorsRepository(
+            localDatasourceActorsImpl: LocalDatasourceActorsImpl,
+            remoteDatasourceActorsImpl: RemoteDatasourceActorsImpl
+    ): ActorsRepository {
+        return ActorsRepository(localDatasourceActorsImpl, remoteDatasourceActorsImpl)
+    }
+
 
     @Singleton
     @Provides
@@ -140,8 +178,8 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideDetailViewModel(repositoryImpl: MovieActionRepositoryImpl): DetailViewModel {
-        return DetailViewModel(repositoryImpl)
+    fun provideDetailViewModel(actorsRepo: ActorsRepository): DetailViewModel {
+        return DetailViewModel(actorsRepo)
     }
 
 

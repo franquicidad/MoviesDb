@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 12,
-    "identityHash": "f582125c31a869e27fe2567043cac79f",
+    "identityHash": "a4ba16e3c5273838f433ef177f407281",
     "entities": [
       {
         "tableName": "movie_action",
@@ -253,8 +253,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "DatabaseActorsModelWithActor",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`movieId` INTEGER NOT NULL, `actorId` INTEGER NOT NULL, PRIMARY KEY(`movieId`, `actorId`))",
+        "tableName": "actorsTable",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`movieId` INTEGER NOT NULL, `actorId` INTEGER NOT NULL, `character` TEXT NOT NULL, `name` TEXT NOT NULL, `order` INTEGER NOT NULL, `originalName` TEXT NOT NULL, `profilePath` TEXT NOT NULL, PRIMARY KEY(`movieId`))",
         "fields": [
           {
             "fieldPath": "movieId",
@@ -265,27 +265,6 @@
           {
             "fieldPath": "actorId",
             "columnName": "actorId",
-            "affinity": "INTEGER",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "movieId",
-            "actorId"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "actorsTable",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER NOT NULL, `character` TEXT NOT NULL, `name` TEXT NOT NULL, `order` INTEGER NOT NULL, `originalName` TEXT NOT NULL, `profilePath` TEXT NOT NULL, PRIMARY KEY(`Id`))",
-        "fields": [
-          {
-            "fieldPath": "Id",
-            "columnName": "Id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -322,7 +301,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "Id"
+            "movieId"
           ],
           "autoGenerate": false
         },
@@ -333,7 +312,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f582125c31a869e27fe2567043cac79f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a4ba16e3c5273838f433ef177f407281')"
     ]
   }
 }

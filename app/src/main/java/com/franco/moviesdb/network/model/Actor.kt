@@ -4,6 +4,7 @@ package com.franco.moviesdb.network.model
 import com.google.gson.annotations.SerializedName
 
 data class Actor(
+        @SerializedName("id")
         val Id: Int,
         val character: String,
         val name: String,

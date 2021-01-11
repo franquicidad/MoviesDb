@@ -8,6 +8,8 @@ import com.google.gson.annotations.SerializedName
 data class Actor(
         @PrimaryKey(autoGenerate = false)
         @SerializedName("id")
+        val movieId: Int,
+        @SerializedName("id")
         val actorId: Int,
         val character: String,
         val name: String,
