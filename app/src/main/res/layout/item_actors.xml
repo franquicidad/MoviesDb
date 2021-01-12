@@ -32,7 +32,7 @@
 
         <TextView
             android:id="@+id/actorName"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/headland_one"
@@ -48,7 +48,7 @@
         <TextView
             android:id="@+id/actorRole"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="37dp"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/headland_one"
             android:gravity="center_horizontal"
@@ -58,8 +58,8 @@
             android:textStyle="bold"
 
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/actorName"
-            app:layout_constraintStart_toStartOf="@+id/actorName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/actorName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
