@@ -75,7 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="649dp" />
+                        app:layout_constraintGuide_begin="712dp" />
 
 
                     <TextView
@@ -107,13 +107,13 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/framelayout_actors"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="411dp"
+                        android:layout_height="227dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="12dp"
                         android:clipToPadding="true"
                         android:orientation="horizontal"
                         android:padding="10dp"
-                        android:layout_marginTop="10dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintBottom_toTopOf="@+id/guideline"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -263,6 +263,24 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="11dp"
+                        android:fontFamily="@font/headland_one"
+                        android:text="TextView"
+
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/framelayout_actors"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view3"
+                        tools:text="Cast" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
