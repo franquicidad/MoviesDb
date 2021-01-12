@@ -2,6 +2,7 @@ package com.franco.moviesdb.network.api
 
 import com.franco.moviesdb.network.model.Cast
 import com.franco.moviesdb.network.model.MoviesActionResponce
+import com.franco.moviesdb.network.model.SimilarMoviesResponce
 import com.franco.moviesdb.network.model.TvActionResponce
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -60,6 +61,18 @@ interface ApiService {
             @Path("movie_id") movieId: Int,
             @Query("api_key") api_key: String,
     ): Cast
+
+    //https://api.themoviedb.org/3/movie/464052/similar?api_key=7d51874568317dfd0c91db399be2bdec&language=en-US&page=1
+
+    @GET("movie/{movie_id}/similar")
+    suspend fun getSimilarMovies(
+            @Path("movie_id") movieId: Int,
+            @Query("api_key") api_key: String,
+            @Query("language") language: String = "en-US",
+            @Query("page") page: Int?,
+    ): SimilarMoviesResponce
+
+
 }
 
 

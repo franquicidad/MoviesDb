@@ -1,7 +1,5 @@
 package com.franco.moviesdb.repository.actorsRepository
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import com.franco.moviesdb.database.actors.localDatasourceActors.LocalDatasourceActorsImpl
 import com.franco.moviesdb.database.actors.remoteDatasourceActors.RemoteDatasourceActorsImpl
 import com.franco.moviesdb.domain.Actor

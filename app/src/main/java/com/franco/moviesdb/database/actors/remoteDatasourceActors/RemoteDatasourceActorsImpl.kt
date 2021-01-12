@@ -2,10 +2,8 @@ package com.franco.moviesdb.database.actors.remoteDatasourceActors
 
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import com.franco.moviesdb.domain.Actor
 import com.franco.moviesdb.network.api.ApiService
-import com.franco.moviesdb.network.fromNetworkToDatabase
 import com.franco.moviesdb.network.fromNetworkToDomain
 import com.franco.moviesdb.util.ALONE_API
 import javax.inject.Inject

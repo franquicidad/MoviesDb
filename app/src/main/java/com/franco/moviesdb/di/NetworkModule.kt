@@ -26,8 +26,6 @@ import com.franco.moviesdb.repository.tvComedyRepository.TvComedyRepositoryImpl
 import com.franco.moviesdb.ui.movie.action.MovieActionViewModel
 import com.franco.moviesdb.ui.movie.comedy.MovieComedyViewModel
 import com.franco.moviesdb.ui.movieDetails.DetailViewModel
-import com.franco.moviesdb.ui.tv.tvaction.TvActionViewModel
-import com.franco.moviesdb.ui.tv.tvcomedy.TvComedyViewModel
 import com.franco.moviesdb.util.BASE_URL
 import com.franco.moviesdb.util.DATABASE_MOVIE_NAME
 import com.google.gson.GsonBuilder

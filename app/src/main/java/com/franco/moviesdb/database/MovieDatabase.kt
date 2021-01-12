@@ -7,6 +7,8 @@ import com.franco.moviesdb.database.actors.model.Actor
 import com.franco.moviesdb.database.actors.actorsDao.ActorsDao
 import com.franco.moviesdb.database.moviesActionDao.MoviesActionDao
 import com.franco.moviesdb.database.moviesComedyDao.MoviesComedyDao
+import com.franco.moviesdb.database.similarMovies.SimilarDao
+import com.franco.moviesdb.database.similarMovies.model.SimilarMovies
 import com.franco.moviesdb.database.tvActionDao.TvActionDao
 import com.franco.moviesdb.database.tvComedyDao.TvComedyDao
 import com.franco.moviesdb.network.api.CastTypeConverter
@@ -17,7 +19,8 @@ import com.franco.moviesdb.network.api.CastTypeConverter
             MovieComedyTable::class,
             TvActionTable::class,
             TvComedyTable::class,
-            Actor::class
+            Actor::class,
+            SimilarMovies::class
         ], version = 13
 )
 @TypeConverters(CastTypeConverter::class)
@@ -27,6 +30,7 @@ abstract class MovieDatabase : RoomDatabase() {
     abstract fun tvActionDAO(): TvActionDao
     abstract fun tvComedyDAO(): TvComedyDao
     abstract fun actorsDAO(): ActorsDao
+    abstract fun similarDAO(): SimilarDao
 }
 //
 //val MIGRATION_1_2: Migration = object : Migration(1, 2) {
