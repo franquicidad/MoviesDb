@@ -17,9 +17,8 @@ import com.franco.moviesdb.network.api.CastTypeConverter
             MovieComedyTable::class,
             TvActionTable::class,
             TvComedyTable::class,
-//            ActorsModelResponceDb::class,
             Actor::class
-        ], version = 12
+        ], version = 13
 )
 @TypeConverters(CastTypeConverter::class)
 abstract class MovieDatabase : RoomDatabase() {

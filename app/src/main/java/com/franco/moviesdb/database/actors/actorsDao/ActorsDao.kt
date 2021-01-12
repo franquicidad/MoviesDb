@@ -14,7 +14,7 @@ interface ActorsDao {
     @Query("SELECT COUNT(actorId) FROM actorsTable")
     suspend fun actorsCount(): Int
 
-    @Query("SELECT * FROM actorsTable WHERE movieId =:movieId")
+    @Query("SELECT * FROM actorsTable WHERE movieId =:movieId ORDER BY `order` ASC")
     fun getAllActorsByMovieId(movieId: Int): Flow<List<Actor>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

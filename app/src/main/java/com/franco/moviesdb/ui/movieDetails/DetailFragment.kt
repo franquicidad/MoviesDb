@@ -1,6 +1,7 @@
 package com.franco.moviesdb.ui.movieDetails
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -86,10 +87,13 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         lifecycleScope.launch {
             val theId: Int? = id
 
-            id?.let { detailModel.observableListActors(it) }
+            theId?.let { detailModel.observableListActors(it) }
 
-            id?.let { id ->
+            theId?.let { id ->
+                val second = id
                 detailModel.passTofunctionThoughtDetail(id).collect { listOfActorsForMovie ->
+                    val list = listOfActorsForMovie
+                    Log.i("Detail", "$list")
                     pagingAdapter.submitList(listOfActorsForMovie)
 
                 }
