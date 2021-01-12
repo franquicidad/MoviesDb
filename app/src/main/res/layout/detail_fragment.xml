@@ -75,7 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="585dp" />
+                        app:layout_constraintGuide_begin="649dp" />
 
 
                     <TextView
@@ -142,7 +142,7 @@
                         android:id="@+id/title_overview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="56dp"
                         android:text="@string/overview"
                         android:theme="@style/ThemeForAppTextTitleConfig"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -252,7 +252,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="341dp" />
+                        app:layout_constraintGuide_begin="376dp" />
 
                     <View
                         android:id="@+id/view3"
