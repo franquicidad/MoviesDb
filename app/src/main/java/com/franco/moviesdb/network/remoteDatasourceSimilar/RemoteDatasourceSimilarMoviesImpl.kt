@@ -1,5 +1,6 @@
 package com.franco.moviesdb.network.remoteDatasourceSimilar
 
+import android.util.Log
 import com.franco.moviesdb.database.similarMovies.fromNetToDomain
 import com.franco.moviesdb.domain.SimilarMovies
 import com.franco.moviesdb.network.api.ApiService
@@ -14,6 +15,7 @@ class RemoteDatasourceSimilarMoviesImpl @Inject constructor(
     @ExperimentalCoroutinesApi
     override suspend fun getSimilarMovies(movieId: Int, page: Int): List<SimilarMovies> {
         service.let {
+            Log.i("Any", "Hola")
             return service.getSimilarMovies(movieId, ALONE_API, "en-US", page).similarMovies.map {
                 it.fromNetToDomain()
             }

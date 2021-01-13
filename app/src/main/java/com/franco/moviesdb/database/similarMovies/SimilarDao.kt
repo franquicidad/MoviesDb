@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.franco.moviesdb.database.actors.model.Actor
 import com.franco.moviesdb.database.similarMovies.model.SimilarMovies
+import com.franco.moviesdb.domain.MovieActionDomain
 import kotlinx.coroutines.flow.Flow
 
 @Dao
