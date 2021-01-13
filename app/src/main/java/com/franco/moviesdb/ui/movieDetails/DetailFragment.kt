@@ -63,7 +63,12 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         rvSimilar.apply {
             //setAdapter
             adapter = similarAdapter
-            setHorizontalLayout()
+            val linearLayout = LinearLayoutManager(requireContext())
+            linearLayout.orientation = LinearLayoutManager.HORIZONTAL
+            layoutManager = linearLayout
+            setHasFixedSize(true)
+
+
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -104,24 +109,20 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
 
             theId?.let { detailModel.observableListActors(it) }
 
+
+
             theId?.let { id ->
                 val second = id
                 detailModel.passTofunctionThoughtDetail(second).collect { listOfActorsForMovie ->
                     pagingAdapter.submitList(listOfActorsForMovie)
 
                 }
-                detailModel.getSimilarMoviesByMovie(second).collect {
+                detailModel.getSimilarMoviesByMovie(id).collect {
+                    Log.i("Sim", "$it")
                     similarAdapter.submitList(it)
                 }
+
             }
-
-
-//            if (theId != null) {
-//                detailModel.observableListActors(theId).observe(viewLifecycleOwner, Observer {
-//                    pagingAdapter.submitList(it)
-//
-//                })
-//            }
 
         }
 
