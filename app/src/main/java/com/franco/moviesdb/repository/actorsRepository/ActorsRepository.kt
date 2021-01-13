@@ -4,6 +4,7 @@ import com.franco.moviesdb.database.actors.localDatasourceActors.LocalDatasource
 import com.franco.moviesdb.database.actors.remoteDatasourceActors.RemoteDatasourceActorsImpl
 import com.franco.moviesdb.domain.Actor
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class ActorsRepository(
         private val localDatasourceActors: LocalDatasourceActorsImpl,

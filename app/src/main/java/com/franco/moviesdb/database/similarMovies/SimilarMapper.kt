@@ -6,25 +6,33 @@ import com.franco.moviesdb.database.similarMovies.model.SimilarMovies as Databas
 
 fun NetworkSim.fromNetToDomain(): SimilarMovies =
         SimilarMovies(
-                id ?: 0, posterPath ?: "", title ?: "", overview ?: "", voteAverage ?: 0.0
+                id,
+                posterPath ?: "",
+                backdropPath ?: "", title ?: "", overview, releaseDate, originalLanguage, rating
         )
 
 fun NetworkSim.fromNetToDb(): DatabaseSim =
         DatabaseSim(
                 id,
                 relatedToMovieId = 0,
-                backdropPath ?: "",
-                originalLanguage ?: "",
-                releaseDate ?: "",
-                posterPath ?: "",
-                title ?: "",
-                overview ?: "",
-                voteAverage ?: 0.0
+                backdropPath,
+                originalLanguage,
+                releaseDate,
+                posterPath,
+                title,
+                overview
         )
 
 fun DatabaseSim.fromDbToDomain(): SimilarMovies =
         SimilarMovies(
-                id, posterPath ?: "", title ?: "", overview ?: "", voteAverage ?: 0.0
+                id,
+                posterPath,
+                backdropPath,
+                title,
+                overview,
+                releaseDate,
+                originalLanguage,
+                rating
         )
 
 fun SimilarMovies.fromDomainToDB(): DatabaseSim =
@@ -37,5 +45,5 @@ fun SimilarMovies.fromDomainToDB(): DatabaseSim =
                 posterPath,
                 title,
                 overview ?: "",
-                voteAverage ?: 0.0
+                rating ?: 0.0
         )

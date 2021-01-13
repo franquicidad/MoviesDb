@@ -18,6 +18,6 @@ data class SimilarMovies(
         val releaseDate: String,
         val title: String,
         @SerializedName("vote_average")
-        val voteAverage: Double,
+        val rating: Double,
 
         )

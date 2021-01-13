@@ -9,9 +9,11 @@ import com.franco.moviesdb.database.localDatasources.movies.localDataSourceMovie
 import com.franco.moviesdb.database.localDatasources.movies.localDatasourceTvAction.LocalDataSourceTvActionImpl
 import com.franco.moviesdb.database.localDatasources.movies.localDatasourceTvComedy.LocalDataSourceTvComedyImpl
 import com.franco.moviesdb.database.localDatasources.movies.localdatasourceMovieAction.LocalDatasourceMoviesActionImpl
+import com.franco.moviesdb.database.similarMovies.localDatasourceSimilar.LocalDatasourceSimilarImpl
 import com.franco.moviesdb.network.api.ApiService
 import com.franco.moviesdb.network.remoteDatasourceMovieAction.RemoteDatasourceMovieActionImpl
 import com.franco.moviesdb.network.remoteDatasourceMoviecomedy.RemoteDatasourceMovieComedyImpl
+import com.franco.moviesdb.network.remoteDatasourceSimilar.RemoteDatasourceSimilarMoviesImpl
 import com.franco.moviesdb.network.remoteDatasourceTvAction.RemoteDatasourceTvActionImpl
 import com.franco.moviesdb.network.remoteDatasourceTvComedy.RemoteDataSourceTvComedyImpl
 import com.franco.moviesdb.repository.actorsRepository.ActorsRepository
@@ -19,6 +21,8 @@ import com.franco.moviesdb.repository.movieActionRepository.MovieActionRepositor
 import com.franco.moviesdb.repository.movieActionRepository.MovieActionRepositoryImpl
 import com.franco.moviesdb.repository.movieComedyRepository.MovieComedyRepository
 import com.franco.moviesdb.repository.movieComedyRepository.MovieComedyRepositoryImpl
+import com.franco.moviesdb.repository.similarRepository.SimilarRepository
+import com.franco.moviesdb.repository.similarRepository.SimilarRepositoryImpl
 import com.franco.moviesdb.repository.tvActionRepository.TvActionRepository
 import com.franco.moviesdb.repository.tvActionRepository.TvActionRepositoryImpl
 import com.franco.moviesdb.repository.tvComedyRepository.TvComedyRepository
@@ -159,12 +163,28 @@ object NetworkModule {
         return ActorsRepository(localDatasourceActorsImpl, remoteDatasourceActorsImpl)
     }
 
+    @Singleton
+    @Provides
+    fun provideSimilarRepository(
+            localDatasourceSimilarImpl: LocalDatasourceSimilarImpl,
+            remoteDatasourceSimilarImpl: RemoteDatasourceSimilarMoviesImpl
+    ): SimilarRepository {
+        return SimilarRepositoryImpl(localDatasourceSimilarImpl, remoteDatasourceSimilarImpl)
+    }
+
 
     @Singleton
     @Provides
     fun providesRepoToMovieComedyVm(movieComedyRepo: MovieComedyRepositoryImpl): MovieComedyViewModel {
         return MovieComedyViewModel(movieComedyRepo)
     }
+
+    @Singleton
+    @Provides
+    fun provideRemoteDatasource(apiService: ApiService): RemoteDatasourceSimilarMoviesImpl {
+        return RemoteDatasourceSimilarMoviesImpl(apiService)
+    }
+
 //
 //    fun providesRepoToTvActionVm(repositoryImpl: RepositoryImpl): TvActionViewModel {
 //        return TvActionViewModel(repositoryImpl)
@@ -176,8 +196,8 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideDetailViewModel(actorsRepo: ActorsRepository): DetailViewModel {
-        return DetailViewModel(actorsRepo)
+    fun provideDetailViewModel(actorsRepo: ActorsRepository, similarRepo: SimilarRepository): DetailViewModel {
+        return DetailViewModel(actorsRepo, similarRepository = similarRepo)
     }
 
 

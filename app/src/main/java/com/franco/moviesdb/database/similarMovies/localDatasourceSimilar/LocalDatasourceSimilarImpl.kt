@@ -1,5 +1,6 @@
 package com.franco.moviesdb.database.similarMovies.localDatasourceSimilar
 
+import com.franco.moviesdb.database.MovieDatabase
 import com.franco.moviesdb.database.similarMovies.SimilarDao
 import com.franco.moviesdb.database.similarMovies.fromDbToDomain
 import com.franco.moviesdb.database.similarMovies.fromDomainToDB
@@ -9,21 +10,21 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class LocalDatasourceSimilarImpl @Inject constructor(
-        private val similarDao: SimilarDao
+        private val movieDb: MovieDatabase
 ) : LocalDatasourceSimilar {
     override suspend fun size(): Int {
-        return similarDao.similarCount()
+        return movieDb.similarDAO().similarCount()
     }
 
     override suspend fun getAllSimilarByMovieId(movieId: Int): Flow<List<SimilarMovies>> =
-            similarDao.getAllSimilarByMovieId(movieId).map {
+            movieDb.similarDAO().getAllSimilarByMovieId(movieId).map {
                 it.map {
                     it.fromDbToDomain()
                 }
             }
 
     override suspend fun insertSimilar(movies: List<SimilarMovies>) {
-        return similarDao.insertSimilar(movies = movies.map {
+        return movieDb.similarDAO().insertSimilar(movies = movies.map {
             it.fromDomainToDB()
         })
     }

@@ -2,9 +2,13 @@ package com.franco.moviesdb.repository.similarRepository
 
 import com.franco.moviesdb.domain.MovieActionDomain
 import com.franco.moviesdb.domain.SimilarMovies
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 interface SimilarRepository {
-    fun getSimilarMoviesByMovie(movieId: Int): Flow<List<SimilarMovies>>
-    suspend fun checkRequireNewPageSimilarMovies(lastVisible: Int)
+    suspend fun getSimilarMoviesByMovie(movieId: Int): Flow<List<SimilarMovies>>
+
+    @ExperimentalCoroutinesApi
+    suspend fun checkRequireNewPageSimilarMovies(movieId: Int, lastVisible: Int)
 }
