@@ -6,44 +6,50 @@ import com.franco.moviesdb.database.similarMovies.model.SimilarMovies as Databas
 
 fun NetworkSim.fromNetToDomain(): SimilarMovies =
         SimilarMovies(
-                id,
+                id ?: 0,
                 posterPath ?: "",
-                backdropPath ?: "", title ?: "", overview, releaseDate, originalLanguage, rating
+                backdropPath ?: "",
+                title ?: "",
+                overview ?: "",
+                releaseDate ?: "",
+                originalLanguage ?: "",
+                rating ?: 0.0
         )
 
 fun NetworkSim.fromNetToDb(): DatabaseSim =
         DatabaseSim(
-                id,
+                id ?: 0,
                 relatedToMovieId = 0,
-                backdropPath,
-                originalLanguage,
-                releaseDate,
-                posterPath,
-                title,
-                overview
+                backdropPath ?: "",
+                originalLanguage ?: "",
+                releaseDate ?: "",
+                posterPath ?: "",
+                title ?: "",
+                overview ?: "",
+                rating ?: 0.0
         )
 
 fun DatabaseSim.fromDbToDomain(): SimilarMovies =
         SimilarMovies(
                 id,
-                posterPath,
-                backdropPath,
-                title,
-                overview,
-                releaseDate,
-                originalLanguage,
-                rating
+                posterPath ?: "",
+                backdropPath ?: "",
+                title ?: "",
+                overview ?: "",
+                releaseDate ?: "",
+                originalLanguage ?: "",
+                rating ?: 0.0
         )
 
 fun SimilarMovies.fromDomainToDB(): DatabaseSim =
         DatabaseSim(
                 id,
                 relatedToMovieId = 0,
-                backdropPath = "",
-                originalLanguage = "",
-                releaseDate = "",
-                posterPath,
-                title,
+                backdropPath = backdropPath ?: "",
+                originalLanguage = originalLanguage ?: "",
+                releaseDate = releaseDate ?: "",
+                posterPath ?: "",
+                title ?: "",
                 overview ?: "",
                 rating ?: 0.0
         )
