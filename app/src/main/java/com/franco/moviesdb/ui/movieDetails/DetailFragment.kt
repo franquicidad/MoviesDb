@@ -131,14 +131,12 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                     theId?.let {
                         val oneId = theSelectedRecyclerViewid
                         detailModel.getSimilarMoviesByMovie(oneId!!).collect {
-
-                            Log.i("Sim", "$it")
+                            val list = it
+                            Log.i("Sim", "$list")
                             similarAdapter.submitList(it)
                         }
                     }
                 }
-
-
             }
             parentJob.invokeOnCompletion {
                 println("Both jobs completed")

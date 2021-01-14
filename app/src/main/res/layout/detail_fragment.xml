@@ -195,7 +195,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
-                        android:paddingTop="20dp"
                         tools:listitem="@layout/item_similar"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
