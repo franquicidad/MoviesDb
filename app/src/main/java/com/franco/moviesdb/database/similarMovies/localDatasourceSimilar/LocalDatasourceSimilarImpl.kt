@@ -1,5 +1,6 @@
 package com.franco.moviesdb.database.similarMovies.localDatasourceSimilar
 
+import android.util.Log
 import com.franco.moviesdb.database.MovieDatabase
 import com.franco.moviesdb.database.similarMovies.SimilarDao
 import com.franco.moviesdb.database.similarMovies.fromDbToDomain
@@ -26,9 +27,16 @@ class LocalDatasourceSimilarImpl @Inject constructor(
             }
 
     override suspend fun insertSimilar(movies: List<SimilarMovies>) {
-        return movieDb.similarDAO().insertSimilar(movies = movies.map {
+        val list = movies
+        Log.i("insert", "${list}")
+        val newDbList = list.map {
             it.fromDomainToDB()
-        })
+        }
+
+        Log.i("insert", "${newDbList}")
+
+
+        return movieDb.similarDAO().insertSimilar(newDbList)
     }
 
 }

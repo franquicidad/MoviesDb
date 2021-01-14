@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.franco.moviesdb.R
 import com.franco.moviesdb.databinding.ItemSimilarBinding
-import com.franco.moviesdb.domain.MovieActionDomain
 import com.franco.moviesdb.domain.SimilarMovies
 import com.franco.moviesdb.util.IMAGE_URL
 import com.franco.moviesdb.util.collectFlow
@@ -45,27 +44,27 @@ class PagingSimilarMoviesAdapter(private val scope: CoroutineScope) :
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) = with(holder) {
         val item = getItem(position)
         bind(item)
-        scope.collectFlow(itemView.onClickEvents) {
-            val url = IMAGE_URL + item.posterPath
-            val backImage = IMAGE_URL + item.backdropPath
+//        scope.collectFlow(itemView.onClickEvents) {
+//            val url = IMAGE_URL + item.posterPath
+//            val backImage = IMAGE_URL + item.backdropPath
+////
+//
+//            val bundle = bundleOf(
+//                    "id" to item.id,
+//                    "movieName" to item.title,
+//                    "overview" to item.overview,
+//                    "poster" to url,
+//                    "rating" to item.rating,
+//                    "lang" to item.originalLanguage,
+//                    "release" to item.releaseDate,
+//                    "backimage" to backImage
+//
+//
+//            )
+//            navController = Navigation.findNavController(it!!)
+//            navController!!.navigate(R.id.action_navigation_dashboard_to_detailFragment, bundle)
 
-
-            val bundle = bundleOf(
-                    "id" to item.id,
-                    "movieName" to item.title,
-                    "overview" to item.overview,
-                    "poster" to url,
-                    "rating" to item.rating,
-                    "lang" to item.originalLanguage,
-                    "release" to item.releaseDate,
-                    "backimage" to backImage
-
-
-            )
-            navController = Navigation.findNavController(it!!)
-            navController!!.navigate(R.id.action_navigation_dashboard_to_detailFragment, bundle)
-
-        }
+//        }
     }
 }
 
@@ -75,7 +74,7 @@ class DiffCallBackSimilar : DiffUtil.ItemCallback<SimilarMovies>() {
     }
 
     override fun areContentsTheSame(oldItem: SimilarMovies, newItem: SimilarMovies): Boolean {
-        return oldItem == newItem
+        return oldItem.equals(newItem)
     }
 
 
