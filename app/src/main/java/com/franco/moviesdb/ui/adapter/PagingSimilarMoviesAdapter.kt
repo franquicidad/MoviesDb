@@ -44,27 +44,27 @@ class PagingSimilarMoviesAdapter(private val scope: CoroutineScope) :
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) = with(holder) {
         val item = getItem(position)
         bind(item)
-//        scope.collectFlow(itemView.onClickEvents) {
-//            val url = IMAGE_URL + item.posterPath
-//            val backImage = IMAGE_URL + item.backdropPath
-////
+        scope.collectFlow(itemView.onClickEvents) {
+            val url = IMAGE_URL + item.posterPath
+            val backImage = IMAGE_URL + item.backdropPath
 //
-//            val bundle = bundleOf(
-//                    "id" to item.id,
-//                    "movieName" to item.title,
-//                    "overview" to item.overview,
-//                    "poster" to url,
-//                    "rating" to item.rating,
-//                    "lang" to item.originalLanguage,
-//                    "release" to item.releaseDate,
-//                    "backimage" to backImage
-//
-//
-//            )
-//            navController = Navigation.findNavController(it!!)
-//            navController!!.navigate(R.id.action_navigation_dashboard_to_detailFragment, bundle)
 
-//        }
+            val bundle = bundleOf(
+                "id" to item.id,
+                "movieName" to item.title,
+                "overview" to item.overview,
+                "poster" to url,
+                "rating" to item.rating,
+                "lang" to item.originalLanguage,
+                "release" to item.releaseDate,
+                "backimage" to backImage
+
+
+            )
+            navController = Navigation.findNavController(it!!)
+            navController!!.navigate(R.id.action_navigation_dashboard_to_detailFragment, bundle)
+
+        }
     }
 }
 

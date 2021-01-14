@@ -17,8 +17,11 @@ class DetailViewModel @ViewModelInject constructor(
     private val similarRepository: SimilarRepository
 ) : ViewModel() {
 
-    suspend fun passTofunctionThoughtDetail(movieId: Int): Flow<List<Actor>> =
-        repository.getAllActorsByMovie(movieId)
+    suspend fun passTofunctionThoughtDetail(movieId: Int): Flow<List<Actor>> {
+        val list = repository.getAllActorsByMovie(movieId)
+
+        return list
+    }
 
     suspend fun observableListActors(id: Int) {
         repository.addActorsByMovie(id)
@@ -31,7 +34,6 @@ class DetailViewModel @ViewModelInject constructor(
         return similarRepository.getSimilarMoviesByMovie(movieId)
 
     }
-
     private val _movieIdenti = MutableLiveData<Int>()
     val movieIdenti: LiveData<Int> get() = _movieIdenti
 
