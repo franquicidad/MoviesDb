@@ -20,10 +20,17 @@ class RemoteDatasourceActorsImpl @Inject constructor(
             it.movieId = movieId
 
         }
-        Log.i("actorList", "$list2")
-
-
-
         return list2
     }
+
+//    override suspend fun getActorsRemoteTv(movieId: Int): List<Actor> {
+//        val listTv = service.getActorsByTv(movieId, ALONE_API).cast.map {
+//            it.fromNetworkToDomain()
+//        }
+//        listTv.forEach {
+//            it.movieId = movieId
+//
+//        }
+//        return listTv
+//    }
 }

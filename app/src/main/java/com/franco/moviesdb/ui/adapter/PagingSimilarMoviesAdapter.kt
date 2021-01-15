@@ -50,19 +50,19 @@ class PagingSimilarMoviesAdapter(private val scope: CoroutineScope) :
 //
 
             val bundle = bundleOf(
-                "id" to item.id,
-                "movieName" to item.title,
-                "overview" to item.overview,
-                "poster" to url,
-                "rating" to item.rating,
-                "lang" to item.originalLanguage,
-                "release" to item.releaseDate,
-                "backimage" to backImage
+                    "id" to item.id,
+                    "movieName" to item.title,
+                    "overview" to item.overview,
+                    "poster" to url,
+                    "rating" to item.rating,
+                    "lang" to item.originalLanguage,
+                    "release" to item.releaseDate,
+                    "backimage" to backImage
 
 
             )
-            navController = Navigation.findNavController(it!!)
-            navController!!.navigate(R.id.action_navigation_dashboard_to_detailFragment, bundle)
+//            navController = Navigation.findNavController(it!!)
+//            navController!!.navigate(R.id.action_navigation_dashboard_to_detailFragment, bundle)
 
         }
     }

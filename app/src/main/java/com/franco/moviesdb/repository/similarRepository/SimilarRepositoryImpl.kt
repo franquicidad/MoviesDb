@@ -29,6 +29,21 @@ class SimilarRepositoryImpl(
     @ExperimentalCoroutinesApi
     override suspend fun checkRequireNewPageSimilarMovies(movieId: Int, lastVisible: Int) {
         val size = localDatasourceSimilar.size()
+        if (size > 0) {
+            val numPages = remoteDatasourceSimilar.getSimilarMovies(movieId, page = 1).get(0).totalPages
+            val newSimilarMovies = remoteDatasourceSimilar.getSimilarMovies(movieId, 1)
+            val newDatabaseRelatedMovies = newSimilarMovies.map {
+                it.fromDomainToDB()
+            }
+            newDatabaseRelatedMovies.forEach {
+                it.relatedToMovieId = movieId
+            }
+            val finalDomainRelatedDb: List<SimilarMovies> = newDatabaseRelatedMovies.map {
+                it.fromDbToDomain()
+            }
+            Log.i("SimId", "$finalDomainRelatedDb")
+            localDatasourceSimilar.insertSimilar(finalDomainRelatedDb)
+        }
         if (lastVisible >= size - PAGE_THRESHOLD) {
             val page = size / PAGE_SIZE + 1
             val theId = movieId

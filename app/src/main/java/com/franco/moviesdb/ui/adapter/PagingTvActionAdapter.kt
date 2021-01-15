@@ -51,9 +51,11 @@ class PagingTvActionAdapter(private val scope: CoroutineScope) :
 
             val url = IMAGE_URL + item.posterPath
             val backImage = IMAGE_URL + item.backdropPath
+            val typeMovieOrTv = "tv"
 
 
             val bundle = bundleOf(
+                    "movieOrTv" to typeMovieOrTv,
                     "id" to item.id,
                     "movieName" to item.title,
                     "overview" to item.overview,

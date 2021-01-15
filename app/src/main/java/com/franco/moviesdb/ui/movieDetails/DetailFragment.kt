@@ -24,6 +24,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
 
     private val detailModel: DetailViewModel by viewModels()
 
+    var typeMovieOrTv: String? = null
     var theSelectedRecyclerViewid: Int? = null
     var movieName: String? = null
     var overview: String? = null
@@ -37,6 +38,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        typeMovieOrTv = arguments?.getString("movieOrTv")
         theSelectedRecyclerViewid = arguments?.getInt("id")
         movieName = arguments?.getString("movieName")
         overview = arguments?.getString("overview")
@@ -56,10 +58,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         val similarAdapter = PagingSimilarMoviesAdapter(lifecycleScope)
         framelayout_actors.apply {
             adapter = pagingAdapter
-            val linearLayout = LinearLayoutManager(requireContext())
-            linearLayout.orientation = LinearLayoutManager.HORIZONTAL
-            layoutManager = linearLayout
-            setHasFixedSize(true)
+            setHorizontalLayout()
         }
         rvSimilar.apply {
             //setAdapter
@@ -111,19 +110,24 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             collectFlow(rvSimilar.lastVisibleEventsLinearActors) {
                 detailModel.lastVisible.value = it
             }
+
+            detailModel.notifyLastVisible(theSelectedRecyclerViewid!!, 0)
+
             val theId: Int? = theSelectedRecyclerViewid
 
             detailModel.viewModelId = theSelectedRecyclerViewid!!
 
             theId?.let { detailModel.observableListActors(it) }
+
+
             val parentJob = CoroutineScope(IO).launch {
                 val job1 = launch {
                     theId?.let { id ->
                         val second = id
                         detailModel.passTofunctionThoughtDetail(second)
-                            .collect { listOfActorsForMovie ->
-                                pagingAdapter.submitList(listOfActorsForMovie)
-                            }
+                                .collect { listOfActorsForMovie ->
+                                    pagingAdapter.submitList(listOfActorsForMovie)
+                                }
                     }
                 }
 
@@ -131,26 +135,36 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                     theId?.let {
                         val oneId = theSelectedRecyclerViewid
                         detailModel.getSimilarMoviesByMovie(oneId!!).collect {
-                            val list = it
-                            Log.i("Sim", "$list")
-                            similarAdapter.submitList(it)
+                            if (it.size != 0) {
+                                val list = it
+                                Log.i("Sim", "$list")
+                                similarAdapter.submitList(it)
+                            } else {
+                                detailModel.notifyLastVisible(theSelectedRecyclerViewid!!, 0)
+                            }
                         }
                     }
                 }
             }
+
             parentJob.invokeOnCompletion {
                 println("Both jobs completed")
             }
-        }
 
-        fun RecyclerView.setHorizontalLayout() {
-            val linearLayout = LinearLayoutManager(requireContext())
-            linearLayout.orientation = LinearLayoutManager.HORIZONTAL
-            layoutManager = linearLayout
-            setHasFixedSize(true)
+
         }
     }
+
+    fun RecyclerView.setHorizontalLayout() {
+        val linearLayout = LinearLayoutManager(requireContext())
+        linearLayout.orientation = LinearLayoutManager.HORIZONTAL
+        layoutManager = linearLayout
+        setHasFixedSize(true)
+    }
 }
+
+
+
 
 
 

@@ -7,6 +7,7 @@ data class SimilarMovies(
         @SerializedName("backdrop_path")
         val backdropPath: String?,
 
+        val totalPages: Int?,
         val id: Int?,
         @SerializedName("original_language")
         val originalLanguage: String?,

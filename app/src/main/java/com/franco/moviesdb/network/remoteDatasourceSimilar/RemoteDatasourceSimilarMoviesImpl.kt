@@ -15,10 +15,16 @@ class RemoteDatasourceSimilarMoviesImpl @Inject constructor(
     @ExperimentalCoroutinesApi
     override suspend fun getSimilarMovies(movieId: Int, page: Int): List<SimilarMovies> {
         service.let {
-            Log.i("Any", "Hola")
-            return service.getSimilarMovies(movieId, ALONE_API, "en-US", page).similarMovies.map {
+
+            val totalPages = service.getSimilarMovies(movieId, ALONE_API, "en-US", page).totalPages
+
+            val list = service.getSimilarMovies(movieId, ALONE_API, "en-US", page).similarMovies.map {
                 it.fromNetToDomain()
             }
+            list.forEach {
+                it.totalPages = totalPages
+            }
+            return list
 
         }
     }
