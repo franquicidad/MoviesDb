@@ -73,6 +73,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                     super.onScrolled(recyclerView, dx, dy)
                     val scrollId = theSelectedRecyclerViewid
                     detailModel.notifyLastVisible(
+                        typeMovieOrTv!!,
                         scrollId!!,
                         (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                     )
@@ -111,13 +112,16 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                 detailModel.lastVisible.value = it
             }
 
-            detailModel.notifyLastVisible(theSelectedRecyclerViewid!!, 0)
+            detailModel.notifyLastVisible(typeMovieOrTv!!, theSelectedRecyclerViewid!!, 0)
 
             val theId: Int? = theSelectedRecyclerViewid
 
+
             detailModel.viewModelId = theSelectedRecyclerViewid!!
 
-            theId?.let { detailModel.observableListActors(it) }
+            detailModel.movieOrTv = typeMovieOrTv!!
+
+            theId?.let { detailModel.observableListActors(typeMovieOrTv!!, it) }
 
 
             val parentJob = CoroutineScope(IO).launch {
@@ -125,9 +129,9 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                     theId?.let { id ->
                         val second = id
                         detailModel.passTofunctionThoughtDetail(second)
-                                .collect { listOfActorsForMovie ->
-                                    pagingAdapter.submitList(listOfActorsForMovie)
-                                }
+                            .collect { listOfActorsForMovie ->
+                                pagingAdapter.submitList(listOfActorsForMovie)
+                            }
                     }
                 }
 
@@ -140,7 +144,11 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                                 Log.i("Sim", "$list")
                                 similarAdapter.submitList(it)
                             } else {
-                                detailModel.notifyLastVisible(theSelectedRecyclerViewid!!, 0)
+                                detailModel.notifyLastVisible(
+                                    typeMovieOrTv!!,
+                                    theSelectedRecyclerViewid!!,
+                                    0
+                                )
                             }
                         }
                     }

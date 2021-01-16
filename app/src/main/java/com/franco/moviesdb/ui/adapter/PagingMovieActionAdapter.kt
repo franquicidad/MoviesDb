@@ -42,15 +42,18 @@ class PagingAdapter(private val scope: CoroutineScope) :
         val url = IMAGE_URL + item.posterPath
             val backImage = IMAGE_URL + item.backdropPath
 
+            val movieOrTv = "movie"
+
             val bundle = bundleOf(
-                    "id" to item.id,
-                    "movieName" to item.title,
-                    "overview" to item.overview,
-                    "poster" to url,
-                    "rating" to item.rating,
-                    "lang" to item.originalLanguage,
-                    "release" to item.releaseDate,
-                    "backimage" to backImage
+                "movieOrTv" to movieOrTv,
+                "id" to item.id,
+                "movieName" to item.title,
+                "overview" to item.overview,
+                "poster" to url,
+                "rating" to item.rating,
+                "lang" to item.originalLanguage,
+                "release" to item.releaseDate,
+                "backimage" to backImage
 
 
             )

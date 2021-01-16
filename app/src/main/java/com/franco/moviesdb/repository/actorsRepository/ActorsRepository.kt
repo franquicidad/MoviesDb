@@ -17,8 +17,8 @@ class ActorsRepository(
         return actors
     }
 
-    suspend fun addActorsByMovie(movieId: Int) {
-        val actors = remoteDatasourceActors.getActorsRemote(movieId)
+    suspend fun addActorsByMovie(movieOrTv: String, movieId: Int) {
+        val actors = remoteDatasourceActors.getActorsRemote(movieOrTv, movieId)
 
         localDatasourceActors.insertActorList(actors)
 

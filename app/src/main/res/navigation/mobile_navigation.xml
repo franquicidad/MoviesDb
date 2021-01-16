@@ -62,7 +62,15 @@
         android:id="@+id/detailFragment"
         android:name="com.franco.moviesdb.ui.movieDetails.DetailFragment"
         android:label="Detail"
-        tools:layout="@layout/detail_fragment" />
+        tools:layout="@layout/detail_fragment">
+        <action
+            android:id="@+id/action_detailFragment_to_actorsDetailFragment"
+            app:destination="@id/actorsDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/actorsDetailFragment"
+        android:name="com.franco.moviesdb.ui.actorsDetail.ActorsDetailFragment"
+        android:label="ActorsDetailFragment" />
 
 
 </navigation>

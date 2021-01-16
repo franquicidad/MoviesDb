@@ -37,11 +37,13 @@ class ActorsAdapter(private val scope: CoroutineScope) :
         val item = getItem(position)
         bind(item, position)
         scope.collectFlow(itemView.onClickEvents) {
+            val actorId = item.Id
 
-// Set where to go next!
-//            val bundle = bundleOf()
-//            navController = Navigation.findNavController(it!!)
-//            navController!!.navigate(R.id.action_navigation_home_to_detailFragment, bundle)
+            val bundle = bundleOf(
+                "actorId" to actorId
+            )
+            navController = Navigation.findNavController(it!!)
+            navController!!.navigate(R.id.action_detailFragment_to_actorsDetailFragment, bundle)
 
         }
     }

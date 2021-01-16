@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 interface RemoteDatasourceSimilarMovies {
     @ExperimentalCoroutinesApi
-    suspend fun getSimilarMovies(movieId: Int, page: Int): List<SimilarMovies>
+    suspend fun getSimilarMovies(movieOrTv: String, movieId: Int, page: Int): List<SimilarMovies>
 }

@@ -10,5 +10,5 @@ interface SimilarRepository {
     suspend fun getSimilarMoviesByMovie(movieId: Int): Flow<List<SimilarMovies>>
 
     @ExperimentalCoroutinesApi
-    suspend fun checkRequireNewPageSimilarMovies(movieId: Int, lastVisible: Int)
+    suspend fun checkRequireNewPageSimilarMovies(movieOrTv: String, movieId: Int, lastVisible: Int)
 }

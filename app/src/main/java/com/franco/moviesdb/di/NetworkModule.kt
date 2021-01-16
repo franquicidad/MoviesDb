@@ -5,17 +5,23 @@ import androidx.room.Room
 import com.franco.moviesdb.database.MovieDatabase
 import com.franco.moviesdb.database.actors.localDatasourceActors.LocalDatasourceActorsImpl
 import com.franco.moviesdb.database.actors.remoteDatasourceActors.RemoteDatasourceActorsImpl
+import com.franco.moviesdb.database.actorsBiographyLocal.ActorBioLocalDatasource
+import com.franco.moviesdb.database.actorsBiographyLocal.ActorBioLocalDatasourceImpl
 import com.franco.moviesdb.database.localDatasources.movies.localDataSourceMoviecomedy.LocalDataSourceMovieComedyImpl
 import com.franco.moviesdb.database.localDatasources.movies.localDatasourceTvAction.LocalDataSourceTvActionImpl
 import com.franco.moviesdb.database.localDatasources.movies.localDatasourceTvComedy.LocalDataSourceTvComedyImpl
 import com.franco.moviesdb.database.localDatasources.movies.localdatasourceMovieAction.LocalDatasourceMoviesActionImpl
 import com.franco.moviesdb.database.similarMovies.localDatasourceSimilar.LocalDatasourceSimilarImpl
+import com.franco.moviesdb.network.actorsBiographyRemote.ActorBioRemoteDatasource
+import com.franco.moviesdb.network.actorsBiographyRemote.ActorBioRemoteDatasourceImpl
 import com.franco.moviesdb.network.api.ApiService
 import com.franco.moviesdb.network.remoteDatasourceMovieAction.RemoteDatasourceMovieActionImpl
 import com.franco.moviesdb.network.remoteDatasourceMoviecomedy.RemoteDatasourceMovieComedyImpl
 import com.franco.moviesdb.network.remoteDatasourceSimilar.RemoteDatasourceSimilarMoviesImpl
 import com.franco.moviesdb.network.remoteDatasourceTvAction.RemoteDatasourceTvActionImpl
 import com.franco.moviesdb.network.remoteDatasourceTvComedy.RemoteDataSourceTvComedyImpl
+import com.franco.moviesdb.repository.actorsBioRepository.actorBioRepository
+import com.franco.moviesdb.repository.actorsBioRepository.actorBioRepositoryImpl
 import com.franco.moviesdb.repository.actorsRepository.ActorsRepository
 import com.franco.moviesdb.repository.movieActionRepository.MovieActionRepository
 import com.franco.moviesdb.repository.movieActionRepository.MovieActionRepositoryImpl
@@ -27,6 +33,7 @@ import com.franco.moviesdb.repository.tvActionRepository.TvActionRepository
 import com.franco.moviesdb.repository.tvActionRepository.TvActionRepositoryImpl
 import com.franco.moviesdb.repository.tvComedyRepository.TvComedyRepository
 import com.franco.moviesdb.repository.tvComedyRepository.TvComedyRepositoryImpl
+import com.franco.moviesdb.ui.actorsDetail.ActorsDetailViewModel
 import com.franco.moviesdb.ui.movie.action.MovieActionViewModel
 import com.franco.moviesdb.ui.movie.comedy.MovieComedyViewModel
 import com.franco.moviesdb.ui.movieDetails.DetailViewModel
@@ -62,31 +69,11 @@ object NetworkModule {
             .build()
 
 
-//    @Singleton
-//    @Provides
-//    fun provideOkHttpClient() = if (BuildConfig.DEBUG) {
-//        val loggingInterceptor = HttpLoggingInterceptor()
-//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-//        OkHttpClient.Builder()
-//                .addInterceptor(loggingInterceptor)
-//                .build()
-//    } else {
-//        OkHttpClient
-//                .Builder()
-//                .build()
-//    }
+
 
     @Singleton
     @Provides
     fun provideApiService(): ApiService {
-//        val client = OkHttpClient.Builder()
-//                .build()
-//        return Retrofit.Builder()
-//                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-//                .baseUrl(BASE_URL)
-//                .client(client)
-//            .build()
-//            .create(ApiService::class.java)
 
         val logger = HttpLoggingInterceptor()
         logger.level = HttpLoggingInterceptor.Level.BASIC
@@ -157,17 +144,26 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideActorsRepository(
-            localDatasourceActorsImpl: LocalDatasourceActorsImpl,
-            remoteDatasourceActorsImpl: RemoteDatasourceActorsImpl
+        localDatasourceActorsImpl: LocalDatasourceActorsImpl,
+        remoteDatasourceActorsImpl: RemoteDatasourceActorsImpl
     ): ActorsRepository {
         return ActorsRepository(localDatasourceActorsImpl, remoteDatasourceActorsImpl)
     }
 
     @Singleton
     @Provides
+    fun provideActorBioRepository(
+        actorsBioLocalDatasource: ActorBioLocalDatasourceImpl,
+        actorsBioRemoteDatasource: ActorBioRemoteDatasourceImpl
+    ): actorBioRepository {
+        return actorBioRepositoryImpl(actorsBioLocalDatasource, actorsBioRemoteDatasource)
+    }
+
+    @Singleton
+    @Provides
     fun provideSimilarRepository(
-            localDatasourceSimilarImpl: LocalDatasourceSimilarImpl,
-            remoteDatasourceSimilarImpl: RemoteDatasourceSimilarMoviesImpl
+        localDatasourceSimilarImpl: LocalDatasourceSimilarImpl,
+        remoteDatasourceSimilarImpl: RemoteDatasourceSimilarMoviesImpl
     ): SimilarRepository {
         return SimilarRepositoryImpl(localDatasourceSimilarImpl, remoteDatasourceSimilarImpl)
     }
@@ -181,29 +177,24 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun providesRepoToActorDetailVm(actorBioRepository: actorBioRepository): ActorsDetailViewModel {
+        return ActorsDetailViewModel(actorBioRepository)
+    }
+
+    @Singleton
+    @Provides
     fun provideRemoteDatasource(apiService: ApiService): RemoteDatasourceSimilarMoviesImpl {
         return RemoteDatasourceSimilarMoviesImpl(apiService)
     }
 
-//
-//    fun providesRepoToTvActionVm(repositoryImpl: RepositoryImpl): TvActionViewModel {
-//        return TvActionViewModel(repositoryImpl)
-//    }
-//
-//    fun providesRepoToTvComedyVm(repositoryImpl: RepositoryImpl): TvComedyViewModel {
-//        return TvComedyViewModel(repositoryImpl)
-//    }
 
     @Singleton
     @Provides
-    fun provideDetailViewModel(actorsRepo: ActorsRepository, similarRepo: SimilarRepository): DetailViewModel {
+    fun provideDetailViewModel(
+        actorsRepo: ActorsRepository,
+        similarRepo: SimilarRepository
+    ): DetailViewModel {
         return DetailViewModel(actorsRepo, similarRepository = similarRepo)
     }
 
-
-//    @Singleton
-//    @Provides
-//    fun providesRepoToVm(service: ApiService): MovieActionViewModel {
-//        return MovieActionViewModel(service)
-//    }
 }

@@ -23,8 +23,8 @@ class DetailViewModel @ViewModelInject constructor(
         return list
     }
 
-    suspend fun observableListActors(id: Int) {
-        repository.addActorsByMovie(id)
+    suspend fun observableListActors(movieOrTv: String, id: Int) {
+        repository.addActorsByMovie(movieOrTv, id)
     }
 
     /**
@@ -38,23 +38,23 @@ class DetailViewModel @ViewModelInject constructor(
     val movieIdenti: LiveData<Int> get() = _movieIdenti
 
     var viewModelId: Int = 0
+    var movieOrTv: String = ""
 
     @ExperimentalCoroutinesApi
     val lastVisible = MutableStateFlow(0)
 
     init {
         viewModelScope.launch {
-            val initId = viewModelId
 
-            notifyLastVisible(viewModelId, lastVisible = 0)
+            notifyLastVisible(movieOrTv, viewModelId, lastVisible = 0)
 
         }
     }
 
     @ExperimentalCoroutinesApi
-    fun notifyLastVisible(movieId: Int, lastVisible: Int) {
+    fun notifyLastVisible(movieOrTv: String, movieId: Int, lastVisible: Int) {
         viewModelScope.launch {
-            similarRepository.checkRequireNewPageSimilarMovies(movieId, lastVisible)
+            similarRepository.checkRequireNewPageSimilarMovies(movieOrTv, movieId, lastVisible)
 
         }
 
