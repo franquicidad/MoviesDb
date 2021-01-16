@@ -5,7 +5,6 @@ const val BASE_URL_POPULAR_MOVIE = "https://api.themoviedb.org/3/movie/popular"
 const val BASE_URL_POPULAR_TV = "https://api.themoviedb.org/3/movie/popular"
 const val IMAGE_URL = "http://image.tmdb.org/t/p/w342"
 
-const val ALONE_API = "7d51874568317dfd0c91db399be2bdec"
 const val APPEND_TO_SELECT_GENRES = "&with_genres="
 const val BASE_URL_TV_POPULAR = "https://api.themoviedb.org/3/tv/popular?api_key="
 const val APPEND_MOVIE = "movie"
