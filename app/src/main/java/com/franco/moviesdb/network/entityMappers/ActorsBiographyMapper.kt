@@ -6,14 +6,15 @@ import com.franco.moviesdb.network.model.ActorBiographyResponce as Network
 
 fun DataBase.fromDatabaseToDomain(): ActorBiographyResponce =
     ActorBiographyResponce(
-        id=0,
-            biography ?: "",
-            birthday ?: "",
-        deathday ?: "",
-            homepage ?: "",
-        name ?: "",
-            placeOfBirth ?: "",
-        profilePath ?: ""
+            id,
+            biography?:"",
+            birthday?:"",
+            deathday?:"",
+            homepage?:"",
+            name?:"",
+            placeOfBirth?:"",
+            profilePath?:""
+
     )
 
 fun ActorBiographyResponce.fromDomainToDatabase(): DataBase =
@@ -30,11 +31,17 @@ deathday?:"",
 
 fun Network.fromNetworkToDatabase(): DataBase =
     DataBase(
-        id, biography, birthday, deathday, homepage, name, placeOfBirth, profilePath
+        id, biography?:"", birthday?:"", deathday?:"", homepage?:"", name?:"", placeOfBirth?:"", profilePath?:""
     )
 
 fun Network.fromNetworkToDomain(): ActorBiographyResponce =
     ActorBiographyResponce(
         id,
-            biography?:"", birthday?:"", deathday?:"", homepage?:"", name?:"", placeOfBirth?:"", profilePath?:""
+            biography?:"",
+            birthday?:"",
+            deathday?:"",
+            homepage?:"",
+            name?:"",
+            placeOfBirth?:"",
+            profilePath?:""
     )
