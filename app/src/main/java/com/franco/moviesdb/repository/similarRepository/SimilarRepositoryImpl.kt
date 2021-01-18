@@ -42,8 +42,7 @@ class SimilarRepositoryImpl(
             } else {
                 movieOrParam = APPEND_TV
             }
-            val numPages = remoteDatasourceSimilar.getSimilarMovies(movieOrParam, movieId, page = 1)
-                .get(0).totalPages
+
             val newSimilarMovies =
                 remoteDatasourceSimilar.getSimilarMovies(movieOrParam, movieId, 1)
             val newDatabaseRelatedMovies = newSimilarMovies.map {

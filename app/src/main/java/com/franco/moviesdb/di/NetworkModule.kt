@@ -196,5 +196,12 @@ object NetworkModule {
     ): DetailViewModel {
         return DetailViewModel(actorsRepo, similarRepository = similarRepo)
     }
+@Singleton
+    @Provides
+    fun provideActorsDetailViewModel(
+        actorsBioRepo: actorBioRepository,
+    ): ActorsDetailViewModel {
+        return ActorsDetailViewModel(actorsBioRepo)
+    }
 
 }

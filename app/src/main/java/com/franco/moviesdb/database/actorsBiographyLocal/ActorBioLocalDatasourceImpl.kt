@@ -1,5 +1,7 @@
 package com.franco.moviesdb.database.actorsBiographyLocal
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import com.franco.moviesdb.database.MovieDatabase
 import com.franco.moviesdb.database.actors.actorsDao.ActorsBioDAO
 import com.franco.moviesdb.domain.ActorBiographyResponce
