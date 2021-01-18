@@ -1,5 +1,6 @@
 package com.franco.moviesdb.repository.actorsBioRepository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.franco.moviesdb.database.actorsBiographyLocal.ActorBioLocalDatasourceImpl
 import com.franco.moviesdb.domain.Actor
@@ -16,6 +17,8 @@ class actorBioRepositoryImpl(
     }
 
     override suspend fun retreiveAndAddToDatabase(actorId: Int) {
+        val list= actorsBioRemoteDatasource.getActorBiographyRemote(actorId)
+        Log.i("Bio","$list")
         val actor = actorsBioRemoteDatasource.getActorBiographyRemote(actorId)
         actorsBioLocalDatasource.insertActorToDb(actor)
     }
