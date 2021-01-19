@@ -66,20 +66,28 @@ interface ApiService {
 
     @GET("{movie}/{movie_id}/similar")
     suspend fun getSimilarMovies(
-        @Path("movie") movieOrTv: String,
-        @Path("movie_id") movieId: Int,
-        @Query("api_key") api_key: String,
-        @Query("language") language: String = "en-US",
-        @Query("page") page: Int?,
+            @Path("movie") movieOrTv: String,
+            @Path("movie_id") movieId: Int,
+            @Query("api_key") api_key: String,
+            @Query("language") language: String = "en-US",
+            @Query("page") page: Int?,
     ): SimilarMoviesResponce
 
     //https://api.themoviedb.org/3/person/935?api_key=7d51874568317dfd0c91db399be2bdec&language=en-US
     @GET("person/{actor_id}")
     suspend fun getActorBiography(
-        @Path("actor_id") movieId: Int,
-        @Query("api_key") api_key: String,
-        @Query("language") language: String = "en-US",
+            @Path("actor_id") movieId: Int,
+            @Query("api_key") api_key: String,
+            @Query("language") language: String = "en-US",
     ): ActorBiographyResponce
+
+    @GET("person/{actor_id}/movie_credits")
+    suspend fun getMoviesFromActor(
+            @Path("actor_id") actorId: Int,
+            @Query("api_key") api_key: String,
+            @Query("language") language: String = "en-US",
+    ): ActorPresentMovies
+
 }
 
 

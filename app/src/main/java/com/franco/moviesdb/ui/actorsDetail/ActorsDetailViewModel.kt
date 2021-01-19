@@ -13,16 +13,14 @@ class ActorsDetailViewModel @ViewModelInject constructor(
     private val actorBioRepository: actorBioRepository
 ) : ViewModel() {
 
-    suspend fun getActorBioFromDatabase(actorId: Int): Flow<ActorBiographyResponce> {
-        return actorBioRepository.getActorBioFromDb(actorId)
+    suspend fun getActorBioFromDatabase(actorId: Int): ActorBiographyResponce = actorBioRepository.getActorBioFromDb(actorId)
 
-    }
 
     suspend fun addActorToDatabase(actorId: Int) =
-        actorBioRepository.retreiveAndAddToDatabase(actorId)
+            actorBioRepository.retreiveAndAddToDatabase(actorId)
 
     private val _actorName = MutableLiveData<ActorBiographyResponce>()
-    val actorName : LiveData<ActorBiographyResponce> get() =_actorName
+    val actorName: LiveData<ActorBiographyResponce> get() = _actorName
 
     private val _actorsBirth = MutableLiveData<ActorBiographyResponce>()
     val actorsBirth : LiveData <ActorBiographyResponce> get() =_actorsBirth

@@ -40,51 +40,59 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding =ActorsDetailFragmentBinding.bind(view)
+        val binding = ActorsDetailFragmentBinding.bind(view)
 
-//        parentJob =lifecycleScope.launchWhenStarted {
-//            actorsDetailViewModel.getActorBioFromDatabase(actorId!!).collect {
-//                val url= IMAGE_URL+it.profilePath
-//                       binding.actorName.text= it.name
-//                        binding.actorImage.loadUrl(url)
-//                        binding.biography.text=it.biography
-//                        binding.dateOfBirth.text = it.birthday
-//                        binding.placeOfBirth.text =it.placeOfBirth
-//
-//            }
-//
-//            val job2 =launch {
-//                actorsDetailViewModel.addActorToDatabase(actorId!!)
-//
-//            }
-//        }
+        parentJob = lifecycleScope.launchWhenStarted {
+            async(Dispatchers.IO) {
+                actorsDetailViewModel.addActorToDatabase(actorId!!)
 
+            }.await()
 
-        lifecycleScope.launchWhenStarted {
-           parentJob = CoroutineScope(Dispatchers.IO).launch {
-                val job1 = launch {
-                    actorsDetailViewModel.getActorBioFromDatabase(actorId!!).collect {
-                        val url= IMAGE_URL+it.profilePath
-                       binding.actorName.text= it.name
-                        binding.actorImage.loadUrl(url)
-//                        bio=it.biography.toString()
-//                        birth =it.birthday.toString()
-//                        birthPlace=it.placeOfBirth
-//                        path=it.profilePath
-                    }
+            launch(Dispatchers.IO) {
+                val bio = actorsDetailViewModel.getActorBioFromDatabase(actorId!!)
 
-                    actorsDetailViewModel.addActorToDatabase(actorId!!)
+                launch(Dispatchers.Main) {
+                    val url = IMAGE_URL + bio.profilePath
+                    binding.actorImage.loadUrl(url)
 
+                    binding.actorName.text = bio.name
+                    binding.dateOfBirth.text = bio.birthday.toString()
+                    binding.placeOfBirth.text = bio.placeOfBirth
+                    binding.biograph.text = bio.biography
                 }
-//                val job2 = launch {
-//                }
-            }
-            parentJob!!.invokeOnCompletion {
-                val successOrError=it.toString()
-                println("$successOrError")
             }
 
         }
+
+
+//        lifecycleScope.launchWhenStarted {
+//           parentJob = CoroutineScope(Dispatchers.IO).launch {
+//               val job1= launch(Dispatchers.IO) {
+//                   actorsDetailViewModel.addActorToDatabase(actorId!!)
+//               }
+//                val job2 = launch {
+//                    val theString=actorId
+//                    val item= actorsDetailViewModel.getActorBioFromDatabase(actorId!!)
+//                        val url= IMAGE_URL+item.profilePath
+//                       binding.actorName.text= item.name
+//                        binding.actorImage.loadUrl(url)
+////                        bio=it.biography.toString()
+////                        birth =it.birthday.toString()
+////                        birthPlace=it.placeOfBirth
+////                        path=it.profilePath
+//
+//
+//
+//
+//                }
+//
+//            }
+//            parentJob!!.invokeOnCompletion {
+//                val successOrError=it.toString()
+//                println("$successOrError")
+//            }
+//
+//        }
         binding.apply {
 //            val url= IMAGE_URL+path
 //            actorName.text = name

@@ -11,9 +11,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ActorsBioDAO {
 
-
     @Query("SELECT * FROM actorsbiography WHERE id=:actorId")
-    fun getActorBioInfo(actorId: Int): Flow<ActorBiographyResponce>
+    fun getActorBioInfo(actorId: Int): ActorBiographyResponce
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertActorInfo(actor: ActorBiographyResponce)

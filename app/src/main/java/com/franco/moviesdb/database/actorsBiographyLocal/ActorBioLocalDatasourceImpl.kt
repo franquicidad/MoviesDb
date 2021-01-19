@@ -12,10 +12,8 @@ import javax.inject.Inject
 class ActorBioLocalDatasourceImpl @Inject constructor(
     private val movieDatabase: MovieDatabase
 ) : ActorBioLocalDatasource {
-    override fun getActorInfo(actorId: Int): Flow<ActorBiographyResponce> =
-        movieDatabase.actorsBioDAO().getActorBioInfo(actorId).map {
-            it.fromDatabaseToDomain()
-        }
+    override fun getActorInfo(actorId: Int): ActorBiographyResponce =
+            movieDatabase.actorsBioDAO().getActorBioInfo(actorId)?.fromDatabaseToDomain()
 
     override suspend fun insertActorToDb(actor: ActorBiographyResponce) {
         return movieDatabase.actorsBioDAO().insertActorInfo(actor.fromDomainToDatabase())

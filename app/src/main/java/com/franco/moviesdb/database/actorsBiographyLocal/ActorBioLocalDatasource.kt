@@ -5,6 +5,6 @@ import com.franco.moviesdb.domain.ActorBiographyResponce
 import kotlinx.coroutines.flow.Flow
 
 interface ActorBioLocalDatasource {
-    fun getActorInfo(actorId: Int): Flow<ActorBiographyResponce>
+    fun getActorInfo(actorId: Int): ActorBiographyResponce
     suspend fun insertActorToDb(actor: ActorBiographyResponce)
 }

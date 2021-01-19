@@ -12,7 +12,7 @@ class actorBioRepositoryImpl(
     private val actorsBioLocalDatasource: ActorBioLocalDatasourceImpl,
     private val actorsBioRemoteDatasource: ActorBioRemoteDatasourceImpl
 ) : actorBioRepository {
-    override suspend fun getActorBioFromDb(actorId: Int): Flow<ActorBiographyResponce> {
+    override suspend fun getActorBioFromDb(actorId: Int): ActorBiographyResponce {
         return actorsBioLocalDatasource.getActorInfo(actorId)
     }
 
