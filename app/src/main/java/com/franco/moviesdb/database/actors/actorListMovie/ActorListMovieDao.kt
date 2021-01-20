@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ActorListMovieDao {
 
-    @Query("SELECT * FROM actorlistmovies WHERE id =:actorId ")
+    @Query("SELECT * FROM actorlistmovies WHERE actorId =:actorId ")
     fun getAllMoviesByActorId(actorId: Int): Flow<List<ActorListMovies>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

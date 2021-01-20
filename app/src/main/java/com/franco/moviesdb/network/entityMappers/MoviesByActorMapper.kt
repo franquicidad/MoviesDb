@@ -7,25 +7,28 @@ import com.franco.moviesdb.domain.ActorListMovies
 
 fun Database.fromDatabaseToDomain(): ActorListMovies =
         ActorListMovies(
-                id, backdropPath, character, originalLanguage, overview, posterPath, releaseDate
+                id, backdropPath, character, actorId, originalLanguage, overview, posterPath, releaseDate
                 ?: "", title, rating
         )
 
 fun ActorListMovies.fromDomainToDatabase(): Database =
         Database(
                 id,
-                backdropPath,
-                character,
-                originalLanguage,
-                overview,
-                posterPath,
-                releaseDate,
-                title,
+                backdropPath ?: "",
+                character ?: "",
+                actorId = actorId ?: 0,
+                originalLanguage ?: "",
+                overview ?: "",
+                posterPath ?: "",
+                releaseDate ?: "",
+                title ?: "",
                 rating ?: 0.0
+
         )
 
 fun Network.fromNetworkToDomain(): ActorListMovies =
         ActorListMovies(
-                id, backdropPath, character, originalLanguage, overview, posterPath, releaseDate
+                id, backdropPath, character, actorId = 0, originalLanguage, overview, posterPath
+                ?: "", releaseDate
                 ?: "", title, rating
         )

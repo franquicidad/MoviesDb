@@ -13,11 +13,13 @@ class LocalDatasourceMovieByActorImpl @Inject constructor(
         private val movieDb: MovieDatabase
 ) : LocalDatasourceMovieByActor {
     override fun getAllMoviesByActorId(actorId: Int): Flow<List<ActorListMovies>> {
-        return movieDb.movieListByActorDAO().getAllMoviesByActorId(actorId).map {
+        val list = movieDb.movieListByActorDAO().getAllMoviesByActorId(actorId).map {
             it.map {
                 it.fromDatabaseToDomain()
             }
+
         }
+        return list
     }
 
     override suspend fun insertActors(actor: List<ActorListMovies>) {

@@ -46,10 +46,11 @@
 
                     <ImageView
                         android:id="@+id/image_poster_detail"
-                        android:layout_width="411dp"
-                        android:layout_height="233dp"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/n_negra"
+                        app:layout_constraintDimensionRatio="2:1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
@@ -58,69 +59,60 @@
 
                     <View
                         android:id="@+id/view2"
-                        android:layout_width="395dp"
-                        android:layout_height="243dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/scrim_screen_for_recyclerview"
-                        app:layout_constraintBottom_toTopOf="@+id/guideline"
+                        app:layout_constraintDimensionRatio="w,4:2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/image_poster_detail"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0">
+                        app:layout_constraintTop_toTopOf="parent">
 
                     </View>
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="712dp" />
 
 
                     <TextView
                         android:id="@+id/title_detail"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="12dp"
                         android:text="MovieTitle"
                         android:theme="@style/ThemeForAppTextTitleConfig"
                         android:translationY="-30dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.461"
+                        app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintStart_toStartOf="@+id/guideline3"
                         app:layout_constraintTop_toBottomOf="@+id/image_poster_detail" />
 
                     <androidx.appcompat.widget.AppCompatRatingBar
                         android:id="@+id/movie_list_display_rating"
                         style="?android:attr/ratingBarStyleSmall"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="8dp"
                         android:theme="@style/ThemeForRatingBar"
                         android:translationY="-30dp"
-                        app:layout_constraintBottom_toTopOf="@+id/guideline"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintEnd_toStartOf="@+id/rating_number"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/cardView2"
                         app:layout_constraintStart_toStartOf="@+id/guideline3"
-                        app:layout_constraintTop_toBottomOf="@+id/release_date"
-                        app:layout_constraintVertical_bias="0.102" />
+                        app:layout_constraintTop_toBottomOf="@+id/release_date" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/framelayout_actors"
-                        android:layout_width="399dp"
-                        android:layout_height="227dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_marginTop="20dp"
                         android:clipToPadding="true"
                         android:orientation="horizontal"
-                        android:padding="10dp"
+                        android:padding="30dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toTopOf="@+id/guideline"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/guideline2"
-                        app:layout_constraintVertical_bias="1.0"
+                        app:layout_constraintTop_toBottomOf="@+id/textView"
                         tools:context=".ui.MainActivity"
                         tools:listitem="@layout/item_actors">
 
@@ -131,7 +123,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
-                        app:layout_constraintBottom_toTopOf="@+id/guideline"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/framelayout_actors"
                         app:layout_constraintTop_toTopOf="@+id/framelayout_actors">
@@ -140,15 +131,16 @@
 
                     <TextView
                         android:id="@+id/title_overview"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="45dp"
                         android:text="@string/overview"
                         android:theme="@style/ThemeForAppTextTitleConfig"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.083"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/guideline" />
+                        app:layout_constraintTop_toBottomOf="@+id/framelayout_actors" />
 
                     <TextView
                         android:id="@+id/detail_overview"
@@ -178,7 +170,7 @@
 
                     <TextView
                         android:id="@+id/textSimilarMovies"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="32dp"
@@ -192,19 +184,18 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvSimilar"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
-                        tools:listitem="@layout/item_similar"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textSimilarMovies" />
+                        app:layout_constraintTop_toBottomOf="@id/textSimilarMovies"
+                        tools:listitem="@layout/item_similar" />
 
                     <TextView
                         android:id="@+id/language"
-                        android:layout_width="22dp"
-                        android:layout_height="17dp"
-                        android:layout_marginStart="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/headland_one"
                         android:text="EN"
                         android:textAllCaps="true"
@@ -213,23 +204,26 @@
                         android:textStyle="bold"
                         android:translationY="-30dp"
                         app:layout_constraintBottom_toBottomOf="@+id/rating_number"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/rating_number"
                         app:layout_constraintTop_toTopOf="@+id/rating_number"
                         app:layout_constraintVertical_bias="1.0" />
 
                     <TextView
                         android:id="@+id/rating_number"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
                         android:fontFamily="@font/headland_one"
+                        android:gravity="center"
                         android:text="6.7"
                         android:textAllCaps="true"
-
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold"
                         android:translationY="-30dp"
                         app:layout_constraintBottom_toBottomOf="@+id/movie_list_display_rating"
+                        app:layout_constraintEnd_toStartOf="@+id/language"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/movie_list_display_rating"
                         app:layout_constraintTop_toTopOf="@+id/movie_list_display_rating"
                         app:layout_constraintVertical_bias="0.515" />
@@ -238,18 +232,22 @@
                         android:id="@+id/release_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="8dp"
                         android:fontFamily="@font/headland_one"
                         android:text="TextView"
                         android:textColor="#FD605E5E"
                         android:textSize="18sp"
+
                         android:textStyle="bold"
                         android:translationY="-30dp"
-
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/title_detail"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/guideline3"
                         app:layout_constraintTop_toBottomOf="@+id/title_detail" />
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -278,41 +276,29 @@
                         android:orientation="vertical"
                         app:layout_constraintGuide_begin="162dp" />
 
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+
+                        android:layout_marginTop="36dp"
+                        android:text="@string/cast"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:theme="@style/ThemeForAppTextTitleConfig"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/guideline4"
+                        tools:text="Cast" />
+
                     <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline2"
+                        android:id="@+id/guideline4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="376dp" />
-
-                    <View
-                        android:id="@+id/view3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="5dp"
-                        android:background="#FD605E5E"
-                        app:layout_constraintBottom_toTopOf="@+id/framelayout_actors"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/guideline2"
-                        app:layout_constraintVertical_bias="0.322" />
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:theme="@style/ThemeForAppTextTitleConfig"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="11dp"
-                        android:text="@string/cast"
-
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@+id/framelayout_actors"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view3"
-                        tools:text="Cast" />
+                        app:layout_constraintGuide_begin="335dp" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

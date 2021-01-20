@@ -3,6 +3,7 @@ package com.franco.moviesdb.di
 import android.content.Context
 import androidx.room.Room
 import com.franco.moviesdb.database.MovieDatabase
+import com.franco.moviesdb.database.actors.actorListMovie.localDatasourceListMoviesByActor.LocalDatasourceMovieByActorImpl
 import com.franco.moviesdb.database.actors.localDatasourceActors.LocalDatasourceActorsImpl
 import com.franco.moviesdb.database.actors.remoteDatasourceActors.RemoteDatasourceActorsImpl
 import com.franco.moviesdb.database.actorsBiographyLocal.ActorBioLocalDatasource
@@ -16,12 +17,15 @@ import com.franco.moviesdb.network.actorsBiographyRemote.ActorBioRemoteDatasourc
 import com.franco.moviesdb.network.actorsBiographyRemote.ActorBioRemoteDatasourceImpl
 import com.franco.moviesdb.network.api.ApiService
 import com.franco.moviesdb.network.remoteDatasourceMovieAction.RemoteDatasourceMovieActionImpl
+import com.franco.moviesdb.network.remoteDatasourceMovieListByActor.RemoteDatasourceMovieListByActorImpl
 import com.franco.moviesdb.network.remoteDatasourceMoviecomedy.RemoteDatasourceMovieComedyImpl
 import com.franco.moviesdb.network.remoteDatasourceSimilar.RemoteDatasourceSimilarMoviesImpl
 import com.franco.moviesdb.network.remoteDatasourceTvAction.RemoteDatasourceTvActionImpl
 import com.franco.moviesdb.network.remoteDatasourceTvComedy.RemoteDataSourceTvComedyImpl
 import com.franco.moviesdb.repository.actorsBioRepository.actorBioRepository
 import com.franco.moviesdb.repository.actorsBioRepository.actorBioRepositoryImpl
+import com.franco.moviesdb.repository.actorsMovieListRepository.ActorsMovieListRepository
+import com.franco.moviesdb.repository.actorsMovieListRepository.ActorsMovieListRepositoryImpl
 import com.franco.moviesdb.repository.actorsRepository.ActorsRepository
 import com.franco.moviesdb.repository.movieActionRepository.MovieActionRepository
 import com.franco.moviesdb.repository.movieActionRepository.MovieActionRepositoryImpl
@@ -162,10 +166,19 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideSimilarRepository(
-        localDatasourceSimilarImpl: LocalDatasourceSimilarImpl,
-        remoteDatasourceSimilarImpl: RemoteDatasourceSimilarMoviesImpl
+            localDatasourceSimilarImpl: LocalDatasourceSimilarImpl,
+            remoteDatasourceSimilarImpl: RemoteDatasourceSimilarMoviesImpl
     ): SimilarRepository {
         return SimilarRepositoryImpl(localDatasourceSimilarImpl, remoteDatasourceSimilarImpl)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieListByActorId(
+            localDatasourceMovieByActor: LocalDatasourceMovieByActorImpl,
+            remoteDatasourceMovieListByActor: RemoteDatasourceMovieListByActorImpl
+    ): ActorsMovieListRepository {
+        return ActorsMovieListRepositoryImpl(localDatasourceMovieByActor, remoteDatasourceMovieListByActor)
     }
 
 
@@ -177,8 +190,8 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesRepoToActorDetailVm(actorBioRepository: actorBioRepository): ActorsDetailViewModel {
-        return ActorsDetailViewModel(actorBioRepository)
+    fun providesRepoToActorDetailVm(actorBioRepository: actorBioRepository, actorMovieListRepo: ActorsMovieListRepository): ActorsDetailViewModel {
+        return ActorsDetailViewModel(actorBioRepository, actorMovieListRepo)
     }
 
     @Singleton
@@ -200,8 +213,9 @@ object NetworkModule {
     @Provides
     fun provideActorsDetailViewModel(
         actorsBioRepo: actorBioRepository,
-    ): ActorsDetailViewModel {
-        return ActorsDetailViewModel(actorsBioRepo)
+        actorMovieListRepo: ActorsMovieListRepository
+): ActorsDetailViewModel {
+    return ActorsDetailViewModel(actorsBioRepo, actorMovieListRepo)
     }
 
 }

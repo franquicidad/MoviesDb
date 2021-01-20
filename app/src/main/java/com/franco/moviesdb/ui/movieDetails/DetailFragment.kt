@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -115,13 +116,20 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             detailModel.notifyLastVisible(typeMovieOrTv!!, theSelectedRecyclerViewid!!, 0)
 
             val theId: Int? = theSelectedRecyclerViewid
+            detailModel.id.observe(viewLifecycleOwner, Observer {
+                theSelectedRecyclerViewid = it
+            })
+
+            detailModel.typeMovieOrTv.observe(viewLifecycleOwner, Observer {
+                typeMovieOrTv = it
+            })
 
 
             detailModel.viewModelId = theSelectedRecyclerViewid!!
 
             detailModel.movieOrTv = typeMovieOrTv!!
 
-            theId?.let { detailModel.observableListActors(typeMovieOrTv!!, it) }
+            detailModel.observableListActors(typeMovieOrTv!!, theSelectedRecyclerViewid!!)
 
 
             val parentJob = CoroutineScope(IO).launch {
@@ -130,6 +138,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                         val second = id
                         detailModel.passTofunctionThoughtDetail(second)
                             .collect { listOfActorsForMovie ->
+                                Log.i("Anf", "$listOfActorsForMovie")
                                 pagingAdapter.submitList(listOfActorsForMovie)
                             }
                     }

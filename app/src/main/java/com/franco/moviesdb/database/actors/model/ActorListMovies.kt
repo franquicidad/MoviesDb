@@ -9,6 +9,7 @@ data class ActorListMovies(
         val id: Int,
         val backdropPath: String,
         val character: String,
+        val actorId: Int?,
         val originalLanguage: String,
         val overview: String,
         val posterPath: String,

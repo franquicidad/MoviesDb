@@ -51,7 +51,7 @@
 
                     <LinearLayout
                         android:id="@+id/linearLayout"
-                        android:layout_width="373dp"
+                        android:layout_width="0dp"
                         android:layout_height="2013dp"
                         android:background="@drawable/personalized_cardview"
                         android:orientation="vertical"
@@ -125,13 +125,16 @@
                         </TextView>
 
                         <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerMovieActor"
                             android:layout_width="match_parent"
-                            android:layout_height="700dp"
-                            android:layout_marginStart="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+
                             android:layout_marginTop="20dp"
-                            android:layout_marginEnd="20dp"
+                            android:layout_marginEnd="10dp"
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                            app:spanCount="3">
+                            app:spanCount="2"
+                            tools:listitem="@layout/item_layout_reclycler_movies_and_tv">
 
                         </androidx.recyclerview.widget.RecyclerView>
 

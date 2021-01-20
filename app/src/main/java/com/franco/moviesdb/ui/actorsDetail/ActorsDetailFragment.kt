@@ -1,13 +1,16 @@
 package com.franco.moviesdb.ui.actorsDetail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import com.franco.moviesdb.R
 import com.franco.moviesdb.databinding.ActorsDetailFragmentBinding
-import com.franco.moviesdb.util.APPEND_MOVIE
+import com.franco.moviesdb.ui.adapter.MovieListByActorAdapter
 import com.franco.moviesdb.util.IMAGE_URL
 import com.franco.moviesdb.util.loadUrl
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,14 +23,7 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
     private val actorsDetailViewModel: ActorsDetailViewModel by viewModels()
 
     var actorId: Int? = null
-//
-//    private lateinit var name:String
-//    private lateinit var bio:String
-//    private lateinit var birth:String
-//    //private lateinit var death:String
-//    //private lateinit var pageHome:String
-//    private lateinit var birthPlace:String
-//    private lateinit var path:String
+
 
     private var parentJob:Job?=null
 
@@ -40,8 +36,18 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = ActorsDetailFragmentBinding.bind(view)
 
+        actorsDetailViewModel.id.observe(viewLifecycleOwner, Observer {
+            actorId = it
+        })
+        val binding = ActorsDetailFragmentBinding.bind(view)
+        val movieListByActorAdapter = MovieListByActorAdapter(lifecycleScope)
+        binding.recyclerMovieActor.apply {
+            adapter = movieListByActorAdapter
+            val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+            layoutManager = gridLayoutManager
+            setHasFixedSize(true)
+        }
         parentJob = lifecycleScope.launchWhenStarted {
             async(Dispatchers.IO) {
                 actorsDetailViewModel.addActorToDatabase(actorId!!)
@@ -51,7 +57,7 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
             launch(Dispatchers.IO) {
                 val bio = actorsDetailViewModel.getActorBioFromDatabase(actorId!!)
 
-                launch(Dispatchers.Main) {
+                async(Dispatchers.Main) {
                     val url = IMAGE_URL + bio.profilePath
                     binding.actorImage.loadUrl(url)
 
@@ -59,51 +65,30 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
                     binding.dateOfBirth.text = bio.birthday.toString()
                     binding.placeOfBirth.text = bio.placeOfBirth
                     binding.biograph.text = bio.biography
+                }.await()
+
+                async(Dispatchers.IO) {
+                    actorsDetailViewModel.retreiveAndAddToDb(actorId!!)
+                }.await()
+
+                launch {
+
+                    val list = actorsDetailViewModel.getAllMoviesActorId(actorId!!)
+                    Log.i("Any", "$list")
+
+                    list.let {
+                        it.collect {
+                            movieListByActorAdapter.submitList(it)
+                        }
+                    }
                 }
             }
 
         }
 
 
-//        lifecycleScope.launchWhenStarted {
-//           parentJob = CoroutineScope(Dispatchers.IO).launch {
-//               val job1= launch(Dispatchers.IO) {
-//                   actorsDetailViewModel.addActorToDatabase(actorId!!)
-//               }
-//                val job2 = launch {
-//                    val theString=actorId
-//                    val item= actorsDetailViewModel.getActorBioFromDatabase(actorId!!)
-//                        val url= IMAGE_URL+item.profilePath
-//                       binding.actorName.text= item.name
-//                        binding.actorImage.loadUrl(url)
-////                        bio=it.biography.toString()
-////                        birth =it.birthday.toString()
-////                        birthPlace=it.placeOfBirth
-////                        path=it.profilePath
-//
-//
-//
-//
-//                }
-//
-//            }
-//            parentJob!!.invokeOnCompletion {
-//                val successOrError=it.toString()
-//                println("$successOrError")
-//            }
-//
-//        }
-        binding.apply {
-//            val url= IMAGE_URL+path
-//            actorName.text = name
-//            biography.text = bio
-//            dateOfBirth.text=birth
-//            placeOfBirth.text= birthPlace
-//            actorImage.loadUrl(url)
-
         }
 
-    }
 
     override fun onDestroy() {
         super.onDestroy()
