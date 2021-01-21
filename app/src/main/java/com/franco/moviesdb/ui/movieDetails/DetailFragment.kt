@@ -25,6 +25,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
 
     private val detailModel: DetailViewModel by viewModels()
 
+
     var typeMovieOrTv: String? = null
     var theSelectedRecyclerViewid: Int? = null
     var movieName: String? = null

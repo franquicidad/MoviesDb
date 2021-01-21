@@ -37,9 +37,6 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        actorsDetailViewModel.id.observe(viewLifecycleOwner, Observer {
-            actorId = it
-        })
         val binding = ActorsDetailFragmentBinding.bind(view)
         val movieListByActorAdapter = MovieListByActorAdapter(lifecycleScope)
         binding.recyclerMovieActor.apply {
@@ -48,6 +45,10 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
             layoutManager = gridLayoutManager
             setHasFixedSize(true)
         }
+
+        actorsDetailViewModel.id.observe(viewLifecycleOwner, Observer {
+            actorId = it
+        })
         parentJob = lifecycleScope.launchWhenStarted {
             async(Dispatchers.IO) {
                 actorsDetailViewModel.addActorToDatabase(actorId!!)

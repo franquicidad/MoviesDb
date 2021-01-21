@@ -3,6 +3,9 @@ package com.franco.moviesdb.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,19 +18,31 @@ import com.franco.moviesdb.util.collectFlow
 import com.franco.moviesdb.util.loadUrl
 import com.franco.moviesdb.util.onClickEvents
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class MovieListByActorAdapter(private val scope: CoroutineScope) :
         ListAdapter<ActorListMovies, MovieListByActorAdapter.ItemViewHolder>(DiffCallBackFromMovieActor()) {
+
+    var navController: NavController? = null
+
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemLayoutReclyclerMoviesAndTvBinding.bind(itemView)
+
+        @ExperimentalCoroutinesApi
         fun bind(item: ActorListMovies) = with(binding) {
+
             val url = IMAGE_URL + item.posterPath
-            movieTitle.text = item.title
-            binding.rvImageMovie.loadUrl(url)
+            with(binding) {
+                movieTitle.text = item.title
+                binding.rvImageMovie.loadUrl(url)
+            }
+
 
         }
 
-    }
+        }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
@@ -40,6 +55,22 @@ class MovieListByActorAdapter(private val scope: CoroutineScope) :
         val item = getItem(position)
         bind(item)
         scope.collectFlow(itemView.onClickEvents) {
+            val movieItemId = item.id
+            val url = IMAGE_URL + item.posterPath
+
+            val bundle = bundleOf(
+                    "id" to item.id,
+                    "movieName" to item.title,
+                    "overview" to item.overview,
+                    "poster" to url,
+                    "rating" to item.rating,
+                    "lang" to item.originalLanguage,
+                    "release" to item.releaseDate,
+                    "backimage" to item.backdropPath
+            )
+            navController = Navigation.findNavController(it)
+            navController!!.navigate(R.id.action_actorsDetailFragment_to_detailFragment, bundle)
+
 
         }
     }
