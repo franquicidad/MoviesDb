@@ -1,4 +1,4 @@
-package com.franco.moviesdb.ui.movieDetails
+package com.franco.moviesdb.ui.similarMoviesFragment
 
 import android.os.Bundle
 import android.util.Log
@@ -10,9 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.franco.moviesdb.R
-import com.franco.moviesdb.databinding.DetailFragmentBinding
-import com.franco.moviesdb.ui.adapter.ActorsAdapter
-import com.franco.moviesdb.ui.adapter.PagingSimilarMoviesAdapter
+import com.franco.moviesdb.databinding.SimilarDetailFragmentBinding
+import com.franco.moviesdb.ui.adapter.SimilarActorsAdapter
 import com.franco.moviesdb.ui.adapter.PagingSimilarMoviesAdapterToFragment
 import com.franco.moviesdb.util.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,9 +21,10 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class DetailFragment : Fragment(R.layout.detail_fragment) {
+class SimilarDetailFragment : Fragment(R.layout.similar_detail_fragment) {
 
-    private val detailModel: DetailViewModel by viewModels()
+    @ExperimentalCoroutinesApi
+    private val similarDetailModel: SimilarDetailViewModel by viewModels()
 
 
     var typeMovieOrTv: String? = null
@@ -56,9 +56,9 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = DetailFragmentBinding.bind(view)
-        val pagingAdapter = ActorsAdapter(lifecycleScope)
-        val similarAdapter = PagingSimilarMoviesAdapter(lifecycleScope)
+        val binding = SimilarDetailFragmentBinding.bind(view)
+        val pagingAdapter = SimilarActorsAdapter(lifecycleScope)
+        val similarAdapter = PagingSimilarMoviesAdapterToFragment(lifecycleScope)
         framelayout_actors.apply {
             adapter = pagingAdapter
             setHorizontalLayout()
@@ -75,10 +75,10 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     val scrollId = theSelectedRecyclerViewid
-                    detailModel.notifyLastVisible(
-                        typeMovieOrTv!!,
-                        scrollId!!,
-                        (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                    similarDetailModel.notifyLastVisible(
+                            typeMovieOrTv!!,
+                            scrollId!!,
+                            (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                     )
 
                 }
@@ -112,53 +112,53 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         lifecycleScope.launch {
 
             collectFlow(rvSimilar.lastVisibleEventsLinearActors) {
-                detailModel.lastVisible.value = it
+                similarDetailModel.lastVisible.value = it
             }
 
-            detailModel.notifyLastVisible(typeMovieOrTv!!, theSelectedRecyclerViewid!!, 0)
+            similarDetailModel.notifyLastVisible(typeMovieOrTv!!, theSelectedRecyclerViewid!!, 0)
 
             val theId: Int? = theSelectedRecyclerViewid
-            detailModel.id.observe(viewLifecycleOwner, Observer {
+            similarDetailModel.id.observe(viewLifecycleOwner, Observer {
                 theSelectedRecyclerViewid = it
             })
 
-            detailModel.typeMovieOrTv.observe(viewLifecycleOwner, Observer {
+            similarDetailModel.typeMovieOrTv.observe(viewLifecycleOwner, Observer {
                 typeMovieOrTv = it
             })
 
 
-            detailModel.viewModelId = theSelectedRecyclerViewid!!
+            similarDetailModel.viewModelId = theSelectedRecyclerViewid!!
 
-            detailModel.movieOrTv = typeMovieOrTv!!
+            similarDetailModel.movieOrTv = typeMovieOrTv!!
 
-            detailModel.observableListActors(typeMovieOrTv!!, theSelectedRecyclerViewid!!)
+            similarDetailModel.observableListActors(typeMovieOrTv!!, theSelectedRecyclerViewid!!)
 
 
             val parentJob = CoroutineScope(IO).launch {
                 val job1 = launch {
                     theId?.let { id ->
                         val second = id
-                        detailModel.passTofunctionThoughtDetail(second)
-                            .collect { listOfActorsForMovie ->
-                                Log.i("Anf", "$listOfActorsForMovie")
-                                pagingAdapter.submitList(listOfActorsForMovie)
-                            }
+                        similarDetailModel.passTofunctionThoughtDetail(second)
+                                .collect { listOfActorsForMovie ->
+                                    Log.i("Anf", "$listOfActorsForMovie")
+                                    pagingAdapter.submitList(listOfActorsForMovie)
+                                }
                     }
                 }
 
                 val job2 = launch {
                     theId?.let {
                         val oneId = theSelectedRecyclerViewid
-                        detailModel.getSimilarMoviesByMovie(oneId!!).collect {
+                        similarDetailModel.getSimilarMoviesByMovie(oneId!!).collect {
                             if (it.size != 0) {
                                 val list = it
                                 Log.i("Sim", "$list")
                                 similarAdapter.submitList(it)
                             } else {
-                                detailModel.notifyLastVisible(
-                                    typeMovieOrTv!!,
-                                    theSelectedRecyclerViewid!!,
-                                    0
+                                similarDetailModel.notifyLastVisible(
+                                        typeMovieOrTv!!,
+                                        theSelectedRecyclerViewid!!,
+                                        0
                                 )
                             }
                         }

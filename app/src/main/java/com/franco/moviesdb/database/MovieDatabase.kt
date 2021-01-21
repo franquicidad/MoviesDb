@@ -27,7 +27,7 @@ import com.franco.moviesdb.network.api.CastTypeConverter
             SimilarMovies::class,
             ActorBiographyResponce::class,
             ActorListMovies::class
-        ], version = 26
+        ], version = 27
 )
 @TypeConverters(CastTypeConverter::class)
 abstract class MovieDatabase : RoomDatabase() {

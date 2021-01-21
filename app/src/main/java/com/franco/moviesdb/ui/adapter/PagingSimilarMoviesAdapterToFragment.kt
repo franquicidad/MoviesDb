@@ -20,8 +20,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-class PagingSimilarMoviesAdapter(private val scope: CoroutineScope) :
-        ListAdapter<SimilarMovies, PagingSimilarMoviesAdapter.ItemViewHolder>(DiffCallBackSimilar()) {
+class PagingSimilarMoviesAdapterToFragment(private val scope: CoroutineScope) :
+        ListAdapter<SimilarMovies, PagingSimilarMoviesAdapterToFragment.ItemViewHolder>(DiffCallBackSimilarToDetail()) {
     var navController: NavController? = null
 
 
@@ -80,13 +80,13 @@ class PagingSimilarMoviesAdapter(private val scope: CoroutineScope) :
 
             )
             navController = Navigation.findNavController(it!!)
-            navController!!.navigate(R.id.action_detailFragment_to_similarDetailFragment, bundle)
+            navController!!.navigate(R.id.action_similarDetailFragment_to_detailFragment, bundle)
 
         }
     }
 }
 
-class DiffCallBackSimilar : DiffUtil.ItemCallback<SimilarMovies>() {
+class DiffCallBackSimilarToDetail : DiffUtil.ItemCallback<SimilarMovies>() {
     override fun areItemsTheSame(oldItem: SimilarMovies, newItem: SimilarMovies): Boolean {
         return oldItem.id == newItem.id
     }

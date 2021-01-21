@@ -41,6 +41,7 @@ import com.franco.moviesdb.ui.actorsDetail.ActorsDetailViewModel
 import com.franco.moviesdb.ui.movie.action.MovieActionViewModel
 import com.franco.moviesdb.ui.movie.comedy.MovieComedyViewModel
 import com.franco.moviesdb.ui.movieDetails.DetailViewModel
+import com.franco.moviesdb.ui.similarMoviesFragment.SimilarDetailViewModel
 import com.franco.moviesdb.util.BASE_URL
 import com.franco.moviesdb.util.DATABASE_MOVIE_NAME
 import com.google.gson.GsonBuilder
@@ -204,18 +205,28 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideDetailViewModel(
-        actorsRepo: ActorsRepository,
-        similarRepo: SimilarRepository
+            actorsRepo: ActorsRepository,
+            similarRepo: SimilarRepository
     ): DetailViewModel {
         return DetailViewModel(actorsRepo, similarRepository = similarRepo)
     }
-@Singleton
+
+    @Singleton
+    @Provides
+    fun provideSimilarDetailViewModel(
+            actorsRepo: ActorsRepository,
+            similarRepo: SimilarRepository
+    ): SimilarDetailViewModel {
+        return SimilarDetailViewModel(actorsRepo, similarRepository = similarRepo)
+    }
+
+    @Singleton
     @Provides
     fun provideActorsDetailViewModel(
-        actorsBioRepo: actorBioRepository,
-        actorMovieListRepo: ActorsMovieListRepository
-): ActorsDetailViewModel {
-    return ActorsDetailViewModel(actorsBioRepo, actorMovieListRepo)
+            actorsBioRepo: actorBioRepository,
+            actorMovieListRepo: ActorsMovieListRepository
+    ): ActorsDetailViewModel {
+        return ActorsDetailViewModel(actorsBioRepo, actorMovieListRepo)
     }
 
 }

@@ -15,7 +15,7 @@ interface SimilarDao {
     @Query("SELECT COUNT(id) FROM SimilarMovies")
     suspend fun similarCount(): Int
 
-    @Query("SELECT * FROM similarmovies WHERE relatedToMovieId =:movieId ORDER BY releaseDate ")
+    @Query("SELECT * FROM similarmovies WHERE relatedToMovieId =:movieId ORDER BY releaseDate DESC ")
     fun getAllSimilarByMovieId(movieId: Int): Flow<List<SimilarMovies>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

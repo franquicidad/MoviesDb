@@ -6,6 +6,7 @@ class SimilarMovies(
         val id: Int,
         val relatedToMovieId: Int?,
         var totalPages: Int?,
+        val originalName: String?,
         @SerializedName("poster_path")
         val posterPath: String?,
         @SerializedName("backdrop_path")

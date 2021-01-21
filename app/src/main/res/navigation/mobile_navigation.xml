@@ -66,6 +66,9 @@
         <action
             android:id="@+id/action_detailFragment_to_actorsDetailFragment"
             app:destination="@id/actorsDetailFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_similarDetailFragment"
+            app:destination="@id/similarDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/actorsDetailFragment"
@@ -73,6 +76,17 @@
         android:label="ActorsDetailFragment">
         <action
             android:id="@+id/action_actorsDetailFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/similarDetailFragment"
+        android:name="com.franco.moviesdb.ui.similarMoviesFragment.SimilarDetailFragment"
+        android:label="SimilarDetailFragment">
+        <action
+            android:id="@+id/action_similarDetailFragment_to_actorsDetailFragment"
+            app:destination="@id/actorsDetailFragment" />
+        <action
+            android:id="@+id/action_similarDetailFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
 

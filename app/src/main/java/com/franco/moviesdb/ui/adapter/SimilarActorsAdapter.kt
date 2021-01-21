@@ -20,8 +20,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-class ActorsAdapter(private val scope: CoroutineScope) :
-        ListAdapter<Actor, ActorsAdapter.ItemViewHolder>(DiffCallBackFromSimilarAdapterActors()) {
+class SimilarActorsAdapter(private val scope: CoroutineScope) :
+        ListAdapter<Actor, SimilarActorsAdapter.ItemViewHolder>(DiffCallBackFromSimilarAdapterActors()) {
 
     var navController: NavController? = null
 
@@ -40,10 +40,10 @@ class ActorsAdapter(private val scope: CoroutineScope) :
             val actorId = item.Id
 
             val bundle = bundleOf(
-                "actorId" to actorId
+                    "actorId" to actorId
             )
             navController = Navigation.findNavController(it!!)
-            navController!!.navigate(R.id.action_detailFragment_to_actorsDetailFragment, bundle)
+            navController!!.navigate(R.id.action_similarDetailFragment_to_actorsDetailFragment, bundle)
 
         }
     }
@@ -67,7 +67,7 @@ class ActorsAdapter(private val scope: CoroutineScope) :
 
 }
 
-class DiffCallBackFromAdapterActors : DiffUtil.ItemCallback<Actor>() {
+class DiffCallBackFromSimilarAdapterActors : DiffUtil.ItemCallback<Actor>() {
     override fun areItemsTheSame(oldItem: Actor, newItem: Actor): Boolean {
         return oldItem.Id == newItem.Id
     }

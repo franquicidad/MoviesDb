@@ -6,7 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class SimilarMovies(
         @SerializedName("backdrop_path")
         val backdropPath: String?,
-
+        @SerializedName("original_name")
+        val originalName: String?,
         val totalPages: Int?,
         val id: Int?,
         @SerializedName("original_language")

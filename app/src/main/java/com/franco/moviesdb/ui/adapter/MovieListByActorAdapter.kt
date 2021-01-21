@@ -37,9 +37,7 @@ class MovieListByActorAdapter(private val scope: CoroutineScope) :
                 binding.rvImageMovie.loadUrl(url)
             }
 
-
         }
-
         }
 
 
@@ -51,22 +49,27 @@ class MovieListByActorAdapter(private val scope: CoroutineScope) :
         )
     }
 
+
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) = with(holder) {
         val item = getItem(position)
         bind(item)
         scope.collectFlow(itemView.onClickEvents) {
+
             val movieItemId = item.id
             val url = IMAGE_URL + item.posterPath
+            val backUrl = IMAGE_URL + item.backdropPath
 
             val bundle = bundleOf(
+
                     "id" to item.id,
+                    "movieOrTv" to "movie",
                     "movieName" to item.title,
                     "overview" to item.overview,
                     "poster" to url,
                     "rating" to item.rating,
                     "lang" to item.originalLanguage,
                     "release" to item.releaseDate,
-                    "backimage" to item.backdropPath
+                    "backimage" to backUrl
             )
             navController = Navigation.findNavController(it)
             navController!!.navigate(R.id.action_actorsDetailFragment_to_detailFragment, bundle)

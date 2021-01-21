@@ -9,6 +9,7 @@ fun NetworkSim.fromNetToDomain(): SimilarMovies =
                 id ?: 0,
                 relatedToMovieId = 0,
                 totalPages ?: 1,
+                originalName = originalName ?: "",
                 posterPath ?: "",
                 backdropPath ?: "",
                 title ?: "",
@@ -22,6 +23,7 @@ fun NetworkSim.fromNetToDb(): DatabaseSim =
         DatabaseSim(
                 id ?: 0,
                 relatedToMovieId = 0,
+                originalName = originalName ?: "",
                 backdropPath ?: "",
                 originalLanguage ?: "",
                 releaseDate ?: "",
@@ -36,6 +38,7 @@ fun DatabaseSim.fromDbToDomain(): SimilarMovies =
                 id,
                 relatedToMovieId ?: 0,
                 totalPages = 1,
+                originalName = originalName ?: "",
                 posterPath ?: "",
                 backdropPath ?: "",
                 title ?: "",
@@ -47,13 +50,14 @@ fun DatabaseSim.fromDbToDomain(): SimilarMovies =
 
 fun SimilarMovies.fromDomainToDB(): DatabaseSim =
         DatabaseSim(
-            id,
-            relatedToMovieId = relatedToMovieId,
-            backdropPath = backdropPath ?: "",
-            originalLanguage = originalLanguage ?: "",
-            releaseDate = releaseDate ?: "",
-            posterPath ?: "",
-            title ?: "",
-            overview ?: "",
-            rating ?: 0.0
+                id,
+                relatedToMovieId = relatedToMovieId,
+                originalName ?: "",
+                backdropPath = backdropPath ?: "",
+                originalLanguage = originalLanguage ?: "",
+                releaseDate = releaseDate ?: "",
+                posterPath ?: "",
+                title ?: "",
+                overview ?: "",
+                rating ?: 0.0
         )

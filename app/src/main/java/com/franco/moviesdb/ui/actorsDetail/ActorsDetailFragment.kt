@@ -75,10 +75,11 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
                 launch {
 
                     val list = actorsDetailViewModel.getAllMoviesActorId(actorId!!)
-                    Log.i("Any", "$list")
 
                     list.let {
                         it.collect {
+                            Log.i("Any", "$it")
+
                             movieListByActorAdapter.submitList(it)
                         }
                     }
