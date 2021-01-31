@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.franco.moviesdb.R
 import com.franco.moviesdb.databinding.ActorsDetailFragmentBinding
+import com.franco.moviesdb.domain.ActorBiographyResponce
 import com.franco.moviesdb.ui.adapter.MovieListByActorAdapter
 import com.franco.moviesdb.util.IMAGE_URL
 import com.franco.moviesdb.util.loadUrl
@@ -56,16 +57,23 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
             }.await()
 
             launch(Dispatchers.IO) {
-                val bio = actorsDetailViewModel.getActorBioFromDatabase(actorId!!)
+                val bio: ActorBiographyResponce? = actorsDetailViewModel.getActorBioFromDatabase(actorId!!)
+
 
                 async(Dispatchers.Main) {
-                    val url = IMAGE_URL + bio.profilePath
-                    binding.actorImage.loadUrl(url)
+                    bio?.let {
+                        binding.actorName.text = bio.name
 
-                    binding.actorName.text = bio.name
-                    binding.dateOfBirth.text = bio.birthday.toString()
-                    binding.placeOfBirth.text = bio.placeOfBirth
-                    binding.biograph.text = bio.biography
+                        val url: String?
+                        url = IMAGE_URL + bio.profilePath
+
+                        binding.actorImage.loadUrl(url)
+
+                        binding.dateOfBirth.text = bio.birthday.toString()
+                        binding.placeOfBirth.text = bio.placeOfBirth
+                        binding.biograph.text = bio.biography
+                    }
+
                 }.await()
 
                 async(Dispatchers.IO) {

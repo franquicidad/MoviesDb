@@ -2,8 +2,9 @@ package com.franco.moviesdb.ui.movieDetails
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.appcompat.app.ActionBar
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -11,18 +12,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.franco.moviesdb.R
 import com.franco.moviesdb.databinding.DetailFragmentBinding
+import com.franco.moviesdb.ui.MainActivity
 import com.franco.moviesdb.ui.adapter.ActorsAdapter
 import com.franco.moviesdb.ui.adapter.PagingSimilarMoviesAdapter
-import com.franco.moviesdb.ui.adapter.PagingSimilarMoviesAdapterToFragment
 import com.franco.moviesdb.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.detail_fragment.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
+
 
 @AndroidEntryPoint
-class DetailFragment : Fragment(R.layout.detail_fragment) {
+class DetailFragment() : Fragment(R.layout.detail_fragment) {
 
     private val detailModel: DetailViewModel by viewModels()
 
@@ -51,6 +54,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         release = arguments?.getString("release")
         backdropImage = arguments?.getString("backimage")
 
+
     }
 
     @ExperimentalCoroutinesApi
@@ -76,9 +80,9 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                     super.onScrolled(recyclerView, dx, dy)
                     val scrollId = theSelectedRecyclerViewid
                     detailModel.notifyLastVisible(
-                        typeMovieOrTv!!,
-                        scrollId!!,
-                        (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                            typeMovieOrTv!!,
+                            scrollId!!,
+                            (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                     )
 
                 }
@@ -90,6 +94,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                 titleDetail.text = movieName
                 val cardviewImage = posterImage
                 val backImage = backdropImage.toString()
+
 
                 poster.loadUrl(cardviewImage.toString())
 
@@ -156,9 +161,9 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
                                 similarAdapter.submitList(it)
                             } else {
                                 detailModel.notifyLastVisible(
-                                    typeMovieOrTv!!,
-                                    theSelectedRecyclerViewid!!,
-                                    0
+                                        typeMovieOrTv!!,
+                                        theSelectedRecyclerViewid!!,
+                                        0
                                 )
                             }
                         }

@@ -9,15 +9,19 @@ import androidx.lifecycle.asLiveData
 import com.franco.moviesdb.domain.ActorBiographyResponce
 import com.franco.moviesdb.domain.ActorListMovies
 import com.franco.moviesdb.repository.actorsBioRepository.actorBioRepository
+import com.franco.moviesdb.repository.actorsBioRepository.actorBioRepositoryImpl
 import com.franco.moviesdb.repository.actorsMovieListRepository.ActorsMovieListRepository
+import com.franco.moviesdb.repository.actorsMovieListRepository.ActorsMovieListRepositoryImpl
+import com.franco.moviesdb.util.NetworkUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 
 class ActorsDetailViewModel @ViewModelInject constructor(
-        private val actorBioRepository: actorBioRepository,
-        private val actorMovieListRepo: ActorsMovieListRepository
+        private val actorBioRepository: actorBioRepositoryImpl,
+        private val actorMovieListRepo: ActorsMovieListRepositoryImpl
 ) : ViewModel() {
+
 
     private val _id = MutableLiveData<Int>()
     val id: LiveData<Int> get() = _id
@@ -44,8 +48,11 @@ class ActorsDetailViewModel @ViewModelInject constructor(
 
     }
 
+
     suspend fun retreiveAndAddToDb(actorId: Int) {
+
         actorMovieListRepo.retreiveFromNetAddToDB(actorId)
+
     }
 
 

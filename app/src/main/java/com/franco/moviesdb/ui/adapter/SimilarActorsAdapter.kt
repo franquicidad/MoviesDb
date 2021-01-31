@@ -52,7 +52,7 @@ class SimilarActorsAdapter(private val scope: CoroutineScope) :
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemActorsBinding.bind(itemView)
         fun bind(item: Actor, position: Int) = with(binding) {
-            val url = IMAGE_URL + item.urlImage
+            val url: String? = IMAGE_URL + item.urlImage
 
             if (url != null) {
                 actorImage.loadUrl(url)

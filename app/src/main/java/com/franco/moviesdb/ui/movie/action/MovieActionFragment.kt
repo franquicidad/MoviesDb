@@ -18,6 +18,7 @@ import com.franco.moviesdb.util.lastVisibleEvents
 import com.franco.moviesdb.util.onQueryTextChanged
 import com.franco.moviesdb.util.visible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.item_layout_reclycler_movies_and_tv.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
@@ -31,7 +32,8 @@ class MovieActionFragment : Fragment(R.layout.fragment_movie_action) {
         val binding = FragmentMovieActionBinding.bind(view)
         val pagingAdapter = PagingAdapter(lifecycleScope)
         binding.apply {
-            binding.rvListTypesMovies.apply {
+
+        binding.rvListTypesMovies.apply {
                 adapter = pagingAdapter
                 layoutManager = GridLayoutManager(requireContext(), 2)
                 setHasFixedSize(true)

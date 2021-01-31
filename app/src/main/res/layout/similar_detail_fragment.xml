@@ -103,11 +103,10 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/framelayout_actors"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:clipToPadding="true"
                         android:orientation="horizontal"
-                        android:padding="30dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"

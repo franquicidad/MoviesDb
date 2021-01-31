@@ -28,7 +28,7 @@ class PagingSimilarMoviesAdapter(private val scope: CoroutineScope) :
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemSimilarBinding.bind(itemView)
         fun bind(item: SimilarMovies) = with(binding) {
-            val url = IMAGE_URL + item.posterPath
+            val url: String? = IMAGE_URL + item.posterPath
 
             var movieOrTvName = ""
 
@@ -38,7 +38,10 @@ class PagingSimilarMoviesAdapter(private val scope: CoroutineScope) :
                 movieOrTvName = item.title
             }
             similarMovieTitle.text = movieOrTvName
-            similarImage.loadUrl(url)
+            url?.let {
+                similarImage.loadUrl(it)
+
+            }
         }
     }
 

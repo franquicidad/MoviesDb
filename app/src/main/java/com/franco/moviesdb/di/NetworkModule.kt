@@ -1,5 +1,6 @@
 package com.franco.moviesdb.di
 
+import android.accounts.NetworkErrorException
 import android.content.Context
 import androidx.room.Room
 import com.franco.moviesdb.database.MovieDatabase
@@ -44,16 +45,20 @@ import com.franco.moviesdb.ui.movieDetails.DetailViewModel
 import com.franco.moviesdb.ui.similarMoviesFragment.SimilarDetailViewModel
 import com.franco.moviesdb.util.BASE_URL
 import com.franco.moviesdb.util.DATABASE_MOVIE_NAME
+import com.franco.moviesdb.util.NetworkUtils
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.ConnectException
+import java.net.UnknownHostException
 import javax.inject.Singleton
 
 @Module
@@ -86,13 +91,18 @@ object NetworkModule {
         val client = OkHttpClient.Builder()
                 .addInterceptor(logger)
                 .build()
-
         return Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .baseUrl(BASE_URL)
                 .client(client)
                 .build()
                 .create(ApiService::class.java)
+
+
+//        catch (connection: ConnectException){}
+//        catch (network: NetworkErrorException){}
+//        catch (unknown: UnknownHostException){}
+
     }
 
 
@@ -105,9 +115,10 @@ object NetworkModule {
     fun provideMovieActionRepository(
             localDatasourceMoviesAction: LocalDatasourceMoviesActionImpl,
             remoteDatasourceMoviesAction: RemoteDatasourceMovieActionImpl,
+            isInternetAvailable: NetworkUtils
 
-            ): MovieActionRepository {
-        return MovieActionRepositoryImpl(localDatasourceMoviesAction, remoteDatasourceMoviesAction)
+    ): MovieActionRepository {
+        return MovieActionRepositoryImpl(localDatasourceMoviesAction, remoteDatasourceMoviesAction, isInternetAvailable)
     }
 
     @Singleton
@@ -121,9 +132,10 @@ object NetworkModule {
     fun provideMovieComedyRepository(
             localDatasourceMoviesComedy: LocalDataSourceMovieComedyImpl,
             remoteDatasourceMoviesComedy: RemoteDatasourceMovieComedyImpl,
+            isInternetAvailable: NetworkUtils
 
-            ): MovieComedyRepository {
-        return MovieComedyRepositoryImpl(localDatasourceMoviesComedy, remoteDatasourceMoviesComedy)
+    ): MovieComedyRepository {
+        return MovieComedyRepositoryImpl(localDatasourceMoviesComedy, remoteDatasourceMoviesComedy, isInternetAvailable)
     }
 
     @Singleton
@@ -131,9 +143,10 @@ object NetworkModule {
     fun provideTvActionRepository(
             localDatasourceTvAction: LocalDataSourceTvActionImpl,
             remoteDatasourceTvAction: RemoteDatasourceTvActionImpl,
+            isInternetAvailable: NetworkUtils
 
-            ): TvActionRepository {
-        return TvActionRepositoryImpl(localDatasourceTvAction, remoteDatasourceTvAction)
+    ): TvActionRepository {
+        return TvActionRepositoryImpl(localDatasourceTvAction, remoteDatasourceTvAction, isInternetAvailable)
     }
 
     @Singleton
@@ -141,57 +154,63 @@ object NetworkModule {
     fun provideTvComedyRepository(
             localDatasourceTvComedy: LocalDataSourceTvComedyImpl,
             remoteDatasourceTvComedy: RemoteDataSourceTvComedyImpl,
+            isInternetAvailable: NetworkUtils
 
-            ): TvComedyRepository {
-        return TvComedyRepositoryImpl(localDatasourceTvComedy, remoteDatasourceTvComedy)
+    ): TvComedyRepository {
+        return TvComedyRepositoryImpl(localDatasourceTvComedy, remoteDatasourceTvComedy, isInternetAvailable)
     }
 
     @Singleton
     @Provides
     fun provideActorsRepository(
-        localDatasourceActorsImpl: LocalDatasourceActorsImpl,
-        remoteDatasourceActorsImpl: RemoteDatasourceActorsImpl
+            localDatasourceActorsImpl: LocalDatasourceActorsImpl,
+            remoteDatasourceActorsImpl: RemoteDatasourceActorsImpl,
+            isInternetAvailable: NetworkUtils
+
     ): ActorsRepository {
-        return ActorsRepository(localDatasourceActorsImpl, remoteDatasourceActorsImpl)
+        return ActorsRepository(localDatasourceActorsImpl, remoteDatasourceActorsImpl, isInternetAvailable)
     }
 
     @Singleton
     @Provides
     fun provideActorBioRepository(
-        actorsBioLocalDatasource: ActorBioLocalDatasourceImpl,
-        actorsBioRemoteDatasource: ActorBioRemoteDatasourceImpl
+            actorsBioLocalDatasource: ActorBioLocalDatasourceImpl,
+            actorsBioRemoteDatasource: ActorBioRemoteDatasourceImpl,
+            isInternetAvailable: NetworkUtils
     ): actorBioRepository {
-        return actorBioRepositoryImpl(actorsBioLocalDatasource, actorsBioRemoteDatasource)
+        return actorBioRepositoryImpl(actorsBioLocalDatasource, actorsBioRemoteDatasource, isInternetAvailable)
     }
 
     @Singleton
     @Provides
     fun provideSimilarRepository(
             localDatasourceSimilarImpl: LocalDatasourceSimilarImpl,
-            remoteDatasourceSimilarImpl: RemoteDatasourceSimilarMoviesImpl
+            remoteDatasourceSimilarImpl: RemoteDatasourceSimilarMoviesImpl,
+            isInternetAvailable: NetworkUtils
     ): SimilarRepository {
-        return SimilarRepositoryImpl(localDatasourceSimilarImpl, remoteDatasourceSimilarImpl)
+        return SimilarRepositoryImpl(localDatasourceSimilarImpl, remoteDatasourceSimilarImpl, isInternetAvailable)
     }
 
     @Singleton
     @Provides
     fun provideMovieListByActorId(
             localDatasourceMovieByActor: LocalDatasourceMovieByActorImpl,
-            remoteDatasourceMovieListByActor: RemoteDatasourceMovieListByActorImpl
+            remoteDatasourceMovieListByActor: RemoteDatasourceMovieListByActorImpl,
+            isInternetAvailable: NetworkUtils
     ): ActorsMovieListRepository {
-        return ActorsMovieListRepositoryImpl(localDatasourceMovieByActor, remoteDatasourceMovieListByActor)
+        return ActorsMovieListRepositoryImpl(localDatasourceMovieByActor, remoteDatasourceMovieListByActor, isInternetAvailable)
     }
 
 
     @Singleton
     @Provides
-    fun providesRepoToMovieComedyVm(movieComedyRepo: MovieComedyRepositoryImpl): MovieComedyViewModel {
-        return MovieComedyViewModel(movieComedyRepo)
+    fun providesRepoToMovieComedyVm(movieComedyRepo: MovieComedyRepositoryImpl, isInternet: NetworkUtils): MovieComedyViewModel {
+        return MovieComedyViewModel(movieComedyRepo, isInternet)
     }
 
     @Singleton
     @Provides
-    fun providesRepoToActorDetailVm(actorBioRepository: actorBioRepository, actorMovieListRepo: ActorsMovieListRepository): ActorsDetailViewModel {
+    fun providesRepoToActorDetailVm(actorBioRepository: actorBioRepositoryImpl, actorMovieListRepo: ActorsMovieListRepositoryImpl): ActorsDetailViewModel {
         return ActorsDetailViewModel(actorBioRepository, actorMovieListRepo)
     }
 
@@ -202,6 +221,7 @@ object NetworkModule {
     }
 
 
+    @ExperimentalCoroutinesApi
     @Singleton
     @Provides
     fun provideDetailViewModel(
@@ -211,6 +231,7 @@ object NetworkModule {
         return DetailViewModel(actorsRepo, similarRepository = similarRepo)
     }
 
+    @ExperimentalCoroutinesApi
     @Singleton
     @Provides
     fun provideSimilarDetailViewModel(
@@ -223,8 +244,8 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideActorsDetailViewModel(
-            actorsBioRepo: actorBioRepository,
-            actorMovieListRepo: ActorsMovieListRepository
+            actorsBioRepo: actorBioRepositoryImpl,
+            actorMovieListRepo: ActorsMovieListRepositoryImpl
     ): ActorsDetailViewModel {
         return ActorsDetailViewModel(actorsBioRepo, actorMovieListRepo)
     }

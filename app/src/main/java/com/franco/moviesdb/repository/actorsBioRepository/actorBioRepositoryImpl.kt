@@ -6,20 +6,23 @@ import com.franco.moviesdb.database.actorsBiographyLocal.ActorBioLocalDatasource
 import com.franco.moviesdb.domain.Actor
 import com.franco.moviesdb.domain.ActorBiographyResponce
 import com.franco.moviesdb.network.actorsBiographyRemote.ActorBioRemoteDatasourceImpl
+import com.franco.moviesdb.util.NetworkUtils
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class actorBioRepositoryImpl(
-    private val actorsBioLocalDatasource: ActorBioLocalDatasourceImpl,
-    private val actorsBioRemoteDatasource: ActorBioRemoteDatasourceImpl
+class actorBioRepositoryImpl @Inject constructor(
+        private val actorsBioLocalDatasource: ActorBioLocalDatasourceImpl,
+        private val actorsBioRemoteDatasource: ActorBioRemoteDatasourceImpl,
+        private val isInternetAvailable: NetworkUtils
 ) : actorBioRepository {
     override suspend fun getActorBioFromDb(actorId: Int): ActorBiographyResponce {
         return actorsBioLocalDatasource.getActorInfo(actorId)
     }
 
     override suspend fun retreiveAndAddToDatabase(actorId: Int) {
-        val list= actorsBioRemoteDatasource.getActorBiographyRemote(actorId)
-        Log.i("Bio","$list")
-        val actor = actorsBioRemoteDatasource.getActorBiographyRemote(actorId)
-        actorsBioLocalDatasource.insertActorToDb(actor)
+        if (isInternetAvailable.isInternetAvailable()) {
+            val actor = actorsBioRemoteDatasource.getActorBiographyRemote(actorId)
+            actorsBioLocalDatasource.insertActorToDb(actor)
+        }
     }
 }

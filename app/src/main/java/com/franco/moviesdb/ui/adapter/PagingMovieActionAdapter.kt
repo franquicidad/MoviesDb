@@ -1,9 +1,13 @@
 package com.franco.moviesdb.ui.adapter
 
+import android.app.Activity
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.os.bundleOf
+import androidx.core.util.Pair
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
@@ -16,20 +20,22 @@ import com.franco.moviesdb.util.IMAGE_URL
 import com.franco.moviesdb.util.collectFlow
 import com.franco.moviesdb.util.loadUrl
 import com.franco.moviesdb.util.onClickEvents
+import kotlinx.android.synthetic.main.detail_fragment.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 
 @ExperimentalCoroutinesApi
 class PagingAdapter(private val scope: CoroutineScope) :
     ListAdapter<MovieActionDomain, PagingAdapter.ItemViewHolder>(DiffCallBackFromAdapter()) {
 
-    var navController: NavController? = null
+    private var navController: NavController? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_layout_reclycler_movies_and_tv, parent, false)
+                LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_layout_reclycler_movies_and_tv, parent, false)
         )
     }
 
@@ -39,21 +45,21 @@ class PagingAdapter(private val scope: CoroutineScope) :
         scope.collectFlow(itemView.onClickEvents) {
 
 
-        val url = IMAGE_URL + item.posterPath
+            val url = IMAGE_URL + item.posterPath
             val backImage = IMAGE_URL + item.backdropPath
 
             val movieOrTv = "movie"
 
             val bundle = bundleOf(
-                "movieOrTv" to movieOrTv,
-                "id" to item.id,
-                "movieName" to item.title,
-                "overview" to item.overview,
-                "poster" to url,
-                "rating" to item.rating,
-                "lang" to item.originalLanguage,
-                "release" to item.releaseDate,
-                "backimage" to backImage
+                    "movieOrTv" to movieOrTv,
+                    "id" to item.id,
+                    "movieName" to item.title,
+                    "overview" to item.overview,
+                    "poster" to url,
+                    "rating" to item.rating,
+                    "lang" to item.originalLanguage,
+                    "release" to item.releaseDate,
+                    "backimage" to backImage
 
 
             )
@@ -67,9 +73,11 @@ class PagingAdapter(private val scope: CoroutineScope) :
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemLayoutReclyclerMoviesAndTvBinding.bind(itemView)
         fun bind(item: MovieActionDomain) = with(binding) {
-            val url = IMAGE_URL + item.posterPath
+            val url: String? = IMAGE_URL + item.posterPath
             movieTitle.text = item.title
-            rvImageMovie.loadUrl(url)
+            url?.let {
+                rvImageMovie.loadUrl(it)
+            }
 
         }
     }
@@ -82,8 +90,8 @@ class DiffCallBackFromAdapter : DiffUtil.ItemCallback<MovieActionDomain>() {
     }
 
     override fun areContentsTheSame(
-        oldItem: MovieActionDomain,
-        newItem: MovieActionDomain
+            oldItem: MovieActionDomain,
+            newItem: MovieActionDomain
     ): Boolean {
         return oldItem == newItem
     }

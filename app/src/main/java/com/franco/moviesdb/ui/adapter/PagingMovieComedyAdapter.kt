@@ -29,9 +29,12 @@ class PagingMovieComedyAdapter(private val scope: CoroutineScope) :
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemLayoutReclyclerMoviesAndTvBinding.bind(itemView)
         fun bind(item: MovieActionDomain) = with(binding) {
-            val url = IMAGE_URL + item.posterPath
+            val url: String? = IMAGE_URL + item.posterPath
             movieTitle.text = item.title
-            rvImageMovie.loadUrl(url)
+            url?.let {
+                rvImageMovie.loadUrl(it)
+
+            }
         }
 
     }

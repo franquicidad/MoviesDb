@@ -3,6 +3,7 @@ package com.franco.moviesdb.ui.movie.action
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.franco.moviesdb.repository.movieActionRepository.MovieActionRepository
+import com.franco.moviesdb.util.NetworkUtils
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 class MovieActionViewModel @ViewModelInject constructor(
         private val movieActionRepository: MovieActionRepository
 ) : ViewModel() {
+
 
     private val _spinner = MutableStateFlow(true)
     val spinner: StateFlow<Boolean> get() = _spinner
@@ -39,8 +41,11 @@ class MovieActionViewModel @ViewModelInject constructor(
         }
     }
 
+
     private suspend fun notifyLastVisible(lastVisible: Int) {
+
         movieActionRepository.checkRequireNewPageMovieAction(lastVisible)
+
         _spinner.value = false
 
     }
