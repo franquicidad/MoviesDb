@@ -20,5 +20,6 @@ _______ ![movieApp2](https://user-images.githubusercontent.com/28768991/10463863
 ### Shared elements transition
 #### Clean Code ... Apply design patterns and SOLID principles.
 ##### Update to Pagination3 
+#### Add Trailers!
 
 ##### THIS APP IS NOT THE FINAL VERSION AND WILL BE UPGRADED WITH TIME #######
