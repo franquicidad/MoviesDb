@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.detail_fragment.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
@@ -69,7 +70,7 @@ class SimilarDetailFragment : Fragment(R.layout.similar_detail_fragment) {
             val linearLayout = LinearLayoutManager(requireContext())
             linearLayout.orientation = LinearLayoutManager.HORIZONTAL
             layoutManager = linearLayout
-            setHasFixedSize(true)
+            setHasFixedSize(false)
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -134,7 +135,7 @@ class SimilarDetailFragment : Fragment(R.layout.similar_detail_fragment) {
             similarDetailModel.observableListActors(typeMovieOrTv!!, theSelectedRecyclerViewid!!)
 
 
-            val parentJob = CoroutineScope(IO).launch {
+            val parentJob = CoroutineScope(Main).launch {
                 val job1 = launch {
                     theId?.let { id ->
                         val second = id

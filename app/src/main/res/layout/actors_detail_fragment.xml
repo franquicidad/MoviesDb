@@ -143,10 +143,8 @@
                             android:id="@+id/recyclerMovieActor"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="20dp"
                             android:layout_marginTop="30dp"
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                            android:padding="18dp"
                             app:spanCount="2"
                             tools:listitem="@layout/item_layout_reclycler_movies_and_tv" />
 

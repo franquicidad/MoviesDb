@@ -36,7 +36,7 @@ class MovieActionFragment : Fragment(R.layout.fragment_movie_action) {
         binding.rvListTypesMovies.apply {
                 adapter = pagingAdapter
                 layoutManager = GridLayoutManager(requireContext(), 2)
-                setHasFixedSize(true)
+                setHasFixedSize(false)
 
                 lifecycleScope.apply {
                     collectFlow(rvListTypesMovies.lastVisibleEvents) {
