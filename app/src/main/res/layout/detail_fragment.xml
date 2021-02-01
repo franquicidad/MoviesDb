@@ -44,6 +44,7 @@
 
                     </ProgressBar>
 
+
                     <ImageView
                         android:id="@+id/image_poster_detail"
                         android:layout_width="0dp"
@@ -52,10 +53,9 @@
                         android:src="@drawable/n_negra"
                         app:layout_constraintDimensionRatio="2:1"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
 
                     <View
                         android:id="@+id/view2"
@@ -102,16 +102,18 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/framelayout_actors"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
                         android:clipToPadding="true"
                         android:orientation="horizontal"
+                        android:padding="20dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView"
+                        app:layout_constraintTop_toBottomOf="@+id/CastTextView"
                         tools:context=".ui.MainActivity"
                         tools:listitem="@layout/item_actors">
 
@@ -260,9 +262,9 @@
                             android:layout_width="150dp"
                             android:layout_height="200dp"
                             android:elevation="32dp"
-                            android:transitionName="rvMovies"
                             android:scaleType="centerCrop"
                             android:src="@drawable/movies_noimage"
+                            android:transitionName="rvMovies"
                             app:layout_constraintBottom_toBottomOf="@+id/image_poster_detail"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/image_poster_detail">
@@ -278,12 +280,12 @@
                         app:layout_constraintGuide_begin="162dp" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/CastTextView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
 
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="15dp"
                         android:text="@string/cast"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
@@ -291,7 +293,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/guideline4"
+                        app:layout_constraintTop_toBottomOf="@+id/cardView2"
                         tools:text="Cast" />
 
                     <androidx.constraintlayout.widget.Guideline

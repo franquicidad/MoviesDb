@@ -17,11 +17,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list_types_movies"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:padding="10dp"
-            android:paddingStart="25dp"
-            android:paddingEnd="20dp"
             app:spanCount="2"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"

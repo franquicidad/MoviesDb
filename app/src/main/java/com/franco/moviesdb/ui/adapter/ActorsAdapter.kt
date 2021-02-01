@@ -21,7 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 class ActorsAdapter(private val scope: CoroutineScope) :
-        ListAdapter<Actor, ActorsAdapter.ItemViewHolder>(DiffCallBackFromSimilarAdapterActors()) {
+        ListAdapter<Actor, ActorsAdapter.ItemViewHolder>(DiffCallBackFromAdapterActors()) {
 
     var navController: NavController? = null
 

@@ -15,6 +15,7 @@ import com.franco.moviesdb.ui.adapter.MovieListByActorAdapter
 import com.franco.moviesdb.util.IMAGE_URL
 import com.franco.moviesdb.util.loadUrl
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.actors_detail_fragment.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 
@@ -44,7 +45,7 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
             adapter = movieListByActorAdapter
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             layoutManager = gridLayoutManager
-            setHasFixedSize(true)
+            setHasFixedSize(false)
         }
 
         actorsDetailViewModel.id.observe(viewLifecycleOwner, Observer {
@@ -80,13 +81,20 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
                     actorsDetailViewModel.retreiveAndAddToDb(actorId!!)
                 }.await()
 
-                launch {
+                async(Dispatchers.Main) {
 
                     val list = actorsDetailViewModel.getAllMoviesActorId(actorId!!)
 
                     list.let {
                         it.collect {
                             Log.i("Any", "$it")
+                            if (it.size == 0) {
+                                recyclerMovieActor.visibility = View.GONE
+                                noMoviesForActor.visibility = View.VISIBLE
+                            } else {
+                                recyclerMovieActor.visibility = View.VISIBLE
+                                noMoviesForActor.visibility = View.GONE
+                            }
 
                             movieListByActorAdapter.submitList(it)
                         }

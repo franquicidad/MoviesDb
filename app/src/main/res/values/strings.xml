@@ -7,5 +7,7 @@
     <string name="overview">Overview</string>
     <string name="cast">Cast</string>
     <string name="similar_movies">Similar Movies</string>
-    <string name="please_connect_to_internet">Please Connect to Internet</string>
+    <string name="please_connect_to_internet">No Internet</string>
+    <string name="please_connect">Please Connect</string>
+    <string name="movies">Movies</string>
 </resources>

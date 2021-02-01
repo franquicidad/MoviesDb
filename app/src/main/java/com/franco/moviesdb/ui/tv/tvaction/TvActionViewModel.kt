@@ -4,6 +4,7 @@ package com.franco.moviesdb.ui.tv.tvaction
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.franco.moviesdb.repository.tvActionRepository.TvActionRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -17,11 +18,15 @@ class TvActionViewModel @ViewModelInject constructor(
     private val _spinnerTvAction = MutableStateFlow(true)
     val spinnerTvAction: StateFlow<Boolean> get() = _spinnerTvAction
 
+    @ExperimentalCoroutinesApi
     val searchTvActionQuery = MutableStateFlow("")
 
+    @ExperimentalCoroutinesApi
     private val tvActionQueryFlow = searchTvActionQuery.flatMapLatest {
         tvActionRepository.getTvListActionByQuery(it)
     }
+
+    @ExperimentalCoroutinesApi
     val tvActionQuery = tvActionQueryFlow.asLiveData()
 
     init {

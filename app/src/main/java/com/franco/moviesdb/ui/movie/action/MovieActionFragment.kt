@@ -60,7 +60,8 @@ class MovieActionFragment : Fragment(R.layout.fragment_movie_action) {
         }
 
         movieActionVM.movieQuery.observe(viewLifecycleOwner, Observer {
-
+            val list = it
+            Log.i("An", "list")
             pagingAdapter.submitList(it)
         })
         setHasOptionsMenu(true)

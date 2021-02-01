@@ -3,7 +3,6 @@ package com.franco.moviesdb.ui.movieDetails
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.franco.moviesdb.R
 import com.franco.moviesdb.databinding.DetailFragmentBinding
-import com.franco.moviesdb.ui.MainActivity
 import com.franco.moviesdb.ui.adapter.ActorsAdapter
 import com.franco.moviesdb.ui.adapter.PagingSimilarMoviesAdapter
 import com.franco.moviesdb.util.*
@@ -20,8 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.detail_fragment.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.collect
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -65,7 +63,11 @@ class DetailFragment() : Fragment(R.layout.detail_fragment) {
         val similarAdapter = PagingSimilarMoviesAdapter(lifecycleScope)
         framelayout_actors.apply {
             adapter = pagingAdapter
-            setHorizontalLayout()
+            val linearLayout = LinearLayoutManager(requireContext())
+            linearLayout.orientation = LinearLayoutManager.HORIZONTAL
+            layoutManager = linearLayout
+            setHasFixedSize(false)
+
         }
         rvSimilar.apply {
             //setAdapter
@@ -139,15 +141,16 @@ class DetailFragment() : Fragment(R.layout.detail_fragment) {
             detailModel.observableListActors(typeMovieOrTv!!, theSelectedRecyclerViewid!!)
 
 
-            val parentJob = CoroutineScope(IO).launch {
+            val parentJob = CoroutineScope(Main).launch {
                 val job1 = launch {
                     theId?.let { id ->
                         val second = id
                         detailModel.passTofunctionThoughtDetail(second)
-                            .collect { listOfActorsForMovie ->
-                                Log.i("Anf", "$listOfActorsForMovie")
-                                pagingAdapter.submitList(listOfActorsForMovie)
-                            }
+                                .collect { listOfActorsForMovie ->
+                                    println("TEST $listOfActorsForMovie")
+                                    Log.i("Anf", "$listOfActorsForMovie")
+                                    pagingAdapter.submitList(listOfActorsForMovie)
+                                }
                     }
                 }
 
