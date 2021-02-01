@@ -62,7 +62,10 @@ class SimilarDetailFragment : Fragment(R.layout.similar_detail_fragment) {
         val similarAdapter = PagingSimilarMoviesAdapterToFragment(lifecycleScope)
         framelayout_actors.apply {
             adapter = pagingAdapter
-            setHorizontalLayout()
+            val linearLayout = LinearLayoutManager(requireContext())
+            linearLayout.orientation = LinearLayoutManager.HORIZONTAL
+            layoutManager = linearLayout
+            setHasFixedSize(false)
         }
         rvSimilar.apply {
             //setAdapter
