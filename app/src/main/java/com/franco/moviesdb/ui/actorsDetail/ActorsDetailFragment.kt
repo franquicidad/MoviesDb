@@ -45,7 +45,7 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
             adapter = movieListByActorAdapter
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             layoutManager = gridLayoutManager
-            setHasFixedSize(true)
+            setHasFixedSize(false)
         }
 
         actorsDetailViewModel.id.observe(viewLifecycleOwner, Observer {
