@@ -10,3 +10,16 @@ from the network.
 ---
 ![movies1](https://user-images.githubusercontent.com/28768991/103659757-ca8f0480-4f3a-11eb-9d68-ea58d3e4ce1b.png)  ###### ![screen2](https://user-images.githubusercontent.com/28768991/103817244-49b43380-5034-11eb-89f1-5097182e48fd.png)
 _______ ![movieApp2](https://user-images.githubusercontent.com/28768991/104638639-75f33400-5674-11eb-9b39-cf749b1d5462.png)
+
+<img width="933" alt="Screen Shot 2021-01-31 at 3 23 52 PM" src="https://user-images.githubusercontent.com/28768991/106396839-7d3a7180-63d8-11eb-943a-dc33fa197dea.png">
+
+### Future Plans####
+
+# From main add more categories of movies and also tv with a material design of a pager in the top and modify the Bottom Navigation to add other functionalitiesç
+## Add Likes
+### Shared elements transition
+#### Clean Code ... Apply design patterns and SOLID principles.
+##### Update to Pagination3 
+#### Add Trailers!
+
+##### THIS APP IS NOT THE FINAL VERSION AND WILL BE UPGRADED WITH TIME #######
