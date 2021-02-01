@@ -88,13 +88,7 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
                     list.let {
                         it.collect {
                             Log.i("Any", "$it")
-//                            if (it.size == 0) {
-//                                recyclerMovieActor.visibility = View.GONE
-//                                noMoviesForActor.visibility = View.VISIBLE
-//                            } else {
-//                                recyclerMovieActor.visibility = View.VISIBLE
-//                                noMoviesForActor.visibility = View.GONE
-//                            }
+
 
                             movieListByActorAdapter.submitList(it)
                         }
