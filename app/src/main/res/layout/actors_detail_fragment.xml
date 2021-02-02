@@ -54,10 +54,10 @@
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.228"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.128">
+                        app:layout_constraintVertical_bias="0.323">
 
 
                         <TextView
@@ -104,8 +104,8 @@
                             android:layout_marginStart="40dp"
                             android:layout_marginTop="50dp"
                             android:layout_marginEnd="40dp"
-                            android:textAlignment="center"
                             android:text="Charlize Theron"
+                            android:textAlignment="center"
                             android:textColor="#9E9C9C"
                             android:theme="@style/ThemeForAppTextTitleOverviewConfig">
 
@@ -129,12 +129,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:visibility="gone"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="400dp"
                             android:text="No movies for this actor"
                             android:textColor="#A5A1A1"
-                            android:textSize="22sp">
+                            android:textSize="22sp"
+                            android:visibility="gone">
 
                         </TextView>
 

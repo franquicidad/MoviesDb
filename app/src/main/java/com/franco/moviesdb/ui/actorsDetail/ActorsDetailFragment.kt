@@ -45,7 +45,7 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
             adapter = movieListByActorAdapter
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             layoutManager = gridLayoutManager
-            setHasFixedSize(false)
+//            setHasFixedSize(false)
         }
 
         actorsDetailViewModel.id.observe(viewLifecycleOwner, Observer {
@@ -88,6 +88,7 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
                     list.let {
                         it.collect {
                             Log.i("Any", "$it")
+                            movieListByActorAdapter.notifyDataSetChanged()
 
 
                             movieListByActorAdapter.submitList(it)
@@ -106,5 +107,6 @@ class ActorsDetailFragment : Fragment(R.layout.actors_detail_fragment) {
         super.onDestroy()
         parentJob?.cancel()
     }
+
 
 }
